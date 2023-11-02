@@ -5,10 +5,15 @@ import Icon from './Icon.astro';
 
 <aside>
 	<h2>¿Interesado en trabajar juntos?</h2>
-	<CallToAction href="mailto:lucartes1997@gmail.com">
-		Envíame un mensaje
-		<Icon icon="paper-plane-tilt" size="1.2em" />
-	</CallToAction>
+	<form action="/send-email" method="post" style="display: flex; flex-direction: column; gap: 1rem;">
+		<input type="text" name="name" placeholder="Tu nombre" required style="padding: 0.5rem; border-radius: 0.25rem; border: 1px solid var(--gray-800);">
+		<input type="email" name="email" placeholder="Tu correo electrónico" required style="padding: 0.5rem; border-radius: 0.25rem; border: 1px solid var(--gray-800);">
+		<textarea name="message" placeholder="Tu mensaje" required style="padding: 0.5rem; border-radius: 0.25rem; border: 1px solid var(--gray-800); resize: vertical;"></textarea>
+		<button type="submit" style="padding: 0.5rem 1rem; border-radius: 0.25rem; border: none; background-color: var(--blue-500); color: var(--text-color); cursor: pointer;">
+			Envíame un mensaje
+			<Icon icon="paper-plane-tilt" size="1.2em" />
+		</button>
+	</form>
 </aside>
 
 <style>
