@@ -1,11 +1,11 @@
 ---
-title: Felicitación de German Guarin
+title: Contribución
 publishDate: 2023-03-04 00:00:00
 img: /assets/starmeup (1).png
-img_alt: Felicitación de German Guarin
+img_alt: Hacer la diferencia
 description: |
 tags:
-  - Desarrollo 
+  - Development 
   - Batch
   - Kratos
 ---
