@@ -40,7 +40,9 @@ const projects = (await getCollection('work'))
 						<Pill><Icon icon="git" size="1.33em" /> Git</Pill>
 					</div>
 				</Hero>
-
+				<a href="https://api.whatsapp.com/send/?phone=%2B573186405618&text=Hola%20Luis.%0AVi%20tu%20p%C3%A1gina%2C%20me%20interesa%20contactarte%20%F0%9F%91%A8%F0%9F%8F%BB%E2%80%8D%F0%9F%92%BB.&type=phone_number&app_absent=0" class="whatsapp-button" target="_blank">
+					<img src="/assets/whatsapp-icon.svg" alt="Icono de Whatsapp" />
+					</a>
 				<img
 					alt="Luis Arteaga sonríe con su diploma en la mano."
 					width="480"
@@ -321,4 +323,13 @@ const projects = (await getCollection('work'))
 		0px 0px 40px 4px #2C39797c,
 		0px 0px 60px 6px #2C39797c;
 		}
+
+
+	.whatsapp-button {
+		position: fixed;
+		bottom: 20px;
+		right: 20px;
+		z-index: 1000;
+	}
+
 </style>
