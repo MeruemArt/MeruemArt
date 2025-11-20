@@ -1,23 +1,23 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection } from "astro:content";
 
 // Layout import — provides basic page elements: <head>, <nav>, <footer> etc.
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 // Component Imports
-import CallToAction from '../components/CallToAction.astro';
-import Grid from '../components/Grid.astro';
-import Hero from '../components/Hero.astro';
-import Icon from '../components/Icon.astro';
-import Pill from '../components/Pill.astro';
-import PortfolioPreview from '../components/PortfolioPreview.astro';
+import CallToAction from "../components/CallToAction.astro";
+import Grid from "../components/Grid.astro";
+import Hero from "../components/Hero.astro";
+import Icon from "../components/Icon.astro";
+import Pill from "../components/Pill.astro";
+import PortfolioPreview from "../components/PortfolioPreview.astro";
 
 // Page section components
-import ContactCTA from '../components/ContactCTA.astro';
-import Skills from '../components/Skills.astro';
+import ContactCTA from "../components/ContactCTA.astro";
+import Skills from "../components/Skills.astro";
 
 // Content Fetching: List four most recent work projects
-const projects = (await getCollection('work'))
+const projects = (await getCollection("work"))
 	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
 	.slice(0, 4);
 
@@ -40,8 +40,15 @@ const projects = (await getCollection('work'))
 						<Pill><Icon icon="git" size="1.33em" /> Git</Pill>
 					</div>
 				</Hero>
-				<a href="https://api.whatsapp.com/send/?phone=%2B573186405618&text=Hola%20Luis.%0AVi%20tu%20p%C3%A1gina%2C%20me%20interesa%20contactarte%20%F0%9F%91%A8%F0%9F%8F%BB%E2%80%8D%F0%9F%92%BB.&type=phone_number&app_absent=0" class="whatsapp-button" target="_blank">
-					<img src="/assets/whatsapp-icon.svg" alt="Icono de Whatsapp" />
+				<a
+					href="https://api.whatsapp.com/send/?phone=%2B573186405618&text=Hola%20Luis.%0AVi%20tu%20p%C3%A1gina%2C%20me%20interesa%20contactarte%20%F0%9F%91%A8%F0%9F%8F%BB%E2%80%8D%F0%9F%92%BB.&type=phone_number&app_absent=0"
+					class="whatsapp-button"
+					target="_blank"
+				>
+					<img
+						src="/assets/whatsapp-icon.svg"
+						alt="Icono de Whatsapp"
+					/>
 				</a>
 				<img
 					alt="Luis Arteaga sonríe con su diploma en la mano."
@@ -49,6 +56,12 @@ const projects = (await getCollection('work'))
 					height="620"
 					src="/assets/portrait.jpg"
 				/>
+				<div class="scroll-indicator">
+					<span class="mouse">
+						<span class="wheel"></span>
+					</span>
+					<p>Scroll para ver más</p>
+				</div>
 			</header>
 
 			<Skills />
@@ -56,21 +69,32 @@ const projects = (await getCollection('work'))
 
 		<main class="wrapper stack gap-20 lg:gap-48">
 			<div style="text-align: center;">
-				<object data="/assets/CV_Meruem.pdf" type="application/pdf" width="100%" height="700px">
-					<p>Para obtener una visión más completa de mi experiencia y habilidades, <a href="/assets/CV_Meruem.pdf">descargue mi currículum completo</a>.</p>
+				<object
+					data="/assets/CV_Meruem.pdf"
+					type="application/pdf"
+					width="100%"
+					height="700px"
+				>
+					<p>
+						Para obtener una visión más completa de mi experiencia y
+						habilidades, <a href="/assets/CV_Meruem.pdf"
+							>descargue mi currículum completo</a
+						>.
+					</p>
 				</object>
 			</div>
 			<section class="section with-background with-cta">
 				<header class="section-header stack gap-2 lg:gap-4">
 					<h3>Menciones</h3>
-					<p>He tenido la suerte de recibir elogios por mi trabajo en varias publicaciones. Echa un vistazo a continuación para saber más.</p>
+					<p>
+						He tenido la suerte de recibir elogios por mi trabajo en
+						varias publicaciones. Echa un vistazo a continuación
+						para saber más.
+					</p>
 				</header>
 
 				<div class="gallery">
-					<img 
-					src="/assets/cobis.svg"
-					alt="Imagen de Cobis"
-				/>
+					<img src="/assets/cobis.svg" alt="Imagen de Cobis" />
 					<Grid variant="offset">
 						{
 							projects.map((project) => (
@@ -92,28 +116,45 @@ const projects = (await getCollection('work'))
 
 			<section class="section with-background bg-variant">
 				<header class="section-header stack gap-2 lg:gap-4">
-					<h3>Trabajos</h3>
+					<h3>Servicios</h3>
 					<p>
-						Echa un vistazo a algunos de mis trabajos destacados para clientes de los últimos años.
+						Ofrezco soluciones tecnológicas a medida para potenciar
+						tu negocio.
 					</p>
 				</header>
 
 				<div class="gallery">
 					<Grid variant="small">
-						{
-							['1', '2', '3', '4', '5'].map((brand, index) => (
-								<li class='flip-card'>
-									<div class="flip-card-inner">
-										<div class="flip-card-front">
-											<p>{brand}</p>
-										</div>
-										<div class="flip-card-back">
-											<p>{['uno', 'dos', 'tres', 'cuatro', 'cinco'][index]}</p>
-										</div>
-									</div>
-								</li>
-							))
-						}
+						<li class="service-card">
+							<div class="service-icon">
+								<Icon icon="terminal-window" size="2.5em" />
+							</div>
+							<h4>Desarrollo Web</h4>
+							<p>
+								Sitios web modernos, rápidos y responsivos
+								utilizando las últimas tecnologías.
+							</p>
+						</li>
+						<li class="service-card">
+							<div class="service-icon">
+								<Icon icon="aws" size="2.5em" />
+							</div>
+							<h4>Cloud Computing</h4>
+							<p>
+								Arquitectura y despliegue de soluciones
+								escalables en AWS.
+							</p>
+						</li>
+						<li class="service-card">
+							<div class="service-icon">
+								<Icon icon="python" size="2.5em" />
+							</div>
+							<h4>Backend Development</h4>
+							<p>
+								APIs robustas y procesamiento de datos con
+								Python y Serverless.
+							</p>
+						</li>
 					</Grid>
 				</div>
 			</section>
@@ -136,14 +177,14 @@ const projects = (await getCollection('work'))
 	}
 
 	.hero img {
-		aspect-ratio: 5 / 4;
+		aspect-ratio: 9 / 8.8;
 		object-fit: cover;
 		object-position: top;
-		border-radius: 45% 55% 63% 37% / 47% 53% 47% 53% ;
-		box-shadow: 
-			0px 0px 20px 2px #260b3d7c, 
-			0px 0px 40px 4px #2C39797c,
-			0px 0px 60px 6px #2C39797c;
+		border-radius: 45% 55% 63% 37% / 47% 53% 47% 53%;
+		box-shadow:
+			0px 0px 20px 2px #260b3d7c,
+			0px 0px 40px 4px #2c39797c,
+			0px 0px 60px 6px #2c39797c;
 		/* Añade más sombras según sea necesario */
 	}
 
@@ -162,11 +203,11 @@ const projects = (await getCollection('work'))
 		}
 
 		.hero img {
-			border-radius: 45% 55% 63% 37% / 47% 53% 47% 53% ;
-			box-shadow: 
-				0px 0px 20px 2px #260b3d7c, 
-				0px 0px 40px 4px #2C39797c,
-				0px 0px 60px 6px #2C39797c;
+			border-radius: 45% 55% 63% 37% / 47% 53% 47% 53%;
+			box-shadow:
+				0px 0px 20px 2px #260b3d7c,
+				0px 0px 40px 4px #2c39797c,
+				0px 0px 60px 6px #2c39797c;
 		}
 	}
 
@@ -184,7 +225,7 @@ const projects = (await getCollection('work'))
 	.with-background::before {
 		--hero-bg: var(--bg-image-subtle-2);
 
-		content: '';
+		content: "";
 		position: absolute;
 		pointer-events: none;
 		left: 50%;
@@ -192,8 +233,10 @@ const projects = (await getCollection('work'))
 		aspect-ratio: calc(2.25 / var(--bg-scale));
 		top: 0;
 		transform: translateY(-75%) translateX(-50%);
-		background: url('/assets/backgrounds/noise.png') top center/220px repeat,
-			var(--hero-bg) center center / var(--bg-gradient-size) no-repeat, var(--gray-999);
+		background:
+			url("/assets/backgrounds/noise.png") top center/220px repeat,
+			var(--hero-bg) center center / var(--bg-gradient-size) no-repeat,
+			var(--gray-999);
 		background-blend-mode: overlay, normal, normal, normal;
 		mix-blend-mode: var(--bg-blend-mode);
 		z-index: -1;
@@ -218,12 +261,12 @@ const projects = (await getCollection('work'))
 	@media (min-width: 50em) {
 		.section {
 			grid-template-columns: repeat(4, 1fr);
-			grid-template-areas: 'header header header header' 'gallery gallery gallery gallery';
+			grid-template-areas: "header header header header" "gallery gallery gallery gallery";
 			gap: 5rem;
 		}
 
 		.section.with-cta {
-			grid-template-areas: 'header header header cta' 'gallery gallery gallery gallery';
+			grid-template-areas: "header header header cta" "gallery gallery gallery gallery";
 		}
 
 		.section-header {
@@ -272,65 +315,165 @@ const projects = (await getCollection('work'))
 	}
 
 	.flip-card {
-	display: flex;
-	height: 7rem;
-	justify-content: center;
-	align-items: center;
-	text-align: center;
-	border: 1px solid var(--gray-800);
-	border-radius: 1.5rem;
-	color: var(--gray-300);
-	background: var(--gradient-subtle);
-	box-shadow: var(--shadow-sm);
-	perspective: 1000px;
+		display: flex;
+		height: 7rem;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		border: 1px solid var(--gray-800);
+		border-radius: 1.5rem;
+		color: var(--gray-300);
+		background: var(--gradient-subtle);
+		box-shadow: var(--shadow-sm);
+		perspective: 1000px;
 	}
 
 	.flip-card-inner {
-	width: 100%;
-	height: 100%;
-	transition: transform 0.6s;
-	transform-style: preserve-3d;
-	display: flex;
-	justify-content: center;
-	align-items: center;
+		width: 100%;
+		height: 100%;
+		transition: transform 0.6s;
+		transform-style: preserve-3d;
+		display: flex;
+		justify-content: center;
+		align-items: center;
 	}
 
 	.flip-card:hover .flip-card-inner {
-	transform: rotateY(180deg);
+		transform: rotateY(180deg);
 	}
 
-	.flip-card-front, .flip-card-back {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	backface-visibility: hidden;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-}
+	.flip-card-front,
+	.flip-card-back {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		backface-visibility: hidden;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 
 	.flip-card-front {
-	background-color: #f1f1f100;
+		background-color: #f1f1f100;
 	}
 
 	.flip-card-back {
-	background-color: #b3b3b300;
-	transform: rotateY(180deg);
+		background-color: #b3b3b300;
+		transform: rotateY(180deg);
 	}
 
 	.img-with-shadow {
-	box-shadow: 
-		0px 0px 20px 2px #260b3d7c, 
-		0px 0px 40px 4px #2C39797c,
-		0px 0px 60px 6px #2C39797c;
-		}
-
+		box-shadow:
+			0px 0px 20px 2px #260b3d7c,
+			0px 0px 40px 4px #2c39797c,
+			0px 0px 60px 6px #2c39797c;
+	}
 
 	.whatsapp-button {
 		position: fixed;
-		bottom: 20px;
-		right: 20px;
-		z-index: 100;
+		bottom: 30px;
+		right: 30px;
+		z-index: 220;
 	}
 
+	.scroll-indicator {
+		display: none;
+	}
+
+	@media (min-width: 50em) {
+		.scroll-indicator {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 0.5rem;
+			position: absolute;
+			bottom: 2rem;
+			left: 50%;
+			transform: translateX(-50%);
+			color: var(--gray-400);
+			font-size: var(--text-sm);
+			animation: fade-in-up 1s ease-out 1s backwards;
+		}
+
+		.mouse {
+			width: 26px;
+			height: 40px;
+			border: 2px solid var(--gray-400);
+			border-radius: 20px;
+			position: relative;
+		}
+
+		.wheel {
+			width: 4px;
+			height: 8px;
+			background: var(--gray-400);
+			border-radius: 2px;
+			position: absolute;
+			top: 6px;
+			left: 50%;
+			transform: translateX(-50%);
+			animation: scroll-wheel 2s infinite;
+		}
+	}
+
+	@keyframes scroll-wheel {
+		0% {
+			top: 6px;
+			opacity: 1;
+		}
+		100% {
+			top: 20px;
+			opacity: 0;
+		}
+	}
+
+	@keyframes fade-in-up {
+		from {
+			opacity: 0;
+			transform: translate(-50%, 20px);
+		}
+		to {
+			opacity: 1;
+			transform: translate(-50%, 0);
+		}
+	}
+
+	.service-card {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		padding: 2rem;
+		gap: 1rem;
+		background: var(--gradient-subtle);
+		border: 1px solid var(--gray-800);
+		border-radius: 1.5rem;
+		box-shadow: var(--shadow-sm);
+		transition:
+			transform var(--theme-transition),
+			box-shadow var(--theme-transition);
+	}
+
+	.service-card:hover {
+		transform: translateY(-5px);
+		box-shadow: var(--shadow-md);
+	}
+
+	.service-icon {
+		color: var(--accent-regular);
+		background: var(--gray-999);
+		padding: 1rem;
+		border-radius: 50%;
+		box-shadow: var(--shadow-sm);
+	}
+
+	.service-card h4 {
+		font-size: var(--text-lg);
+		color: var(--gray-100);
+	}
+
+	.service-card p {
+		color: var(--gray-300);
+		font-size: var(--text-sm);
+	}
 </style>
