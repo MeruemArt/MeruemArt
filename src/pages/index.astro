@@ -64,6 +64,123 @@ const projects = (await getCollection("work"))
 				</div>
 			</header>
 
+			<script>
+				const scrollIndicator =
+					document.querySelector(".scroll-indicator");
+				if (scrollIndicator) {
+					let idleTimer: any;
+					let debounceTimer: any;
+					const idleTime = 5000; // 5 seconds
+					const debounceDelay = 300; // 300ms para eventos frecuentes
+					
+					// Verificar si estamos en desktop (donde el indicador es visible)
+					const isDesktop = () => window.innerWidth >= 50 * 16; // 50em = 800px
+					
+					// Umbral ajustable según el dispositivo
+					const getBottomThreshold = () => {
+						return isDesktop() ? 100 : 150;
+					};
+
+					// Verifica si el usuario está cerca del final de la página
+					const isNearBottom = () => {
+						if (!isDesktop()) return false; // No mostrar en móvil
+						
+						const threshold = getBottomThreshold();
+						const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+						const windowHeight = window.innerHeight;
+						const documentHeight = Math.max(
+							document.body.scrollHeight,
+							document.body.offsetHeight,
+							document.documentElement.clientHeight,
+							document.documentElement.scrollHeight,
+							document.documentElement.offsetHeight
+						);
+						
+						const scrollPosition = scrollTop + windowHeight;
+						const distanceFromBottom = documentHeight - scrollPosition;
+						
+						return distanceFromBottom <= threshold;
+					};
+
+					// Verifica si el indicador está visible
+					const isIndicatorVisible = () => {
+						return !scrollIndicator.classList.contains("hidden");
+					};
+
+					const showIndicator = () => {
+						// Solo mostrar en desktop y si no está cerca del final
+						if (isDesktop() && !isNearBottom()) {
+							scrollIndicator.classList.remove("hidden");
+						}
+					};
+
+					const hideIndicator = () => {
+						scrollIndicator.classList.add("hidden");
+					};
+
+					const startIdleTimer = () => {
+						clearTimeout(idleTimer);
+						idleTimer = setTimeout(() => {
+							showIndicator();
+						}, idleTime);
+					};
+
+					const resetTimer = () => {
+						// Solo ocultar si el indicador está visible
+						if (isIndicatorVisible()) {
+							hideIndicator();
+						}
+						// Reiniciar el timer de inactividad
+						startIdleTimer();
+					};
+
+					// Debounce para mousemove - solo resetear si el indicador está visible
+					const handleMouseMove = () => {
+						if (isIndicatorVisible()) {
+							clearTimeout(debounceTimer);
+							debounceTimer = setTimeout(() => {
+								resetTimer();
+							}, debounceDelay);
+						}
+					};
+
+					// Inicialización
+					const init = () => {
+						hideIndicator();
+						// Esperar un momento para que los estilos CSS se apliquen
+						setTimeout(() => {
+							startIdleTimer();
+						}, 500);
+					};
+
+					// Esperar a que el DOM esté listo
+					if (document.readyState === "loading") {
+						document.addEventListener("DOMContentLoaded", init);
+					} else {
+						init();
+					}
+
+					// Eventos
+					window.addEventListener("mousemove", handleMouseMove, {
+						passive: true,
+					});
+
+					["scroll", "keydown", "touchstart", "wheel"].forEach(
+						(event) => {
+							window.addEventListener(event, resetTimer, {
+								passive: true,
+							});
+						},
+					);
+
+					// Limpiar al descargar
+					window.addEventListener("beforeunload", () => {
+						clearTimeout(idleTimer);
+						clearTimeout(debounceTimer);
+					});
+				}
+			</script>
+
 			<Skills />
 		</div>
 
@@ -170,6 +287,7 @@ const projects = (await getCollection("work"))
 		flex-direction: column;
 		align-items: center;
 		gap: 2rem;
+		position: relative;
 	}
 
 	.roles {
@@ -393,6 +511,12 @@ const projects = (await getCollection("work"))
 			color: var(--gray-400);
 			font-size: var(--text-sm);
 			animation: fade-in-up 1s ease-out 1s backwards;
+			transition: opacity 0.5s ease;
+		}
+
+		.scroll-indicator.hidden {
+			opacity: 0;
+			pointer-events: none;
 		}
 
 		.mouse {
