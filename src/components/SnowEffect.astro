@@ -1,0 +1,70 @@
+---
+
+---
+
+<div id="snow-container"></div>
+
+<script>
+    const container = document.getElementById("snow-container");
+
+    function createSnowflake() {
+        if (!container) return;
+
+        const snowflake = document.createElement("div");
+        snowflake.classList.add("snowflake");
+        snowflake.textContent = "❄";
+
+        // Randomize position and animation properties
+        snowflake.style.left = Math.random() * 100 + "vw";
+        snowflake.style.animationDuration = Math.random() * 3 + 2 + "s"; // 2-5s
+        snowflake.style.opacity = Math.random().toString();
+        snowflake.style.fontSize = Math.random() * 10 + 10 + "px"; // 10-20px
+
+        container.appendChild(snowflake);
+
+        // Remove snowflake after animation ends
+        setTimeout(() => {
+            snowflake.remove();
+        }, 5000);
+    }
+
+    function initSnowEffect() {
+        const now = new Date();
+        const month = now.getMonth(); // 0-11
+
+        // Activate only in November (10), December (11), and January (0)
+        if (month === 10 || month === 11 || month === 0) {
+            setInterval(createSnowflake, 100);
+        }
+    }
+
+    initSnowEffect();
+</script>
+
+<style is:global>
+    #snow-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+        overflow: hidden;
+    }
+
+    .snowflake {
+        position: absolute;
+        top: -20px;
+        color: white;
+        user-select: none;
+        animation-name: fall;
+        animation-timing-function: linear;
+    }
+
+    @keyframes fall {
+        to {
+            transform: translateY(100vh);
+        }
+    }
+</style>
