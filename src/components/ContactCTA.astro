@@ -50,6 +50,38 @@ import Icon from "./Icon.astro";
 		gap: 1.5rem;
 	}
 
+	input,
+	textarea {
+		width: 100%;
+		padding: 0.75rem 1rem;
+		background-color: var(--gray-999);
+		border: 1px solid var(--gray-800);
+		border-radius: 0.5rem;
+		color: var(--gray-200);
+		font-size: var(--text-md);
+		font-family: inherit;
+		transition:
+			border-color var(--theme-transition),
+			box-shadow var(--theme-transition);
+	}
+
+	input::placeholder,
+	textarea::placeholder {
+		color: var(--gray-400);
+	}
+
+	input:focus,
+	textarea:focus {
+		outline: none;
+		border-color: var(--accent-regular);
+		box-shadow: 0 0 0 2px var(--accent-overlay);
+	}
+
+	textarea {
+		resize: vertical;
+		min-height: 120px;
+	}
+
 	@media (min-width: 50em) {
 		.input-group {
 			flex-direction: row;
@@ -79,38 +111,37 @@ import Icon from "./Icon.astro";
 			text-align: left;
 		}
 	}
+
 	.btn {
-		padding: 0.5rem 1rem;
-		width: 200px;
-		height: 50px;
-		border-radius: 0.25rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		padding: 0.75rem 1.5rem;
+		width: auto;
+		min-width: 200px;
+		border-radius: 999rem;
 		border: none;
-		background-color: var(--blue-500);
-		color: var(--text-color);
+		background: var(--gradient-accent);
+		color: var(--gray-999);
 		cursor: pointer;
-		font-weight: 700;
+		font-weight: 600;
+		font-size: var(--text-md);
 		overflow: hidden;
 		position: relative;
-	}
-
-	.btn::before {
-		content: "";
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-		background: linear-gradient(120deg, transparent, #7476e0, transparent);
-		transform: translateX(-100%);
-		transition: 0.6s;
-		position: absolute;
+		box-shadow: var(--shadow-md);
+		transition:
+			transform 0.2s ease,
+			box-shadow 0.2s ease;
 	}
 
 	.btn:hover {
-		background: transparent;
-		box-shadow: 0 0 20px 5px #7476e0;
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-lg);
 	}
 
-	.btn:hover::before {
-		transform: translateX(100%);
+	.btn:focus {
+		outline: none;
+		box-shadow: 0 0 0 2px var(--accent-overlay);
 	}
 </style>

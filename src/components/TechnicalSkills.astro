@@ -1,0 +1,265 @@
+---
+import Icon from "./Icon.astro";
+---
+
+<section class="box skills">
+    <div class="header">
+        <h2>Technical Skills & Tools</h2>
+        <p>My proficiency in a variety of modern DevOps technologies.</p>
+    </div>
+
+    <div class="stack gap-4 lg:gap-8">
+        <div class="category">
+            <h3>Cloud Technologies</h3>
+            <div class="grid-skills">
+                <div class="skill-card">
+                    <div class="icon-wrapper">
+                        <Icon
+                            icon="aws"
+                            size="2.5rem"
+                            color="var(--accent-regular)"
+                            gradient
+                        />
+                    </div>
+                    <div class="content">
+                        <h4>Amazon Web Services (AWS)</h4>
+                        <p>
+                            Proficient in managing and deploying resources on
+                            AWS.
+                        </p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 90%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="icon-wrapper">
+                        <Icon
+                            icon="azure"
+                            size="2.5rem"
+                            color="var(--accent-regular)"
+                            gradient
+                        />
+                    </div>
+                    <div class="content">
+                        <h4>Microsoft Azure</h4>
+                        <p>
+                            Experienced with Azure's cloud services and
+                            infrastructure.
+                        </p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 75%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category">
+            <h3>CI/CD & Automation</h3>
+            <div class="grid-skills">
+                <div class="skill-card">
+                    <div class="icon-wrapper">
+                        <Icon
+                            icon="strategy"
+                            size="2.5rem"
+                            color="var(--accent-regular)"
+                            gradient
+                        />
+                    </div>
+                    <div class="content">
+                        <h4>Azure Pipelines</h4>
+                        <p>
+                            Expertise in setting up and managing CI/CD
+                            pipelines.
+                        </p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 85%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="icon-wrapper">
+                        <Icon
+                            icon="python"
+                            size="2.5rem"
+                            color="var(--accent-regular)"
+                            gradient
+                        />
+                    </div>
+                    <div class="content">
+                        <h4>Python</h4>
+                        <p>Strong scripting skills for automation tasks.</p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 95%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category">
+            <h3>Containers & Version Control</h3>
+            <div class="grid-skills">
+                <div class="skill-card">
+                    <div class="icon-wrapper">
+                        <Icon
+                            icon="docker"
+                            size="2.5rem"
+                            color="var(--accent-regular)"
+                            gradient
+                        />
+                    </div>
+                    <div class="content">
+                        <h4>Docker</h4>
+                        <p>Proficient in containerizing applications.</p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 80%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="icon-wrapper">
+                        <Icon
+                            icon="kubernetes"
+                            size="2.5rem"
+                            color="var(--accent-regular)"
+                            gradient
+                        />
+                    </div>
+                    <div class="content">
+                        <h4>Kubernetes</h4>
+                        <p>Orchestrating containerized applications.</p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 70%;"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-card">
+                    <div class="icon-wrapper">
+                        <Icon
+                            icon="git"
+                            size="2.5rem"
+                            color="var(--accent-regular)"
+                            gradient
+                        />
+                    </div>
+                    <div class="content">
+                        <h4>Git</h4>
+                        <p>Managing code repositories and collaboration.</p>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 90%;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .box {
+        padding: 2rem;
+        background-color: var(--gray-999_40);
+        /* box-shadow: var(--shadow-sm); */
+    }
+
+    .header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .header h2 {
+        font-size: var(--text-3xl);
+        color: var(--gray-0);
+        margin-bottom: 0.5rem;
+    }
+
+    .header p {
+        color: var(--gray-400);
+        font-size: var(--text-lg);
+    }
+
+    .category h3 {
+        font-size: var(--text-xl);
+        color: var(--gray-100);
+        margin-bottom: 1.5rem;
+        border-left: 4px solid var(--accent-regular);
+        padding-left: 1rem;
+    }
+
+    .grid-skills {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+    }
+
+    .skill-card {
+        display: flex;
+        gap: 1.5rem;
+        padding: 1.5rem;
+        background: var(--gray-999);
+        border: 1px solid var(--gray-800);
+        border-radius: 0.75rem;
+        transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+    }
+
+    .skill-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-md);
+        border-color: var(--accent-regular);
+    }
+
+    .icon-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-width: 3rem;
+    }
+
+    .content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .content h4 {
+        font-size: var(--text-lg);
+        color: var(--gray-100);
+        margin: 0;
+    }
+
+    .content p {
+        font-size: var(--text-sm);
+        color: var(--gray-400);
+        margin: 0;
+    }
+
+    .progress-bar {
+        height: 6px;
+        background: var(--gray-800);
+        border-radius: 3px;
+        margin-top: 0.5rem;
+        overflow: hidden;
+    }
+
+    .progress {
+        height: 100%;
+        background: var(--gradient-accent);
+        border-radius: 3px;
+    }
+
+    @media (min-width: 50em) {
+        .grid-skills {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .box {
+            padding: 3rem;
+        }
+    }
+</style>
