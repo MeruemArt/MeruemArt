@@ -1,7 +1,7 @@
 ---
 title: Investigación
 publishDate: 2023-03-04 00:00:00
-img: /assets/starmeup (3).png
+img: ../../assets/starmeup (3).png
 img_alt: Humildad para aprender
 description: |
 tags:
