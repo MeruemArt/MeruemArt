@@ -1,7 +1,7 @@
 ---
 title: Contribución
 publishDate: 2023-03-04 00:00:00
-img: /assets/starmeup (1).png
+img: ../../assets/starmeup (1).png
 img_alt: Hacer la diferencia
 description: |
 tags:

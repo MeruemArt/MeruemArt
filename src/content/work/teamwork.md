@@ -1,7 +1,7 @@
 ---
 title: Trabajo en equipo
 publishDate: 2019-10-02 00:00:00
-img: /assets/starmeup (6).png
+img: ../../assets/starmeup (6).png
 img_alt: Gran equipos
 description: |
 tags:

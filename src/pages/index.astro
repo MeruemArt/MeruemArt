@@ -25,6 +25,10 @@ const projects = (await getCollection("work"))
 
 // Full Astro Component Syntax:
 // https://docs.astro.build/core-concepts/astro-components/
+import { Image } from "astro:assets";
+import portraitImg from "../assets/portrait.jpg";
+import whatsappIcon from "../assets/whatsapp-icon.svg";
+import cobisLogo from "../assets/cobis.svg";
 ---
 
 <BaseLayout
@@ -50,18 +54,19 @@ const projects = (await getCollection("work"))
 					class="whatsapp-button"
 					target="_blank"
 				>
-					<img
-						src="/assets/whatsapp-icon.svg"
+					<Image
+						src={whatsappIcon}
 						alt="Icono de Whatsapp"
-						width="64"
-						height="64"
+						width={64}
+						height={64}
 					/>
 				</a>
-				<img
+				<Image
+					src={portraitImg}
 					alt="Luis Arteaga cartoon by Gemini AI"
-					width="480"
-					height="620"
-					src="/assets/portrait.jpg"
+					width={480}
+					height={620}
+					loading="eager"
 				/>
 				<div class="scroll-indicator">
 					<span class="mouse">
@@ -222,11 +227,11 @@ const projects = (await getCollection("work"))
 				</header>
 
 				<div class="gallery">
-					<img
-						src="/assets/cobis.svg"
+					<Image
+						src={cobisLogo}
 						alt="Imagen de Cobis"
-						width="808"
-						height="153"
+						width={808}
+						height={153}
 					/>
 					<Grid variant="offset">
 						{

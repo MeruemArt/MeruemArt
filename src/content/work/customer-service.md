@@ -1,7 +1,7 @@
 ---
 title: Atención al cliente
 publishDate: 2019-12-01 00:00:00
-img: /assets/starmeup (7).png
+img: ../../assets/starmeup (7).png
 img_alt: Innovar con el cliente
 description: |
 tags:

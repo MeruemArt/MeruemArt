@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.6.0",
+    "@fontsource/public-sans": "^5.2.7",
+    "@fontsource/rubik": "^5.2.8",
     "astro": "^5.15.9",
     "meruemart": "file:"
   }
