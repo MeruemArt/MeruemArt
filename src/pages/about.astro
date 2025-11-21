@@ -1,16 +1,21 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import BaseLayout from "../layouts/BaseLayout.astro";
 
-import ContactCTA from '../components/ContactCTA.astro';
-import Hero from '../components/Hero.astro';
+import ContactCTA from "../components/ContactCTA.astro";
+import Hero from "../components/Hero.astro";
+import Pill from "../components/Pill.astro";
+import Icon from "../components/Icon.astro";
 ---
 
-<BaseLayout title="Acerca de | Luis Arteaga" description="Aprende más sobre Luis Arteaga y su experiencia en desarrollo de software">
+<BaseLayout
+	title="Acerca de | Luis Arteaga"
+	description="Aprende más sobre Luis Arteaga y su experiencia en desarrollo de software"
+>
 	<div class="stack gap-20">
 		<main class="wrapper about">
 			<Hero
 				title="Acerca de"
-				tagline="Gracias por visitar. Lee a continuación para conocer más sobre mí y mi experiencia."
+				tagline="Gracias por visitar. Lee a continuación para conocer más sobre mí y mi pasión por la tecnología."
 			>
 				<img
 					width="1553"
@@ -21,33 +26,88 @@ import Hero from '../components/Hero.astro';
 			</Hero>
 
 			<section>
-				<h2 class="section-title">Antecedentes</h2>
+				<h2 class="section-title">Mi Historia</h2>
 				<div class="content">
 					<p>
-						Soy Luis Arteaga, un ingeniero de sistemas preparado para enfrentar nuevos desafíos profesionales. Mi meta es dirigir equipos de técnicos y especialistas en tecnología para el desarrollo de software.
+						Soy un Ingeniero de Sistemas que encontró su verdadera
+						vocación en el mundo del <strong>DevOps</strong> y la <strong
+							>Arquitectura Cloud</strong
+						>. Más allá de los títulos, me define la curiosidad y la
+						satisfacción de ver cómo una infraestructura bien
+						diseñada puede potenciar el desarrollo de software.
+					</p>
+					<p>
+						Me he enfocado en estas áreas no solo por su demanda,
+						sino porque disfruto genuinamente resolviendo problemas
+						de automatización y eficiencia. Mi objetivo es seguir
+						aprendiendo y construyendo sistemas que sean robustos,
+						escalables y fáciles de mantener.
 					</p>
 				</div>
+			</section>
+
+			<section>
 				<h2 class="section-title">Educación</h2>
-				<div class="content">
-					<p>
-						Como bachiller académico, me gradué con honores de la Institución Educativa Eugenio Sánchez Cárdenas.
-					</p>
-					<p>
-						Continué mi educación en la Universidad del Sinú - Elías Bechara Zainúm, donde estudié con una beca y fui el primero en graduarme. Mi trabajo de grado fue el diseño e implementación de un asistente virtual (chatbot) para la comunidad del Centro educativo Mata de Caña ubicado en el municipio de Lorica - Córdoba.
-					</p>
-					<p>
-						Además, soy Técnico Operador de sistemas teleinformáticos y aplicaciones multimedia, graduado del Politécnico Indes.
-					</p>
+				<div class="content education-grid">
+					<div class="edu-card">
+						<Icon icon="trophy" size="1.5em" />
+						<div>
+							<h3>Ingeniería de Sistemas</h3>
+							<p class="institution">
+								Universidad del Sinú - Elías Bechara Zainúm
+							</p>
+							<p class="details">
+								Graduado con honores (Primer Puesto) y Becado.
+							</p>
+							<p class="project">
+								Proyecto destacado: Diseño e implementación de
+								un asistente virtual (chatbot) para el Centro
+								educativo Mata de Caña.
+							</p>
+						</div>
+					</div>
+					<div class="edu-card">
+						<Icon icon="terminal-window" size="1.5em" />
+						<div>
+							<h3>Técnico en Sistemas</h3>
+							<p class="institution">Politécnico Indes</p>
+							<p class="details">
+								Operador de sistemas teleinformáticos y
+								aplicaciones multimedia.
+							</p>
+						</div>
+					</div>
 				</div>
+			</section>
+
+			<section>
 				<h2 class="section-title">Habilidades</h2>
 				<div class="content">
-					<ul>
-						<li>Programación</li>
-						<li>Análisis de sistemas</li>
-						<li>Diseño de software</li>
-						<li>Gestión de proyectos</li>
-						<li>Experiencia en diversas tecnologías y lenguajes de programación</li>
-					</ul>
+					<div class="skills-category">
+						<h3>Enfoque Principal</h3>
+						<div class="pills">
+							<Pill>AWS</Pill>
+							<Pill>Python</Pill>
+							<Pill>Automatización</Pill>
+						</div>
+					</div>
+					<div class="skills-category">
+						<h3>Herramientas</h3>
+						<div class="pills">
+							<Pill>Git</Pill>
+							<Pill>Linux</Pill>
+							<Pill>Bash</Pill>
+							<Pill>Docker</Pill>
+						</div>
+					</div>
+					<div class="skills-category">
+						<h3>Aprendiendo Activamente</h3>
+						<div class="pills">
+							<Pill>Terraform (IaC)</Pill>
+							<Pill>CI/CD Pipelines</Pill>
+							<Pill>Azure</Pill>
+						</div>
+					</div>
 				</div>
 			</section>
 		</main>
@@ -86,15 +146,79 @@ import Hero from '../components/Hero.astro';
 		grid-column: 2 / 4;
 	}
 
-	.content :global(a) {
-		text-decoration: 1px solid underline transparent;
-		text-underline-offset: 0.25em;
-		transition: text-decoration-color var(--theme-transition);
+	/* Education Styles - Clean & Minimalist */
+	.education-grid {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
 	}
 
-	.content :global(a:hover),
-	.content :global(a:focus) {
-		text-decoration-color: currentColor;
+	.edu-card {
+		display: flex;
+		gap: 1.5rem;
+		padding-left: 1.5rem;
+		border-left: 2px solid var(--accent-regular);
+		align-items: flex-start;
+		position: relative;
+	}
+
+	/* Optional: Add a subtle dot on the line */
+	.edu-card::before {
+		content: "";
+		position: absolute;
+		left: -5px;
+		top: 0;
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: var(--accent-regular);
+	}
+
+	.edu-card h3 {
+		font-size: var(--text-lg);
+		color: var(--gray-100);
+		margin-bottom: 0.25rem;
+		line-height: 1.2;
+	}
+
+	.institution {
+		color: var(--accent-regular);
+		font-weight: 500;
+		margin-bottom: 0.5rem;
+		font-size: var(--text-md);
+	}
+
+	.details {
+		color: var(--gray-300);
+		font-size: var(--text-sm);
+		margin-bottom: 0.5rem;
+	}
+
+	.project {
+		font-size: var(--text-sm);
+		font-style: italic;
+		color: var(--gray-400);
+		margin-top: 0.25rem;
+	}
+
+	/* Skills Styles */
+	.skills-category {
+		margin-bottom: 2.5rem;
+	}
+
+	.skills-category h3 {
+		font-size: var(--text-md);
+		color: var(--gray-200);
+		margin-bottom: 1rem;
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.pills {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
 	}
 
 	@media (min-width: 50em) {
