@@ -6,11 +6,18 @@ import Icon from "./Icon.astro";
 	<h2>¿Interesado en trabajar juntos?</h2>
 	<form data-netlify="true" method="post" class="contact-form">
 		<div class="input-group">
-			<input type="text" name="name" placeholder="Tu nombre" required />
+			<input
+				type="text"
+				name="name"
+				placeholder="Tu nombre"
+				autocomplete="name"
+				required
+			/>
 			<input
 				type="email"
 				name="email"
 				placeholder="Tu correo electrónico"
+				autocomplete="email"
 				required
 			/>
 		</div>
