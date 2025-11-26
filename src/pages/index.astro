@@ -26,7 +26,7 @@ const projects = (await getCollection("work"))
 // Full Astro Component Syntax:
 // https://docs.astro.build/core-concepts/astro-components/
 import { Image } from "astro:assets";
-import portraitImg from "../assets/portrait.jpg";
+import portraitImg from "../assets/portrait.webp";
 import whatsappIcon from "../assets/whatsapp-icon.svg";
 import cobisLogo from "../assets/cobis.svg";
 ---
@@ -59,6 +59,7 @@ import cobisLogo from "../assets/cobis.svg";
 						alt="Icono de Whatsapp"
 						width={64}
 						height={64}
+						loading="eager"
 					/>
 				</a>
 				<Image
