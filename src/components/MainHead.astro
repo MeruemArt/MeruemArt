@@ -1,19 +1,14 @@
 ---
 import "../styles/global.css";
-import "@fontsource/public-sans/400.css";
-import "@fontsource/public-sans/700.css";
-import "@fontsource/public-sans/400-italic.css";
-import "@fontsource/rubik/500.css";
-import "@fontsource/rubik/600.css";
 
 interface Props {
-	title?: string | undefined;
-	description?: string | undefined;
+  title?: string | undefined;
+  description?: string | undefined;
 }
 
 const {
-	title = "Luis Arteaga: Developer",
-	description = "The personal site of Luis Arteaga",
+  title = "Luis Arteaga: Developer",
+  description = "The personal site of Luis Arteaga",
 } = Astro.props;
 ---
 
@@ -30,8 +25,8 @@ const {
 <meta property="og:url" content={Astro.url} />
 <meta property="og:title" content={title} />
 <meta
-	property="og:image"
-	content={new URL("/assets/portrait.webp", Astro.site)}
+  property="og:image"
+  content={new URL("/assets/portrait.webp", Astro.site)}
 />
 
 <!-- Twitter -->
@@ -40,8 +35,8 @@ const {
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 <meta
-	property="twitter:image"
-	content={new URL("/assets/portrait.webp", Astro.site)}
+  property="twitter:image"
+  content={new URL("/assets/portrait.webp", Astro.site)}
 />
 
 <!-- Mobile & PWA -->
@@ -51,39 +46,35 @@ const {
 
 <!-- Keywords -->
 <meta
-	name="keywords"
-	content="DevOps, AWS, Python, Automatización, IaC, Terraform, CloudFormation, CI/CD, Luis Arteaga, Desarrollador Cloud"
+  name="keywords"
+  content="DevOps, AWS, Python, Automatización, IaC, Terraform, CloudFormation, CI/CD, Luis Arteaga, Desarrollador Cloud"
 />
 
 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
 
 <script is:inline>
-	// This code is inlined in the head to make dark mode instant & blocking.
-	const getThemePreference = () => {
-		if (
-			typeof localStorage !== "undefined" &&
-			localStorage.getItem("theme")
-		) {
-			return localStorage.getItem("theme");
-		}
-		return window.matchMedia("(prefers-color-scheme: dark)").matches
-			? "dark"
-			: "light";
-	};
-	const isDark = getThemePreference() === "dark";
-	document.documentElement.classList[isDark ? "add" : "remove"]("theme-dark");
+  // This code is inlined in the head to make dark mode instant & blocking.
+  const getThemePreference = () => {
+    if (typeof localStorage !== "undefined" && localStorage.getItem("theme")) {
+      return localStorage.getItem("theme");
+    }
+    return window.matchMedia("(prefers-color-scheme: dark)").matches
+      ? "dark"
+      : "light";
+  };
+  const isDark = getThemePreference() === "dark";
+  document.documentElement.classList[isDark ? "add" : "remove"]("theme-dark");
 
-	if (typeof localStorage !== "undefined") {
-		// Watch the document element and persist user preference when it changes.
-		const observer = new MutationObserver(() => {
-			const isDark =
-				document.documentElement.classList.contains("theme-dark");
-			localStorage.setItem("theme", isDark ? "dark" : "light");
-		});
-		observer.observe(document.documentElement, {
-			attributes: true,
-			attributeFilter: ["class"],
-		});
-	}
+  if (typeof localStorage !== "undefined") {
+    // Watch the document element and persist user preference when it changes.
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains("theme-dark");
+      localStorage.setItem("theme", isDark ? "dark" : "light");
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["class"],
+    });
+  }
 </script>
