@@ -1,0 +1,66 @@
+---
+import {
+  FacebookShareButton,
+  LinkedInShareButton,
+  TwitterShareButton,
+  WhatsAppShareButton,
+  EmailShareButton,
+} from "astro-social-share";
+
+interface Props {
+  description?: string;
+  title?: string;
+  url?: string;
+}
+
+const { description, title, url = Astro.url.toString() } = Astro.props;
+---
+
+<div class="social-share">
+  <span class="share-text">Compartir:</span>
+  <div class="buttons">
+    <TwitterShareButton url={url} title={title} description={description} />
+    <FacebookShareButton url={url} />
+    <LinkedInShareButton url={url} title={title} description={description} />
+    <WhatsAppShareButton url={url} title={title} />
+    <EmailShareButton url={url} title={title} description={description} />
+  </div>
+</div>
+
+<style>
+  .social-share {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .share-text {
+    color: var(--gray-300);
+    font-size: var(--text-sm);
+  }
+
+  .buttons {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Estilos para los botones si la librería no trae estilos por defecto o para ajustarlos */
+  :global(.social-share-btn) {
+    transition: transform 0.2s ease;
+  }
+
+  :global(.social-share-btn:hover) {
+    transform: translateY(-2px);
+  }
+
+  :global(.social-share svg) {
+    width: 32px;
+    height: 32px;
+    color: var(--gray-0);
+    fill: currentColor;
+  }
+</style>
