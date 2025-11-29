@@ -5,4 +5,17 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
     site: 'https://meruemart.cloud',
     integrations: [sitemap()],
+    build: {
+        inlineStylesheets: 'auto', // Inline CSS pequeño automáticamente
+    },
+    vite: {
+        build: {
+            cssCodeSplit: true, // Split CSS por ruta
+            rollupOptions: {
+                output: {
+                    manualChunks: undefined,
+                },
+            },
+        },
+    },
 });
