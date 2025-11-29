@@ -20,8 +20,8 @@ import FAQ from "../components/FAQ.astro";
 
 // Content Fetching: List four most recent work projects
 const projects = (await getCollection("work"))
-	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
-	.slice(0, 4);
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  .slice(0, 4);
 
 // Full Astro Component Syntax:
 // https://docs.astro.build/core-concepts/astro-components/
@@ -32,596 +32,590 @@ import cobisLogo from "../assets/cobis.svg";
 ---
 
 <BaseLayout
-	title="Luis Arteaga | Desarrollador DevOps & Cloud Architect"
-	description="Portafolio de Luis Arteaga, experto en DevOps, AWS, Python y automatización de infraestructura. Descubre mis proyectos y servicios."
+  title="Luis Arteaga | Desarrollador DevOps & Cloud Architect"
+  description="Portafolio de Luis Arteaga, experto en DevOps, AWS, Python y automatización de infraestructura. Descubre mis proyectos y servicios."
 >
-	<div class="stack gap-20 lg:gap-48">
-		<div class="wrapper stack gap-8 lg:gap-20">
-			<header class="hero">
-				<Hero
-					title="Luis Arteaga \n Desarrollador DevOps"
-					tagline="Especializado en automatización, infraestructura como código (IaC) y gestión de servidores en AWS"
-					align="start"
-				>
-					<div class="roles">
-						<Pill><Icon icon="aws" size="1.33em" /> AWS</Pill>
-						<Pill><Icon icon="python" size="1.33em" /> Python</Pill>
-						<Pill><Icon icon="git" size="1.33em" /> Git</Pill>
-					</div>
-				</Hero>
-				<a
-					href="https://api.whatsapp.com/send/?phone=%2B573186405618&text=Hola%20Luis.%0AVi%20tu%20p%C3%A1gina%2C%20me%20interesa%20contactarte%20%F0%9F%91%A8%F0%9F%8F%BB%E2%80%8D%F0%9F%92%BB.&type=phone_number&app_absent=0"
-					class="whatsapp-button"
-					target="_blank"
-				>
-					<Image
-						src={whatsappIcon}
-						alt="Icono de Whatsapp"
-						width={64}
-						height={64}
-						loading="eager"
-					/>
-				</a>
-				<Image
-					src={portraitImg}
-					alt="Luis Arteaga cartoon by Gemini AI"
-					width={480}
-					height={620}
-					loading="eager"
-				/>
-				<div class="scroll-indicator">
-					<span class="mouse">
-						<span class="wheel"></span>
-					</span>
-					<p>Scroll para ver más</p>
-				</div>
-			</header>
+  <div class="stack gap-20 lg:gap-48">
+    <div class="wrapper stack gap-8 lg:gap-20">
+      <header class="hero">
+        <Hero
+          title="Luis Arteaga \n Desarrollador DevOps"
+          tagline="Especializado en automatización, infraestructura como código (IaC) y gestión de servidores en AWS"
+          align="start"
+        >
+          <div class="roles">
+            <Pill><Icon icon="aws" size="1.33em" /> AWS</Pill>
+            <Pill><Icon icon="python" size="1.33em" /> Python</Pill>
+            <Pill><Icon icon="git" size="1.33em" /> Git</Pill>
+          </div>
+        </Hero>
+        <a
+          href="https://api.whatsapp.com/send/?phone=%2B573186405618&text=Hola%20Luis.%0AVi%20tu%20p%C3%A1gina%2C%20me%20interesa%20contactarte%20%F0%9F%91%A8%F0%9F%8F%BB%E2%80%8D%F0%9F%92%BB.&type=phone_number&app_absent=0"
+          class="whatsapp-button"
+          target="_blank"
+        >
+          <Image
+            src={whatsappIcon}
+            alt="Icono de Whatsapp"
+            width={64}
+            height={64}
+            loading="eager"
+          />
+        </a>
+        <Image
+          src={portraitImg}
+          alt="Luis Arteaga cartoon by Gemini AI"
+          width={480}
+          height={620}
+          loading="eager"
+          fetchpriority="high"
+        />
+        <div class="scroll-indicator">
+          <span class="mouse">
+            <span class="wheel"></span>
+          </span>
+          <p>Scroll para ver más</p>
+        </div>
+      </header>
 
-			<script>
-				const scrollIndicator =
-					document.querySelector(".scroll-indicator");
-				if (scrollIndicator) {
-					let idleTimer: any;
-					let debounceTimer: any;
-					const idleTime = 5000; // 5 seconds
-					const debounceDelay = 300; // 300ms para eventos frecuentes
+      <script>
+        const scrollIndicator = document.querySelector(".scroll-indicator");
+        if (scrollIndicator) {
+          let idleTimer: any;
+          let debounceTimer: any;
+          const idleTime = 5000; // 5 seconds
+          const debounceDelay = 300; // 300ms para eventos frecuentes
 
-					// Verificar si estamos en desktop (donde el indicador es visible)
-					const isDesktop = () => window.innerWidth >= 50 * 16; // 50em = 800px
+          // Verificar si estamos en desktop (donde el indicador es visible)
+          const isDesktop = () => window.innerWidth >= 50 * 16; // 50em = 800px
 
-					// Umbral ajustable según el dispositivo
-					const getBottomThreshold = () => {
-						return isDesktop() ? 100 : 150;
-					};
+          // Umbral ajustable según el dispositivo
+          const getBottomThreshold = () => {
+            return isDesktop() ? 100 : 150;
+          };
 
-					// Verifica si el usuario está cerca del final de la página
-					const isNearBottom = () => {
-						if (!isDesktop()) return false; // No mostrar en móvil
+          // Verifica si el usuario está cerca del final de la página
+          const isNearBottom = () => {
+            if (!isDesktop()) return false; // No mostrar en móvil
 
-						const threshold = getBottomThreshold();
-						const scrollTop =
-							window.pageYOffset ||
-							document.documentElement.scrollTop;
-						const windowHeight = window.innerHeight;
-						const documentHeight = Math.max(
-							document.body.scrollHeight,
-							document.body.offsetHeight,
-							document.documentElement.clientHeight,
-							document.documentElement.scrollHeight,
-							document.documentElement.offsetHeight,
-						);
+            const threshold = getBottomThreshold();
+            const scrollTop =
+              window.pageYOffset || document.documentElement.scrollTop;
+            const windowHeight = window.innerHeight;
+            const documentHeight = Math.max(
+              document.body.scrollHeight,
+              document.body.offsetHeight,
+              document.documentElement.clientHeight,
+              document.documentElement.scrollHeight,
+              document.documentElement.offsetHeight
+            );
 
-						const scrollPosition = scrollTop + windowHeight;
-						const distanceFromBottom =
-							documentHeight - scrollPosition;
+            const scrollPosition = scrollTop + windowHeight;
+            const distanceFromBottom = documentHeight - scrollPosition;
 
-						return distanceFromBottom <= threshold;
-					};
+            return distanceFromBottom <= threshold;
+          };
 
-					// Verifica si el indicador está visible
-					const isIndicatorVisible = () => {
-						return !scrollIndicator.classList.contains("hidden");
-					};
+          // Verifica si el indicador está visible
+          const isIndicatorVisible = () => {
+            return !scrollIndicator.classList.contains("hidden");
+          };
 
-					const showIndicator = () => {
-						// Solo mostrar en desktop y si no está cerca del final
-						if (isDesktop() && !isNearBottom()) {
-							scrollIndicator.classList.remove("hidden");
-						}
-					};
+          const showIndicator = () => {
+            // Solo mostrar en desktop y si no está cerca del final
+            if (isDesktop() && !isNearBottom()) {
+              scrollIndicator.classList.remove("hidden");
+            }
+          };
 
-					const hideIndicator = () => {
-						scrollIndicator.classList.add("hidden");
-					};
+          const hideIndicator = () => {
+            scrollIndicator.classList.add("hidden");
+          };
 
-					const startIdleTimer = () => {
-						clearTimeout(idleTimer);
-						idleTimer = setTimeout(() => {
-							showIndicator();
-						}, idleTime);
-					};
+          const startIdleTimer = () => {
+            clearTimeout(idleTimer);
+            idleTimer = setTimeout(() => {
+              showIndicator();
+            }, idleTime);
+          };
 
-					const resetTimer = () => {
-						// Solo ocultar si el indicador está visible
-						if (isIndicatorVisible()) {
-							hideIndicator();
-						}
-						// Reiniciar el timer de inactividad
-						startIdleTimer();
-					};
+          const resetTimer = () => {
+            // Solo ocultar si el indicador está visible
+            if (isIndicatorVisible()) {
+              hideIndicator();
+            }
+            // Reiniciar el timer de inactividad
+            startIdleTimer();
+          };
 
-					// Debounce para mousemove - solo resetear si el indicador está visible
-					const handleMouseMove = () => {
-						if (isIndicatorVisible()) {
-							clearTimeout(debounceTimer);
-							debounceTimer = setTimeout(() => {
-								resetTimer();
-							}, debounceDelay);
-						}
-					};
+          // Debounce para mousemove - solo resetear si el indicador está visible
+          const handleMouseMove = () => {
+            if (isIndicatorVisible()) {
+              clearTimeout(debounceTimer);
+              debounceTimer = setTimeout(() => {
+                resetTimer();
+              }, debounceDelay);
+            }
+          };
 
-					// Inicialización
-					const init = () => {
-						hideIndicator();
-						// Esperar un momento para que los estilos CSS se apliquen
-						setTimeout(() => {
-							startIdleTimer();
-						}, 500);
-					};
+          // Inicialización
+          const init = () => {
+            hideIndicator();
+            // Esperar un momento para que los estilos CSS se apliquen
+            setTimeout(() => {
+              startIdleTimer();
+            }, 500);
+          };
 
-					// Esperar a que el DOM esté listo
-					if (document.readyState === "loading") {
-						document.addEventListener("DOMContentLoaded", init);
-					} else {
-						init();
-					}
+          // Esperar a que el DOM esté listo
+          if (document.readyState === "loading") {
+            document.addEventListener("DOMContentLoaded", init);
+          } else {
+            init();
+          }
 
-					// Eventos
-					window.addEventListener("mousemove", handleMouseMove, {
-						passive: true,
-					});
+          // Eventos
+          window.addEventListener("mousemove", handleMouseMove, {
+            passive: true,
+          });
 
-					["scroll", "keydown", "touchstart", "wheel"].forEach(
-						(event) => {
-							window.addEventListener(event, resetTimer, {
-								passive: true,
-							});
-						},
-					);
+          ["scroll", "keydown", "touchstart", "wheel"].forEach((event) => {
+            window.addEventListener(event, resetTimer, {
+              passive: true,
+            });
+          });
 
-					// Limpiar al descargar
-					window.addEventListener("beforeunload", () => {
-						clearTimeout(idleTimer);
-						clearTimeout(debounceTimer);
-					});
-				}
-			</script>
+          // Limpiar al descargar
+          window.addEventListener("beforeunload", () => {
+            clearTimeout(idleTimer);
+            clearTimeout(debounceTimer);
+          });
+        }
+      </script>
 
-			<Skills />
-			<TechnicalSkills />
-		</div>
+      <Skills />
+      <TechnicalSkills />
+    </div>
 
-		<main class="wrapper stack gap-20 lg:gap-48">
-			<div style="text-align: center;">
-				<object
-					data="/assets/CV_Meruem.pdf"
-					type="application/pdf"
-					width="100%"
-					height="700px"
-				>
-					<p>
-						Para obtener una visión más completa de mi experiencia y
-						habilidades, <a href="/assets/CV_Meruem.pdf"
-							>descargue mi currículum completo</a
-						>.
-					</p>
-				</object>
-			</div>
-			<section class="section with-background with-cta">
-				<header class="section-header stack gap-2 lg:gap-4">
-					<h3>Menciones</h3>
-					<p>
-						He tenido la suerte de recibir elogios por mi trabajo en
-						varias publicaciones. Echa un vistazo a continuación
-						para saber más.
-					</p>
-				</header>
+    <main class="wrapper stack gap-20 lg:gap-48">
+      <div style="text-align: center;">
+        <object
+          data="/assets/CV_Meruem.pdf"
+          type="application/pdf"
+          width="100%"
+          height="700px"
+        >
+          <p>
+            Para obtener una visión más completa de mi experiencia y
+            habilidades, <a href="/assets/CV_Meruem.pdf"
+              >descargue mi currículum completo</a
+            >.
+          </p>
+        </object>
+      </div>
+      <section class="section with-background with-cta">
+        <header class="section-header stack gap-2 lg:gap-4">
+          <h3>Menciones</h3>
+          <p>
+            He tenido la suerte de recibir elogios por mi trabajo en varias
+            publicaciones. Echa un vistazo a continuación para saber más.
+          </p>
+        </header>
 
-				<div class="gallery">
-					<Image
-						src={cobisLogo}
-						alt="Imagen de Cobis"
-						width={808}
-						height={153}
-					/>
-					<Grid variant="offset">
-						{
-							projects.map((project) => (
-								<li>
-									<PortfolioPreview project={project} />
-								</li>
-							))
-						}
-					</Grid>
-				</div>
+        <div class="gallery">
+          <Image
+            src={cobisLogo}
+            alt="Imagen de Cobis"
+            width={808}
+            height={153}
+          />
+          <Grid variant="offset">
+            {
+              projects.map((project) => (
+                <li>
+                  <PortfolioPreview project={project} />
+                </li>
+              ))
+            }
+          </Grid>
+        </div>
 
-				<div class="cta">
-					<CallToAction href="/mentions/">
-						Ver todo
-						<Icon icon="arrow-right" size="1.2em" />
-					</CallToAction>
-				</div>
-			</section>
+        <div class="cta">
+          <CallToAction href="/mentions/">
+            Ver todo
+            <Icon icon="arrow-right" size="1.2em" />
+          </CallToAction>
+        </div>
+      </section>
 
-			<section class="section with-background bg-variant">
-				<header class="section-header stack gap-2 lg:gap-4">
-					<h3>Servicios</h3>
-					<p>
-						Ofrezco soluciones tecnológicas a medida para potenciar
-						tu negocio.
-					</p>
-				</header>
+      <section class="section with-background bg-variant">
+        <header class="section-header stack gap-2 lg:gap-4">
+          <h3>Servicios</h3>
+          <p>
+            Ofrezco soluciones tecnológicas a medida para potenciar tu negocio.
+          </p>
+        </header>
 
-				<div class="gallery">
-					<Grid variant="small">
-						<li class="service-card">
-							<div class="service-icon">
-								<Icon icon="terminal-window" size="2.5em" />
-							</div>
-							<h4>Infraestructura como Código</h4>
-							<p>
-								Diseño y despliegue de arquitecturas resilientes
-								con Azure DevOps y CloudFormation.
-							</p>
-						</li>
-						<li class="service-card">
-							<div class="service-icon">
-								<Icon icon="aws" size="2.5em" />
-							</div>
-							<h4>Arquitectura Cloud Native</h4>
-							<p>
-								Arquitectura y despliegue de soluciones
-								escalables y seguras en AWS.
-							</p>
-						</li>
-						<li class="service-card">
-							<div class="service-icon">
-								<Icon icon="python" size="2.5em" />
-							</div>
-							<h4>Automatización y CI/CD</h4>
-							<p>
-								Pipelines eficientes y scripting para
-								operaciones con Python y Bash.
-							</p>
-						</li>
-					</Grid>
-				</div>
-			</section>
+        <div class="gallery">
+          <Grid variant="small">
+            <li class="service-card">
+              <div class="service-icon">
+                <Icon icon="terminal-window" size="2.5em" />
+              </div>
+              <h4>Infraestructura como Código</h4>
+              <p>
+                Diseño y despliegue de arquitecturas resilientes con Azure
+                DevOps y CloudFormation.
+              </p>
+            </li>
+            <li class="service-card">
+              <div class="service-icon">
+                <Icon icon="aws" size="2.5em" />
+              </div>
+              <h4>Arquitectura Cloud Native</h4>
+              <p>
+                Arquitectura y despliegue de soluciones escalables y seguras en
+                AWS.
+              </p>
+            </li>
+            <li class="service-card">
+              <div class="service-icon">
+                <Icon icon="python" size="2.5em" />
+              </div>
+              <h4>Automatización y CI/CD</h4>
+              <p>
+                Pipelines eficientes y scripting para operaciones con Python y
+                Bash.
+              </p>
+            </li>
+          </Grid>
+        </div>
+      </section>
 
-			<FAQ />
-		</main>
+      <FAQ />
+    </main>
 
-		<ContactCTA />
-	</div>
+    <ContactCTA />
+  </div>
 </BaseLayout>
 
 <style>
-	.hero {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 2rem;
-		position: relative;
-	}
+  .hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    position: relative;
+  }
 
-	.roles {
-		display: none;
-	}
+  .roles {
+    display: none;
+  }
 
-	.hero img {
-		aspect-ratio: 9 / 8.8;
-		object-fit: cover;
-		object-position: top;
-		border-radius: 45% 55% 63% 37% / 47% 53% 47% 53%;
-		box-shadow:
-			0px 0px 20px 2px #260b3d7c,
-			0px 0px 40px 4px #2c39797c,
-			0px 0px 60px 6px #2c39797c;
-		/* Añade más sombras según sea necesario */
-	}
+  .hero img {
+    aspect-ratio: 9 / 8.8;
+    object-fit: cover;
+    object-position: top;
+    border-radius: 45% 55% 63% 37% / 47% 53% 47% 53%;
+    box-shadow:
+      0px 0px 20px 2px #260b3d7c,
+      0px 0px 40px 4px #2c39797c,
+      0px 0px 60px 6px #2c39797c;
+    /* Añade más sombras según sea necesario */
+  }
 
-	@media (min-width: 50em) {
-		.hero {
-			display: grid;
-			grid-template-columns: 6fr 4fr;
-			padding-inline: 2.5rem;
-			gap: 3.75rem;
-		}
+  @media (min-width: 50em) {
+    .hero {
+      display: grid;
+      grid-template-columns: 6fr 4fr;
+      padding-inline: 2.5rem;
+      gap: 3.75rem;
+    }
 
-		.roles {
-			margin-top: 0.5rem;
-			display: flex;
-			gap: 0.5rem;
-		}
+    .roles {
+      margin-top: 0.5rem;
+      display: flex;
+      gap: 0.5rem;
+    }
 
-		.hero img {
-			border-radius: 45% 55% 63% 37% / 47% 53% 47% 53%;
-			box-shadow:
-				0px 0px 20px 2px #260b3d7c,
-				0px 0px 40px 4px #2c39797c,
-				0px 0px 60px 6px #2c39797c;
-		}
-	}
+    .hero img {
+      border-radius: 45% 55% 63% 37% / 47% 53% 47% 53%;
+      box-shadow:
+        0px 0px 20px 2px #260b3d7c,
+        0px 0px 40px 4px #2c39797c,
+        0px 0px 60px 6px #2c39797c;
+    }
+  }
 
-	/* ====================================================== */
+  /* ====================================================== */
 
-	.section {
-		display: grid;
-		gap: 2rem;
-	}
+  .section {
+    display: grid;
+    gap: 2rem;
+  }
 
-	.with-background {
-		position: relative;
-	}
+  .with-background {
+    position: relative;
+  }
 
-	.with-background::before {
-		--hero-bg: var(--bg-image-subtle-2);
+  .with-background::before {
+    --hero-bg: var(--bg-image-subtle-2);
 
-		content: "";
-		position: absolute;
-		pointer-events: none;
-		left: 50%;
-		width: 100vw;
-		aspect-ratio: calc(2.25 / var(--bg-scale));
-		top: 0;
-		transform: translateY(-75%) translateX(-50%);
-		background:
-			url("/assets/backgrounds/noise.png") top center/220px repeat,
-			var(--hero-bg) center center / var(--bg-gradient-size) no-repeat,
-			var(--gray-999);
-		background-blend-mode: overlay, normal, normal, normal;
-		mix-blend-mode: var(--bg-blend-mode);
-		z-index: -1;
-	}
+    content: "";
+    position: absolute;
+    pointer-events: none;
+    left: 50%;
+    width: 100vw;
+    aspect-ratio: calc(2.25 / var(--bg-scale));
+    top: 0;
+    transform: translateY(-75%) translateX(-50%);
+    background:
+      url("/assets/backgrounds/noise.png") top center/220px repeat,
+      var(--hero-bg) center center / var(--bg-gradient-size) no-repeat,
+      var(--gray-999);
+    background-blend-mode: overlay, normal, normal, normal;
+    mix-blend-mode: var(--bg-blend-mode);
+    z-index: -1;
+  }
 
-	.with-background.bg-variant::before {
-		--hero-bg: var(--bg-image-subtle-1);
-	}
+  .with-background.bg-variant::before {
+    --hero-bg: var(--bg-image-subtle-1);
+  }
 
-	.section-header {
-		justify-self: center;
-		text-align: center;
-		max-width: 50ch;
-		font-size: var(--text-md);
-		color: var(--gray-300);
-	}
+  .section-header {
+    justify-self: center;
+    text-align: center;
+    max-width: 50ch;
+    font-size: var(--text-md);
+    color: var(--gray-300);
+  }
 
-	.section-header h3 {
-		font-size: var(--text-2xl);
-	}
+  .section-header h3 {
+    font-size: var(--text-2xl);
+  }
 
-	@media (min-width: 50em) {
-		.section {
-			grid-template-columns: repeat(4, 1fr);
-			grid-template-areas: "header header header header" "gallery gallery gallery gallery";
-			gap: 5rem;
-		}
+  @media (min-width: 50em) {
+    .section {
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-areas: "header header header header" "gallery gallery gallery gallery";
+      gap: 5rem;
+    }
 
-		.section.with-cta {
-			grid-template-areas: "header header header cta" "gallery gallery gallery gallery";
-		}
+    .section.with-cta {
+      grid-template-areas: "header header header cta" "gallery gallery gallery gallery";
+    }
 
-		.section-header {
-			grid-area: header;
-			font-size: var(--text-lg);
-		}
+    .section-header {
+      grid-area: header;
+      font-size: var(--text-lg);
+    }
 
-		.section-header h3 {
-			font-size: var(--text-4xl);
-		}
+    .section-header h3 {
+      font-size: var(--text-4xl);
+    }
 
-		.with-cta .section-header {
-			justify-self: flex-start;
-			text-align: left;
-		}
+    .with-cta .section-header {
+      justify-self: flex-start;
+      text-align: left;
+    }
 
-		.gallery {
-			grid-area: gallery;
-		}
+    .gallery {
+      grid-area: gallery;
+    }
 
-		.cta {
-			grid-area: cta;
-		}
-	}
+    .cta {
+      grid-area: cta;
+    }
+  }
 
-	/* ====================================================== */
+  /* ====================================================== */
 
-	.mention-card {
-		display: flex;
-		height: 7rem;
-		justify-content: center;
-		align-items: center;
-		text-align: center;
-		border: 1px solid var(--gray-800);
-		border-radius: 1.5rem;
-		color: var(--gray-300);
-		background: var(--gradient-subtle);
-		box-shadow: var(--shadow-sm);
-	}
+  .mention-card {
+    display: flex;
+    height: 7rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px solid var(--gray-800);
+    border-radius: 1.5rem;
+    color: var(--gray-300);
+    background: var(--gradient-subtle);
+    box-shadow: var(--shadow-sm);
+  }
 
-	@media (min-width: 50em) {
-		.mention-card {
-			border-radius: 1.5rem;
-			height: 9.5rem;
-		}
-	}
+  @media (min-width: 50em) {
+    .mention-card {
+      border-radius: 1.5rem;
+      height: 9.5rem;
+    }
+  }
 
-	.flip-card {
-		display: flex;
-		height: 7rem;
-		justify-content: center;
-		align-items: center;
-		text-align: center;
-		border: 1px solid var(--gray-800);
-		border-radius: 1.5rem;
-		color: var(--gray-300);
-		background: var(--gradient-subtle);
-		box-shadow: var(--shadow-sm);
-		perspective: 1000px;
-	}
+  .flip-card {
+    display: flex;
+    height: 7rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border: 1px solid var(--gray-800);
+    border-radius: 1.5rem;
+    color: var(--gray-300);
+    background: var(--gradient-subtle);
+    box-shadow: var(--shadow-sm);
+    perspective: 1000px;
+  }
 
-	.flip-card-inner {
-		width: 100%;
-		height: 100%;
-		transition: transform 0.6s;
-		transform-style: preserve-3d;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
+  .flip-card-inner {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-	.flip-card:hover .flip-card-inner {
-		transform: rotateY(180deg);
-	}
+  .flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+  }
 
-	.flip-card-front,
-	.flip-card-back {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		backface-visibility: hidden;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
+  .flip-card-front,
+  .flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 
-	.flip-card-front {
-		background-color: #f1f1f100;
-	}
+  .flip-card-front {
+    background-color: #f1f1f100;
+  }
 
-	.flip-card-back {
-		background-color: #b3b3b300;
-		transform: rotateY(180deg);
-	}
+  .flip-card-back {
+    background-color: #b3b3b300;
+    transform: rotateY(180deg);
+  }
 
-	.img-with-shadow {
-		box-shadow:
-			0px 0px 20px 2px #260b3d7c,
-			0px 0px 40px 4px #2c39797c,
-			0px 0px 60px 6px #2c39797c;
-	}
+  .img-with-shadow {
+    box-shadow:
+      0px 0px 20px 2px #260b3d7c,
+      0px 0px 40px 4px #2c39797c,
+      0px 0px 60px 6px #2c39797c;
+  }
 
-	.whatsapp-button {
-		position: fixed;
-		bottom: 30px;
-		right: 30px;
-		z-index: 220;
-	}
+  .whatsapp-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 220;
+  }
 
-	.scroll-indicator {
-		display: none;
-	}
+  .scroll-indicator {
+    display: none;
+  }
 
-	@media (min-width: 50em) {
-		.scroll-indicator {
-			display: flex;
-			flex-direction: column;
-			align-items: center;
-			gap: 0.5rem;
-			position: absolute;
-			bottom: 2rem;
-			left: 50%;
-			transform: translateX(-50%);
-			color: var(--gray-400);
-			font-size: var(--text-sm);
-			animation: fade-in-up 1s ease-out 1s backwards;
-			transition: opacity 0.5s ease;
-		}
+  @media (min-width: 50em) {
+    .scroll-indicator {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--gray-400);
+      font-size: var(--text-sm);
+      animation: fade-in-up 1s ease-out 1s backwards;
+      transition: opacity 0.5s ease;
+    }
 
-		.scroll-indicator.hidden {
-			opacity: 0;
-			pointer-events: none;
-		}
+    .scroll-indicator.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
 
-		.mouse {
-			width: 26px;
-			height: 40px;
-			border: 2px solid var(--gray-400);
-			border-radius: 20px;
-			position: relative;
-		}
+    .mouse {
+      width: 26px;
+      height: 40px;
+      border: 2px solid var(--gray-400);
+      border-radius: 20px;
+      position: relative;
+    }
 
-		.wheel {
-			width: 4px;
-			height: 6px;
-			background: var(--gray-400);
-			border-radius: 2px;
-			position: absolute;
-			top: 6px;
-			left: 50%;
-			transform: translateX(-50%);
-			animation: scroll-wheel 2s infinite;
-		}
-	}
+    .wheel {
+      width: 4px;
+      height: 6px;
+      background: var(--gray-400);
+      border-radius: 2px;
+      position: absolute;
+      top: 6px;
+      left: 50%;
+      transform: translateX(-50%);
+      animation: scroll-wheel 2s infinite;
+    }
+  }
 
-	@keyframes scroll-wheel {
-		0% {
-			top: 6px;
-			opacity: 1;
-		}
-		100% {
-			top: 12px;
-			opacity: 0.5;
-		}
-	}
+  @keyframes scroll-wheel {
+    0% {
+      top: 6px;
+      opacity: 1;
+    }
+    100% {
+      top: 12px;
+      opacity: 0.5;
+    }
+  }
 
-	@keyframes fade-in-up {
-		from {
-			opacity: 0;
-			transform: translate(-50%, 20px);
-		}
-		to {
-			opacity: 1;
-			transform: translate(-50%, 0);
-		}
-	}
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translate(-50%, 20px);
+    }
+    to {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+  }
 
-	.service-card {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		text-align: center;
-		padding: 2rem;
-		gap: 1rem;
-		background: var(--gradient-subtle);
-		border: 1px solid var(--gray-800);
-		border-radius: 1.5rem;
-		box-shadow: var(--shadow-sm);
-		transition:
-			transform var(--theme-transition),
-			box-shadow var(--theme-transition);
-	}
+  .service-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    gap: 1rem;
+    background: var(--gradient-subtle);
+    border: 1px solid var(--gray-800);
+    border-radius: 1.5rem;
+    box-shadow: var(--shadow-sm);
+    transition:
+      transform var(--theme-transition),
+      box-shadow var(--theme-transition);
+  }
 
-	.service-card:hover {
-		transform: translateY(-5px);
-		box-shadow: var(--shadow-md);
-	}
+  .service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+  }
 
-	.service-icon {
-		color: var(--accent-regular);
-		background: var(--gray-999);
-		padding: 1rem;
-		border-radius: 50%;
-		box-shadow: var(--shadow-sm);
-	}
+  .service-icon {
+    color: var(--accent-regular);
+    background: var(--gray-999);
+    padding: 1rem;
+    border-radius: 50%;
+    box-shadow: var(--shadow-sm);
+  }
 
-	.service-card h4 {
-		font-size: var(--text-lg);
-		color: var(--gray-100);
-	}
+  .service-card h4 {
+    font-size: var(--text-lg);
+    color: var(--gray-100);
+  }
 
-	.service-card p {
-		color: var(--gray-300);
-		font-size: var(--text-sm);
-	}
+  .service-card p {
+    color: var(--gray-300);
+    font-size: var(--text-sm);
+  }
 </style>
