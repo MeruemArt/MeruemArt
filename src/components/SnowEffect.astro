@@ -7,6 +7,15 @@
 <script>
   const container = document.getElementById("snow-container");
 
+  // Detect mobile device
+  function isMobileDevice() {
+    return (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      ) || window.innerWidth < 768
+    );
+  }
+
   function createSnowflake() {
     if (!container) return;
 
@@ -14,12 +23,19 @@
     snowflake.classList.add("snowflake");
     snowflake.textContent = "❄";
 
+    const isMobile = isMobileDevice();
+
     // Randomize position and animation properties
     snowflake.style.left = Math.random() * 100 + "vw";
     const duration = Math.random() * 3 + 2; // 2-5s
     snowflake.style.animationDuration = duration + "s";
     snowflake.style.opacity = Math.random().toString();
-    snowflake.style.fontSize = Math.random() * 20 + 20 + "px"; // 20-40px
+
+    // Smaller snowflakes on mobile (10-20px) vs desktop (20-40px)
+    const sizeRange = isMobile
+      ? Math.random() * 10 + 10
+      : Math.random() * 20 + 20;
+    snowflake.style.fontSize = sizeRange + "px";
 
     container.appendChild(snowflake);
 
@@ -35,7 +51,9 @@
 
     // Activate only in November (10), December (11), and January (0)
     if (month === 10 || month === 11 || month === 0) {
-      setInterval(createSnowflake, 400);
+      // Reduce frequency on mobile: 2000ms (2s) vs 400ms on desktop
+      const interval = isMobileDevice() ? 2000 : 400;
+      setInterval(createSnowflake, interval);
     }
   }
 
