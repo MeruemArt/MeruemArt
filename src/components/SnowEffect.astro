@@ -27,15 +27,23 @@
 
     // Randomize position and animation properties
     snowflake.style.left = Math.random() * 100 + "vw";
-    const duration = Math.random() * 3 + 2; // 2-5s
-    snowflake.style.animationDuration = duration + "s";
+    const duration = Math.random() * 3 + 5; // 3-5s
+    snowflake.style.setProperty("--fall-duration", duration + "s");
     snowflake.style.opacity = Math.random().toString();
 
     // Smaller snowflakes on mobile (10-20px) vs desktop (20-40px)
     const sizeRange = isMobile
-      ? Math.random() * 10 + 10
+      ? Math.random() * 20 + 15
       : Math.random() * 20 + 20;
     snowflake.style.fontSize = sizeRange + "px";
+
+    // Random horizontal movement range for zigzag effect
+    const swayDistance = Math.random() * 120 + 40; // 40px to 160px
+    const swayDirection = Math.random() > 0.5 ? 1 : -1; // Random direction
+    snowflake.style.setProperty(
+      "--sway-distance",
+      swayDistance * swayDirection + "px"
+    );
 
     container.appendChild(snowflake);
 
@@ -77,16 +85,141 @@
     top: -10px;
     color: white;
     user-select: none;
-    animation-name: fall;
-    animation-timing-function: linear;
+    animation: fall-sway var(--fall-duration, 4s) linear forwards;
   }
 
-  @keyframes fall {
-    from {
-      transform: translateY(0);
+  @keyframes fall-sway {
+    0% {
+      transform: translateY(0vh) translateX(0);
     }
-    to {
-      transform: translateY(calc(100vh + 40px));
+    3% {
+      transform: translateY(3vh)
+        translateX(calc(0.28 * var(--sway-distance, 20px)));
+    }
+    6% {
+      transform: translateY(6vh)
+        translateX(calc(0.54 * var(--sway-distance, 20px)));
+    }
+    9% {
+      transform: translateY(9vh)
+        translateX(calc(0.76 * var(--sway-distance, 20px)));
+    }
+    12% {
+      transform: translateY(12vh)
+        translateX(calc(0.91 * var(--sway-distance, 20px)));
+    }
+    15% {
+      transform: translateY(15vh)
+        translateX(calc(0.99 * var(--sway-distance, 20px)));
+    }
+    18% {
+      transform: translateY(18vh)
+        translateX(calc(0.99 * var(--sway-distance, 20px)));
+    }
+    21% {
+      transform: translateY(21vh)
+        translateX(calc(0.91 * var(--sway-distance, 20px)));
+    }
+    24% {
+      transform: translateY(24vh)
+        translateX(calc(0.76 * var(--sway-distance, 20px)));
+    }
+    27% {
+      transform: translateY(27vh)
+        translateX(calc(0.54 * var(--sway-distance, 20px)));
+    }
+    30% {
+      transform: translateY(30vh)
+        translateX(calc(0.28 * var(--sway-distance, 20px)));
+    }
+    33% {
+      transform: translateY(33vh) translateX(0);
+    }
+    36% {
+      transform: translateY(36vh)
+        translateX(calc(-0.28 * var(--sway-distance, 20px)));
+    }
+    39% {
+      transform: translateY(39vh)
+        translateX(calc(-0.54 * var(--sway-distance, 20px)));
+    }
+    42% {
+      transform: translateY(42vh)
+        translateX(calc(-0.76 * var(--sway-distance, 20px)));
+    }
+    45% {
+      transform: translateY(45vh)
+        translateX(calc(-0.91 * var(--sway-distance, 20px)));
+    }
+    48% {
+      transform: translateY(48vh)
+        translateX(calc(-0.99 * var(--sway-distance, 20px)));
+    }
+    51% {
+      transform: translateY(51vh)
+        translateX(calc(-0.99 * var(--sway-distance, 20px)));
+    }
+    54% {
+      transform: translateY(54vh)
+        translateX(calc(-0.91 * var(--sway-distance, 20px)));
+    }
+    57% {
+      transform: translateY(57vh)
+        translateX(calc(-0.76 * var(--sway-distance, 20px)));
+    }
+    60% {
+      transform: translateY(60vh)
+        translateX(calc(-0.54 * var(--sway-distance, 20px)));
+    }
+    63% {
+      transform: translateY(63vh)
+        translateX(calc(-0.28 * var(--sway-distance, 20px)));
+    }
+    66% {
+      transform: translateY(66vh) translateX(0);
+    }
+    69% {
+      transform: translateY(69vh)
+        translateX(calc(0.28 * var(--sway-distance, 20px)));
+    }
+    72% {
+      transform: translateY(72vh)
+        translateX(calc(0.54 * var(--sway-distance, 20px)));
+    }
+    75% {
+      transform: translateY(75vh)
+        translateX(calc(0.76 * var(--sway-distance, 20px)));
+    }
+    78% {
+      transform: translateY(78vh)
+        translateX(calc(0.91 * var(--sway-distance, 20px)));
+    }
+    81% {
+      transform: translateY(81vh)
+        translateX(calc(0.99 * var(--sway-distance, 20px)));
+    }
+    84% {
+      transform: translateY(84vh)
+        translateX(calc(0.99 * var(--sway-distance, 20px)));
+    }
+    87% {
+      transform: translateY(87vh)
+        translateX(calc(0.91 * var(--sway-distance, 20px)));
+    }
+    90% {
+      transform: translateY(90vh)
+        translateX(calc(0.76 * var(--sway-distance, 20px)));
+    }
+    93% {
+      transform: translateY(93vh)
+        translateX(calc(0.54 * var(--sway-distance, 20px)));
+    }
+    96% {
+      transform: translateY(96vh)
+        translateX(calc(0.28 * var(--sway-distance, 20px)));
+    }
+    100% {
+      transform: translateY(calc(100vh + 40px)) translateX(0);
     }
   }
 </style>
