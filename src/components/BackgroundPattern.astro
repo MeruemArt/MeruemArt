@@ -1,0 +1,261 @@
+---
+
+---
+
+<!-- Left Container -->
+<div class="pattern-container pattern-left">
+    <!-- Base Images -->
+    <img
+        alt="Numbers pattern"
+        class="pattern-img light-only"
+        fetchpriority="high"
+        loading="eager"
+        src="/assets/backgrounds/numbers-pattern.avif"
+    />
+    <img
+        alt="Numbers pattern"
+        class="pattern-img dark-only"
+        fetchpriority="high"
+        loading="eager"
+        src="/assets/backgrounds/numbers-pattern.avif"
+    />
+
+    <!-- Light Overlay (Ellipses) -->
+    <div class="overlay-container light-only mask-pattern">
+        <div>
+            <div class="ellipse ellipse-1"></div>
+            <div class="ellipse ellipse-2"></div>
+            <div class="ellipse ellipse-3"></div>
+            <div class="ellipse ellipse-4"></div>
+        </div>
+    </div>
+
+    <!-- Dark Overlay (Ellipses) -->
+    <div class="overlay-container dark-only mask-pattern">
+        <div>
+            <div class="ellipse ellipse-1"></div>
+            <div class="ellipse ellipse-2"></div>
+            <div class="ellipse ellipse-3"></div>
+            <div class="ellipse ellipse-4"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Right Container (Mirrored) -->
+<div class="pattern-container pattern-right">
+    <!-- Base Images -->
+    <img
+        alt="Numbers pattern"
+        class="pattern-img light-only"
+        fetchpriority="high"
+        loading="eager"
+        src="/assets/backgrounds/numbers-pattern.avif"
+    />
+    <img
+        alt="Numbers pattern"
+        class="pattern-img dark-only"
+        fetchpriority="high"
+        loading="eager"
+        src="/assets/backgrounds/numbers-pattern.avif"
+    />
+
+    <!-- Light Overlay (Ellipses) -->
+    <div class="overlay-container light-only mask-pattern">
+        <div>
+            <div class="ellipse ellipse-1"></div>
+            <div class="ellipse ellipse-2"></div>
+            <div class="ellipse ellipse-3"></div>
+            <div class="ellipse ellipse-4"></div>
+        </div>
+    </div>
+
+    <!-- Dark Overlay (Ellipses) -->
+    <div class="overlay-container dark-only mask-pattern">
+        <div>
+            <div class="ellipse ellipse-1"></div>
+            <div class="ellipse ellipse-2"></div>
+            <div class="ellipse ellipse-3"></div>
+            <div class="ellipse ellipse-4"></div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* Container Common */
+    .pattern-container {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        height: 100%;
+        z-index: 0;
+        pointer-events: none;
+
+        /* Gradient Mask */
+        -webkit-mask-image:
+            linear-gradient(
+                280deg,
+                rgba(0, 0, 0, 0) 18.13%,
+                rgba(0, 0, 0, 0.88) 66.72%,
+                rgba(0, 0, 0, 0) 85.62%
+            ),
+            linear-gradient(
+                360deg,
+                rgba(0, 0, 0, 0) 0%,
+                #000000 12%,
+                #000000 88%,
+                rgba(0, 0, 0, 0) 100%
+            );
+        mask-image:
+            linear-gradient(
+                280deg,
+                rgba(0, 0, 0, 0) 18.13%,
+                rgba(0, 0, 0, 0.88) 66.72%,
+                rgba(0, 0, 0, 0) 85.62%
+            ),
+            linear-gradient(
+                360deg,
+                rgba(0, 0, 0, 0) 0%,
+                #000000 12%,
+                #000000 88%,
+                rgba(0, 0, 0, 0) 100%
+            );
+        -webkit-mask-composite: source-in;
+        mask-composite: intersect;
+    }
+
+    /* Left Side */
+    .pattern-left {
+        left: 0;
+        width: 180px;
+    }
+
+    /* Right Side */
+    .pattern-right {
+        right: 0;
+        width: 180px;
+    }
+
+    @media (min-width: 1024px) {
+        .pattern-left,
+        .pattern-right {
+            width: 234px;
+        }
+    }
+
+    /* Images */
+    .pattern-img {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        inset: 0;
+        object-fit: cover;
+    }
+
+    /* Theme Visibility */
+    .light-only {
+        display: block;
+    }
+    .dark-only {
+        display: none;
+    }
+
+    :global(.theme-dark) .light-only {
+        display: none;
+    }
+    :global(.theme-dark) .dark-only {
+        display: block;
+    }
+
+    /* Additional opacity for dark mode base image
+    :global(.theme-dark) .pattern-img.dark-only {
+        opacity: 1;
+    } */
+
+    /* Overlay Container */
+    .overlay-container {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+    }
+
+    /* Mask Pattern */
+    .mask-pattern {
+        -webkit-mask-image: url("/assets/backgrounds/numbers-pattern.avif");
+        mask-image: url("/assets/backgrounds/numbers-pattern.avif");
+        -webkit-mask-size: cover;
+        mask-size: cover;
+        -webkit-mask-repeat: no-repeat;
+        mask-repeat: no-repeat;
+        -webkit-mask-position: center;
+        mask-position: center;
+    }
+
+    /* Ellipses Base */
+    .ellipse {
+        position: absolute;
+        background-color: var(--accent-regular);
+        filter: blur(40px); /* Increased blur for bigger glow */
+        opacity: 0; /* Start hidden */
+        border-radius: 50%;
+    }
+
+    :global(.theme-dark) .ellipse {
+        background-color: var(
+            --accent-dark
+        ); /* Recommended: Bright Lilac for visible glow */
+        box-shadow: 0 0 40px var(--accent-dark);
+    }
+
+    /* Ellipse Dimensions & Positions - Staggered Rising Wave */
+    .ellipse-1 {
+        width: 120px;
+        height: 250px;
+        left: 10%;
+        bottom: -30%;
+        animation: wave-rise 8s ease-in-out infinite;
+        animation-delay: 0s;
+    }
+    .ellipse-2 {
+        width: 140px;
+        height: 300px;
+        left: 40%;
+        bottom: -30%;
+        animation: wave-rise 10s ease-in-out infinite;
+        animation-delay: 3s;
+    }
+    .ellipse-3 {
+        width: 100px;
+        height: 200px;
+        left: 70%;
+        bottom: -30%;
+        animation: wave-rise 7s ease-in-out infinite;
+        animation-delay: 1.5s;
+    }
+    .ellipse-4 {
+        width: 180px;
+        height: 350px;
+        left: 20%;
+        bottom: -30%;
+        animation: wave-rise 12s ease-in-out infinite;
+        animation-delay: 5s;
+    }
+
+    /* Animations */
+    @keyframes wave-rise {
+        0% {
+            transform: translateY(120%);
+            opacity: 0;
+        }
+        20% {
+            opacity: 1; /* Max opacity */
+        }
+        80% {
+            opacity: 1; /* Max opacity */
+        }
+        100% {
+            transform: translateY(-800px); /* Move way up */
+            opacity: 0;
+        }
+    }
+</style>
