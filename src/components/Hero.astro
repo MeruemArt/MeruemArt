@@ -1,55 +1,83 @@
 ---
 interface Props {
-	title: string;
-	tagline?: string;
-	align?: 'start' | 'center';
+  title: string;
+  tagline?: string;
+  align?: "start" | "center";
+  size?: "sm" | "md" | "lg";
 }
 
-const { align = 'center', tagline, title } = Astro.props;
+const { align = "center", tagline, title, size = "lg" } = Astro.props;
 ---
 
-<header class:list={['hero stack gap-4', align]}>
-	<div class="stack gap-2">
-		<h1 class="title">{title}</h1>
-		{tagline && <p class="tagline">{tagline}</p>}
-	</div>
-	<slot />
+<header class:list={["hero", align, `hero-${size}`]}>
+  <div class="hero-content">
+    <h1 class="hero-title">{title}</h1>
+    {tagline && <p class="hero-tagline">{tagline}</p>}
+  </div>
+  <div class="hero-children">
+    <slot />
+  </div>
 </header>
 
 <style>
-	.hero {
-		font-size: var(--text-lg);
-		text-align: center;
-	}
+  .hero {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    padding: 2rem 0;
+  }
 
-	.title,
-	.tagline {
-		max-width: 37ch;
-		margin-inline: auto;
-		color: var(--gray-0);
-	}
+  .hero.center {
+    align-items: center;
+    text-align: center;
+  }
 
-	.title {
-		font-size: var(--text-3xl);
-		color: var(--gray-0);
-	}
+  .hero.start {
+    align-items: flex-start;
+    text-align: left;
+  }
 
-	@media (min-width: 50em) {
-		.hero {
-			font-size: var(--text-xl);
-		}
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
 
-		.start {
-			text-align: start;
-		}
+  .hero-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-		.start .title,
-		.start .tagline {
-			margin-inline: unset;
-		}
+  .hero-lg .hero-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+  }
 
-		.title {
-			font-size: var(--text-4xl);
-		}
-	}
+  .hero-md .hero-title {
+    font-size: clamp(1.75rem, 4vw, 2.75rem);
+  }
+
+  .hero-sm .hero-title {
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+  }
+
+  .hero-tagline {
+    max-width: 48ch;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .hero.center .hero-tagline {
+    margin-inline: auto;
+  }
+
+  .hero-children {
+    margin-top: 0.5rem;
+  }
 </style>

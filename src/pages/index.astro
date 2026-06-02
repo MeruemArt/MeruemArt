@@ -1,626 +1,347 @@
 ---
 import { getCollection } from "astro:content";
-
-// Layout import — provides basic page elements: <head>, <nav>, <footer> etc.
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-// Component Imports
-import CallToAction from "../components/CallToAction.astro";
-import Grid from "../components/Grid.astro";
 import Hero from "../components/Hero.astro";
 import Icon from "../components/Icon.astro";
 import Pill from "../components/Pill.astro";
-import PortfolioPreview from "../components/PortfolioPreview.astro";
-
-// Page section components
-import ContactCTA from "../components/ContactCTA.astro";
 import Skills from "../components/Skills.astro";
 import TechnicalSkills from "../components/TechnicalSkills.astro";
+import PortfolioPreview from "../components/PortfolioPreview.astro";
+import Grid from "../components/Grid.astro";
+import CallToAction from "../components/CallToAction.astro";
 import FAQ from "../components/FAQ.astro";
+import ContactCTA from "../components/ContactCTA.astro";
 
-// Content Fetching: List four most recent work projects
 const projects = (await getCollection("work"))
   .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
   .slice(0, 4);
 
-// Full Astro Component Syntax:
-// https://docs.astro.build/core-concepts/astro-components/
 import { Image } from "astro:assets";
 import portraitImg from "../assets/portrait.webp";
-import whatsappIcon from "../assets/whatsapp-icon.svg";
 import cobisLogo from "../assets/cobis.svg";
 ---
 
 <BaseLayout
   title="Luis Arteaga | Desarrollador DevOps & Cloud Architect"
-  description="Portafolio de Luis Arteaga, experto en DevOps, AWS, Python y automatización de infraestructura. Descubre mis proyectos y servicios."
+  description="Portafolio de Luis Arteaga, experto en DevOps, AWS, Python y automatización de infraestructura."
 >
-  <div class="stack gap-20 lg:gap-48">
-    <div class="wrapper stack gap-8 lg:gap-20">
-      <header class="hero">
-        <Hero
-          title="Luis Arteaga \n Desarrollador DevOps"
-          tagline="Especializado en automatización, infraestructura como código (IaC) y gestión de servidores en AWS"
-          align="start"
-        >
-          <div class="roles">
-            <Pill><Icon icon="aws" size="1.33em" /> AWS</Pill>
-            <Pill><Icon icon="python" size="1.33em" /> Python</Pill>
-            <Pill><Icon icon="git" size="1.33em" /> Git</Pill>
+  <div class="wrapper" style="padding-top: 6rem;">
+    <section class="hero-section">
+      <div class="hero-main animate-in">
+        <div class="hero-text">
+          <div class="hero-badge" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.375rem 1rem; border-radius: 999rem; font-size: 0.85rem; font-weight: 500; background: var(--color-accent-glow); color: var(--color-accent); margin-bottom: 1rem; width: fit-content;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-accent); animation: glow-pulse 2s ease-in-out infinite;"></span>
+            Disponible para proyectos
           </div>
-        </Hero>
-        <a
-          href="https://api.whatsapp.com/send/?phone=%2B573186405618&text=Hola%20Luis.%0AVi%20tu%20p%C3%A1gina%2C%20me%20interesa%20contactarte%20%F0%9F%91%A8%F0%9F%8F%BB%E2%80%8D%F0%9F%92%BB.&type=phone_number&app_absent=0"
-          class="whatsapp-button"
-          target="_blank"
-        >
-          <Image
-            src={whatsappIcon}
-            alt="Icono de Whatsapp"
-            width={64}
-            height={64}
-            loading="eager"
-          />
-        </a>
-        <Image
-          src={portraitImg}
-          alt="Luis Arteaga cartoon by Gemini AI"
-          width={480}
-          height={620}
-          loading="eager"
-          fetchpriority="high"
-        />
-        <div class="scroll-indicator">
-          <span class="mouse">
-            <span class="wheel"></span>
-          </span>
-          <p>Scroll para ver más</p>
+          <h1 class="hero-title">
+            Luis Arteaga<br />
+            <span class="gradient-text">Desarrollador DevOps</span>
+          </h1>
+          <p class="hero-subtitle">
+            Especializado en automatización, infraestructura como código (IaC) y gestión de servidores en AWS
+          </p>
+          <div class="hero-pills">
+            <Pill><Icon icon="aws" size="1.2em" /> AWS</Pill>
+            <Pill><Icon icon="python" size="1.2em" /> Python</Pill>
+            <Pill><Icon icon="git" size="1.2em" /> Git</Pill>
+          </div>
         </div>
-      </header>
+        <div class="hero-image-wrapper">
+          <div class="hero-glow"></div>
+          <Image
+            src={portraitImg}
+            alt="Luis Arteaga"
+            width={480}
+            height={620}
+            loading="eager"
+            fetchpriority="high"
+            class="hero-portrait"
+          />
+        </div>
+      </div>
+    </section>
 
-      <script>
-        const scrollIndicator = document.querySelector(".scroll-indicator");
-        if (scrollIndicator) {
-          let idleTimer: any;
-          let debounceTimer: any;
-          const idleTime = 5000; // 5 seconds
-          const debounceDelay = 300; // 300ms para eventos frecuentes
+    <Skills />
+    <TechnicalSkills />
+  </div>
 
-          // Verificar si estamos en desktop (donde el indicador es visible)
-          const isDesktop = () => window.innerWidth >= 50 * 16; // 50em = 800px
-
-          // Umbral ajustable según el dispositivo
-          const getBottomThreshold = () => {
-            return isDesktop() ? 100 : 150;
-          };
-
-          // Verifica si el usuario está cerca del final de la página
-          const isNearBottom = () => {
-            if (!isDesktop()) return false; // No mostrar en móvil
-
-            const threshold = getBottomThreshold();
-            const scrollTop =
-              window.pageYOffset || document.documentElement.scrollTop;
-            const windowHeight = window.innerHeight;
-            const documentHeight = Math.max(
-              document.body.scrollHeight,
-              document.body.offsetHeight,
-              document.documentElement.clientHeight,
-              document.documentElement.scrollHeight,
-              document.documentElement.offsetHeight,
-            );
-
-            const scrollPosition = scrollTop + windowHeight;
-            const distanceFromBottom = documentHeight - scrollPosition;
-
-            return distanceFromBottom <= threshold;
-          };
-
-          // Verifica si el indicador está visible
-          const isIndicatorVisible = () => {
-            return !scrollIndicator.classList.contains("hidden");
-          };
-
-          const showIndicator = () => {
-            // Solo mostrar en desktop y si no está cerca del final
-            if (isDesktop() && !isNearBottom()) {
-              scrollIndicator.classList.remove("hidden");
-            }
-          };
-
-          const hideIndicator = () => {
-            scrollIndicator.classList.add("hidden");
-          };
-
-          const startIdleTimer = () => {
-            clearTimeout(idleTimer);
-            idleTimer = setTimeout(() => {
-              showIndicator();
-            }, idleTime);
-          };
-
-          const resetTimer = () => {
-            // Solo ocultar si el indicador está visible
-            if (isIndicatorVisible()) {
-              hideIndicator();
-            }
-            // Reiniciar el timer de inactividad
-            startIdleTimer();
-          };
-
-          // Debounce para mousemove - solo resetear si el indicador está visible
-          const handleMouseMove = () => {
-            if (isIndicatorVisible()) {
-              clearTimeout(debounceTimer);
-              debounceTimer = setTimeout(() => {
-                resetTimer();
-              }, debounceDelay);
-            }
-          };
-
-          // Inicialización
-          const init = () => {
-            hideIndicator();
-            // Esperar un momento para que los estilos CSS se apliquen
-            setTimeout(() => {
-              startIdleTimer();
-            }, 500);
-          };
-
-          // Esperar a que el DOM esté listo
-          if (document.readyState === "loading") {
-            document.addEventListener("DOMContentLoaded", init);
-          } else {
-            init();
-          }
-
-          // Eventos
-          window.addEventListener("mousemove", handleMouseMove, {
-            passive: true,
-          });
-
-          ["scroll", "keydown", "touchstart", "wheel"].forEach((event) => {
-            window.addEventListener(event, resetTimer, {
-              passive: true,
-            });
-          });
-
-          // Limpiar al descargar
-          window.addEventListener("beforeunload", () => {
-            clearTimeout(idleTimer);
-            clearTimeout(debounceTimer);
-          });
-        }
-      </script>
-
-      <Skills />
-      <TechnicalSkills />
-    </div>
-
-    <main class="wrapper stack gap-20 lg:gap-48">
-      <div style="text-align: center;">
+  <main>
+    <div class="wrapper" style="padding-top: 3rem;">
+      <div class="pdf-section animate-in">
         <object
           data="/assets/CV_Meruem.pdf"
           type="application/pdf"
           width="100%"
-          height="700px"
+          height="600px"
+          style="border-radius: 1rem; border: 1px solid var(--color-border);"
         >
-          <p>
-            Para obtener una visión más completa de mi experiencia y
-            habilidades, <a href="/assets/CV_Meruem.pdf"
-              >descargue mi currículum completo</a
-            >.
+          <p style="padding: 2rem; text-align: center;">
+            Para obtener una visión más completa de mi experiencia y habilidades,
+            <a href="/assets/CV_Meruem.pdf" style="color: var(--color-accent);">descargue mi currículum completo</a>.
           </p>
         </object>
       </div>
-      <section class="section with-background with-cta">
-        <header class="section-header stack gap-2 lg:gap-4">
-          <h3>Menciones</h3>
-          <p>
-            He tenido la suerte de recibir elogios por mi trabajo en varias
-            publicaciones. Echa un vistazo a continuación para saber más.
-          </p>
-        </header>
 
-        <div class="gallery">
-          <Image
-            src={cobisLogo}
-            alt="Imagen de Cobis"
-            width={808}
-            height={153}
-          />
-          <Grid variant="offset">
-            {
-              projects.map((project) => (
-                <li>
-                  <PortfolioPreview project={project} />
-                </li>
-              ))
-            }
-          </Grid>
+      <section class="section-padding mentions-section animate-in">
+        <div class="mentions-header">
+          <div class="mentions-text">
+            <h2 class="section-title">Menciones</h2>
+            <p class="section-desc">He tenido la suerte de recibir elogios por mi trabajo en varias publicaciones.</p>
+          </div>
+          <CallToAction href="/mentions/">
+            Ver todo <Icon icon="arrow-right" size="1.2em" />
+          </CallToAction>
         </div>
 
-        <div class="cta">
-          <CallToAction href="/mentions/">
-            Ver todo
-            <Icon icon="arrow-right" size="1.2em" />
-          </CallToAction>
+        <div class="mentions-gallery">
+          <Image
+            src={cobisLogo}
+            alt="Cobis Logo"
+            width={808}
+            height={153}
+            class="cobis-logo"
+          />
+          <Grid variant="offset">
+            {projects.map((project) => (
+              <li><PortfolioPreview project={project} /></li>
+            ))}
+          </Grid>
         </div>
       </section>
 
-      <section class="section with-background bg-variant">
-        <header class="section-header stack gap-2 lg:gap-4">
-          <h3>Servicios</h3>
-          <p>
-            Ofrezco soluciones tecnológicas a medida para potenciar tu negocio.
-          </p>
-        </header>
+      <section class="section-padding services-section animate-in">
+        <div class="services-header">
+          <h2 class="section-title">Servicios</h2>
+          <p class="section-desc">Ofrezco soluciones tecnológicas a medida para potenciar tu negocio.</p>
+        </div>
 
-        <div class="gallery">
-          <Grid variant="small">
-            <li class="service-card">
-              <div class="service-icon">
-                <Icon icon="terminal-window" size="2.5em" />
-              </div>
-              <h4>Infraestructura como Código</h4>
-              <p>
-                Diseño y despliegue de arquitecturas resilientes con Azure
-                DevOps y CloudFormation.
-              </p>
-            </li>
-            <li class="service-card">
-              <div class="service-icon">
-                <Icon icon="aws" size="2.5em" />
-              </div>
-              <h4>Arquitectura Cloud Native</h4>
-              <p>
-                Arquitectura y despliegue de soluciones escalables y seguras en
-                AWS.
-              </p>
-            </li>
-            <li class="service-card">
-              <div class="service-icon">
-                <Icon icon="python" size="2.5em" />
-              </div>
-              <h4>Automatización y CI/CD</h4>
-              <p>
-                Pipelines eficientes y scripting para operaciones con Python y
-                Bash.
-              </p>
-            </li>
-          </Grid>
+        <div class="services-grid">
+          <article class="service-card card-hover">
+            <div class="service-icon">
+              <Icon icon="terminal-window" size="2.5rem" gradient />
+            </div>
+            <h3>Infraestructura como Código</h3>
+            <p>Diseño y despliegue de arquitecturas resilientes con Azure DevOps y CloudFormation.</p>
+          </article>
+          <article class="service-card card-hover">
+            <div class="service-icon">
+              <Icon icon="aws" size="2.5rem" gradient />
+            </div>
+            <h3>Arquitectura Cloud Native</h3>
+            <p>Arquitectura y despliegue de soluciones escalables y seguras en AWS.</p>
+          </article>
+          <article class="service-card card-hover">
+            <div class="service-icon">
+              <Icon icon="python" size="2.5rem" gradient />
+            </div>
+            <h3>Automatización y CI/CD</h3>
+            <p>Pipelines eficientes y scripting para operaciones con Python y Bash.</p>
+          </article>
         </div>
       </section>
 
       <FAQ />
-    </main>
+    </div>
 
     <ContactCTA />
-  </div>
+  </main>
 </BaseLayout>
 
 <style>
-  .hero {
+  .hero-section {
+    padding: 2rem 0 3rem;
+  }
+
+  .hero-main {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .hero-text {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    text-align: center;
+    gap: 1rem;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    color: var(--color-text-primary);
+  }
+
+  .hero-subtitle {
+    max-width: 40ch;
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+  }
+
+  .hero-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 0.5rem;
+  }
+
+  .hero-image-wrapper {
     position: relative;
+    flex-shrink: 0;
   }
 
-  .roles {
-    display: none;
+  .hero-glow {
+    position: absolute;
+    inset: -20px;
+    border-radius: 50%;
+    background: var(--color-accent-glow);
+    filter: blur(40px);
+    animation: glow-pulse 3s ease-in-out infinite;
+    z-index: -1;
   }
 
-  .hero img {
+  .hero-portrait {
+    width: min(280px, 60vw);
+    height: auto;
     aspect-ratio: 9 / 8.8;
     object-fit: cover;
     object-position: top;
     border-radius: 45% 55% 63% 37% / 47% 53% 47% 53%;
-    box-shadow:
-      0px 0px 20px 2px #260b3d7c,
-      0px 0px 40px 4px #2c39797c,
-      0px 0px 60px 6px #2c39797c;
-    /* Añade más sombras según sea necesario */
-    /* Reducida en móvil para mejor visualización */
-    max-width: 240px;
-    width: 100%;
   }
 
-  @media (min-width: 50em) {
-    .hero {
-      display: grid;
-      grid-template-columns: 6fr 4fr;
-      padding-inline: 2.5rem;
-      gap: 3.75rem;
-    }
-
-    .roles {
-      margin-top: 0.5rem;
-      display: flex;
-      gap: 0.5rem;
-    }
-
-    .hero img {
-      border-radius: 45% 55% 63% 37% / 47% 53% 47% 53%;
-      box-shadow:
-        0px 0px 20px 2px #260b3d7c,
-        0px 0px 40px 4px #2c39797c,
-        0px 0px 60px 6px #2c39797c;
-      /* Escritorio: sin restricción de ancho */
-      max-width: none;
-    }
+  .mentions-section {
+    border-top: 1px solid var(--color-border);
   }
 
-  /* ====================================================== */
+  .mentions-header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
 
-  .section {
-    display: grid;
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-desc {
+    color: var(--color-text-secondary);
+    font-size: 1.1rem;
+    max-width: 40ch;
+  }
+
+  .mentions-gallery {
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
   }
 
-  .with-background {
-    position: relative;
+  .cobis-logo {
+    max-height: 3rem;
+    width: auto;
+    align-self: flex-start;
+    opacity: 0.7;
   }
 
-  .with-background::before {
-    --hero-bg: var(--bg-image-subtle-2);
-
-    content: "";
-    position: absolute;
-    pointer-events: none;
-    left: 50%;
-    width: 100vw;
-    aspect-ratio: calc(2.25 / var(--bg-scale));
-    top: 0;
-    transform: translateY(-75%) translateX(-50%);
-    background:
-      url("/assets/backgrounds/noise.svg") top center/220px repeat,
-      var(--hero-bg) center center / var(--bg-gradient-size) no-repeat,
-      var(--gray-999);
-    background-blend-mode: overlay, normal, normal, normal;
-    mix-blend-mode: var(--bg-blend-mode);
-    z-index: -1;
+  .services-section {
+    border-top: 1px solid var(--color-border);
   }
 
-  .with-background.bg-variant::before {
-    --hero-bg: var(--bg-image-subtle-1);
-  }
-
-  .section-header {
-    justify-self: center;
+  .services-header {
     text-align: center;
-    max-width: 50ch;
-    font-size: var(--text-md);
-    color: var(--gray-300);
+    margin-bottom: 2.5rem;
   }
 
-  .section-header h3 {
-    font-size: var(--text-2xl);
+  .services-header .section-desc {
+    margin: 0 auto;
   }
 
-  @media (min-width: 50em) {
-    .section {
-      grid-template-columns: repeat(4, 1fr);
-      grid-template-areas: "header header header header" "gallery gallery gallery gallery";
-      gap: 5rem;
-    }
-
-    .section.with-cta {
-      grid-template-areas: "header header header cta" "gallery gallery gallery gallery";
-    }
-
-    .section-header {
-      grid-area: header;
-      font-size: var(--text-lg);
-    }
-
-    .section-header h3 {
-      font-size: var(--text-4xl);
-    }
-
-    .with-cta .section-header {
-      justify-self: flex-start;
-      text-align: left;
-    }
-
-    .gallery {
-      grid-area: gallery;
-    }
-
-    .cta {
-      grid-area: cta;
-    }
-  }
-
-  /* ====================================================== */
-
-  .mention-card {
-    display: flex;
-    height: 7rem;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border: 1px solid var(--gray-800);
-    border-radius: 1.5rem;
-    color: var(--gray-300);
-    background: var(--gradient-subtle);
-    box-shadow: var(--shadow-sm);
-  }
-
-  @media (min-width: 50em) {
-    .mention-card {
-      border-radius: 1.5rem;
-      height: 9.5rem;
-    }
-  }
-
-  .flip-card {
-    display: flex;
-    height: 7rem;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    border: 1px solid var(--gray-800);
-    border-radius: 1.5rem;
-    color: var(--gray-300);
-    background: var(--gradient-subtle);
-    box-shadow: var(--shadow-sm);
-    perspective: 1000px;
-  }
-
-  .flip-card-inner {
-    width: 100%;
-    height: 100%;
-    transition: transform 0.6s;
-    transform-style: preserve-3d;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .flip-card:hover .flip-card-inner {
-    transform: rotateY(180deg);
-  }
-
-  .flip-card-front,
-  .flip-card-back {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    backface-visibility: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .flip-card-front {
-    background-color: #f1f1f100;
-  }
-
-  .flip-card-back {
-    background-color: #b3b3b300;
-    transform: rotateY(180deg);
-  }
-
-  .img-with-shadow {
-    box-shadow:
-      0px 0px 20px 2px #260b3d7c,
-      0px 0px 40px 4px #2c39797c,
-      0px 0px 60px 6px #2c39797c;
-  }
-
-  .whatsapp-button {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 220;
-  }
-
-  .scroll-indicator {
-    display: none;
-  }
-
-  @media (min-width: 50em) {
-    .scroll-indicator {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 0.5rem;
-      position: absolute;
-      bottom: 2rem;
-      left: 50%;
-      transform: translateX(-50%);
-      color: var(--gray-400);
-      font-size: var(--text-sm);
-      animation: fade-in-up 1s ease-out 1s backwards;
-      transition: opacity 0.5s ease;
-    }
-
-    .scroll-indicator.hidden {
-      opacity: 0;
-      pointer-events: none;
-    }
-
-    .mouse {
-      width: 26px;
-      height: 40px;
-      border: 2px solid var(--gray-400);
-      border-radius: 20px;
-      position: relative;
-    }
-
-    .wheel {
-      width: 4px;
-      height: 6px;
-      background: var(--gray-400);
-      border-radius: 2px;
-      position: absolute;
-      top: 6px;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: scroll-wheel 2s infinite;
-    }
-  }
-
-  @keyframes scroll-wheel {
-    0% {
-      top: 6px;
-      opacity: 1;
-    }
-    100% {
-      top: 12px;
-      opacity: 0.5;
-    }
-  }
-
-  @keyframes fade-in-up {
-    from {
-      opacity: 0;
-      transform: translate(-50%, 20px);
-    }
-    to {
-      opacity: 1;
-      transform: translate(-50%, 0);
-    }
+  .services-grid {
+    display: grid;
+    gap: 1.5rem;
   }
 
   .service-card {
+    padding: 2rem;
+    background: var(--color-surface-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 1.25rem;
+    text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    text-align: center;
-    padding: 2rem;
     gap: 1rem;
-    background: var(--gradient-subtle);
-    border: 1px solid var(--gray-800);
-    border-radius: 1.5rem;
-    box-shadow: var(--shadow-sm);
-    transition:
-      transform var(--theme-transition),
-      box-shadow var(--theme-transition);
-  }
-
-  .service-card:hover {
-    transform: translateY(-5px);
-    box-shadow: var(--shadow-md);
   }
 
   .service-icon {
-    color: var(--accent-regular);
-    background: var(--gray-999);
-    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 4rem;
+    height: 4rem;
     border-radius: 50%;
-    box-shadow: var(--shadow-sm);
+    background: var(--color-accent-glow);
+    margin-bottom: 0.5rem;
   }
 
-  .service-card h4 {
-    font-size: var(--text-lg);
-    color: var(--gray-100);
+  .service-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
   }
 
   .service-card p {
-    color: var(--gray-300);
-    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  @media (min-width: 50em) {
+    .hero-main {
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 4rem;
+    }
+
+    .hero-text {
+      align-items: flex-start;
+      text-align: left;
+      flex: 1;
+    }
+
+    .hero-pills {
+      justify-content: flex-start;
+    }
+
+    .hero-image-wrapper {
+      flex-shrink: 0;
+    }
+
+    .hero-portrait {
+      width: 380px;
+    }
+
+    .mentions-header {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .services-grid {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2rem;
+    }
+
+    .pdf-section {
+      max-width: 48rem;
+      margin: 0 auto;
+    }
   }
 </style>

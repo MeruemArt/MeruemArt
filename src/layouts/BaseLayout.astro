@@ -1,13 +1,8 @@
 ---
-// Learn about using Astro layouts:
-// https://docs.astro.build/en/core-concepts/layouts/
-
-// Component Imports
 import MainHead from "../components/MainHead.astro";
 import Nav from "../components/Nav.astro";
 import Footer from "../components/Footer.astro";
-import SnowEffect from "../components/SnowEffect.astro";
-import BackgroundPattern from "../components/BackgroundPattern.astro";
+import { ViewTransitions } from "astro:transitions";
 
 interface Props {
   title?: string | undefined;
@@ -17,105 +12,77 @@ interface Props {
 const { title, description } = Astro.props;
 ---
 
-<html lang="es">
+<html lang="es" class="theme-transition-base">
   <head>
     <MainHead title={title} description={description} />
+    <ViewTransitions />
   </head>
   <body>
-    <BackgroundPattern />
-    <div class="stack backgrounds">
+    <div class="relative min-h-screen">
+      <div class="fixed inset-0 pointer-events-none -z-10" aria-hidden="true">
+        <div class="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full opacity-20 blur-[120px]" style="background: var(--color-accent-glow)"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full opacity-10 blur-[100px]" style="background: var(--color-accent-dark)"></div>
+      </div>
+
       <Nav />
-      <slot />
+      <main>
+        <slot />
+      </main>
       <Footer />
     </div>
 
-    <SnowEffect />
-
     <script>
-      // Add “loaded” class once the document has completely loaded.
-      addEventListener("load", () =>
-        document.documentElement.classList.add("loaded"),
-      );
+      function applyTheme() {
+        var theme = 'light';
+        try {
+          if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+            theme = localStorage.getItem('theme');
+          } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            theme = 'dark';
+          }
+        } catch(e) {}
+        var isDark = theme === 'dark';
+        document.documentElement.classList[isDark ? 'add' : 'remove']('theme-dark');
+      }
+
+      function persistTheme() {
+        try {
+          if (typeof localStorage !== 'undefined') {
+            var isDark = document.documentElement.classList.contains('theme-dark');
+            localStorage.setItem('theme', isDark ? 'dark' : 'light');
+          }
+        } catch(e) {}
+      }
+
+      applyTheme();
+
+      var mo = new MutationObserver(persistTheme);
+      mo.observe(document.documentElement, {
+        attributes: true,
+        attributeFilter: ['class'],
+      });
+
+      document.addEventListener('astro:page-load', applyTheme);
+
+      document.addEventListener('astro:after-swap', function() {
+        var els = document.querySelectorAll('.animate-in, .animate-in-left, .animate-in-right, .stagger-children');
+        els.forEach(function(el) { el.classList.remove('visible'); });
+      });
+
+      document.addEventListener('astro:page-load', function initAnimations() {
+        var els = document.querySelectorAll('.animate-in, .animate-in-left, .animate-in-right, .stagger-children');
+        if (els.length > 0) {
+          var observer = new IntersectionObserver(function(entries) {
+            entries.forEach(function(entry) {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+                observer.unobserve(entry.target);
+              }
+            });
+          }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+          els.forEach(function(el) { observer.observe(el); });
+        }
+      });
     </script>
-
-    <style>
-      :root {
-        --_placeholder-bg: linear-gradient(transparent, transparent);
-        --bg-image-subtle-1: var(--_placeholder-bg);
-        --bg-image-subtle-2: var(--_placeholder-bg);
-        --bg-image-footer: var(--_placeholder-bg);
-        --bg-svg-blend-mode: overlay;
-        --bg-blend-mode: darken;
-        --bg-image-aspect-ratio: 2.25;
-        --bg-scale: 1.68;
-        --bg-aspect-ratio: calc(var(--bg-image-aspect-ratio) / var(--bg-scale));
-        --bg-gradient-size: calc(var(--bg-scale) * 100%);
-      }
-
-      :root.theme-dark {
-        /* --bg-image-main & curves handled by BackgroundPattern */
-        --bg-svg-blend-mode: darken;
-        --bg-blend-mode: lighten;
-      }
-
-      /* These backgrounds are displayed below the fold, so we lazy load them
-			   once the `.loaded` class has been set.  */
-      :root.loaded {
-        --bg-image-subtle-1: url("/assets/backgrounds/bg-main.svg");
-        --bg-image-subtle-2: url("/assets/backgrounds/bg-subtle-2-light-800w.jpg");
-        --bg-image-footer: url("/assets/backgrounds/bg-footer-light-800w.jpg");
-      }
-      :root.loaded.theme-dark {
-        --bg-image-subtle-1: url("/assets/backgrounds/bg-main.svg");
-        --bg-image-subtle-2: url("/assets/backgrounds/bg-subtle-2-dark-800w.jpg");
-        --bg-image-footer: url("/assets/backgrounds/bg-footer-dark-800w.jpg");
-      }
-
-      @media (min-width: 50em) {
-        :root {
-          --bg-scale: 1;
-          /* handled by BackgroundPattern */
-        }
-        :root.theme-dark {
-          /* handled by BackgroundPattern */
-        }
-
-        :root.loaded {
-          --bg-image-subtle-1: url("/assets/backgrounds/bg-main.svg");
-          --bg-image-subtle-2: url("/assets/backgrounds/bg-subtle-2-light-1440w.jpg");
-          --bg-image-footer: url("/assets/backgrounds/bg-footer-light-1440w.jpg");
-        }
-        :root.loaded.theme-dark {
-          --bg-image-subtle-1: url("/assets/backgrounds/bg-main.svg");
-          --bg-image-subtle-2: url("/assets/backgrounds/bg-subtle-2-dark-1440w.jpg");
-          --bg-image-footer: url("/assets/backgrounds/bg-footer-dark-1440w.jpg");
-        }
-      }
-
-      .backgrounds {
-        min-height: 100%;
-        isolation: isolate;
-        background:
-          /*noise*/
-          /* url("/assets/backgrounds/noise.svg") top center/220px repeat, */
-          /*footer*/
-          var(--bg-image-footer) bottom center/var(--bg-gradient-size) no-repeat,
-          /* base */ transparent;
-        background-blend-mode: /*noise*/
-          overlay,
-          /*footer*/ var(--bg-blend-mode),
-          /*base*/ normal;
-        position: relative;
-        z-index: 1;
-      }
-      @media (forced-colors: active) {
-        /* Deactivate custom backgrounds for high contrast users. */
-        .backgrounds {
-          background: none;
-          background-blend-mode: none;
-          --bg-gradient-size: none;
-        }
-      }
-    </style>
   </body>
 </html>

@@ -1,16 +1,17 @@
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import tailwindcss from '@tailwindcss/vite';
 
-// https://astro.build/config
 export default defineConfig({
     site: 'https://meruemart.cloud',
     integrations: [sitemap()],
     build: {
-        inlineStylesheets: 'auto', // Inline CSS pequeño automáticamente
+        inlineStylesheets: 'auto',
     },
     vite: {
+        plugins: [tailwindcss()],
         build: {
-            cssCodeSplit: true, // Split CSS por ruta
+            cssCodeSplit: true,
             rollupOptions: {
                 output: {
                     manualChunks: undefined,

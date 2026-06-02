@@ -1,239 +1,207 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
-
-import ContactCTA from "../components/ContactCTA.astro";
 import Hero from "../components/Hero.astro";
 import Pill from "../components/Pill.astro";
 import Icon from "../components/Icon.astro";
+import ContactCTA from "../components/ContactCTA.astro";
 ---
 
 <BaseLayout
-	title="Acerca de | Luis Arteaga"
-	description="Aprende más sobre Luis Arteaga y su experiencia en desarrollo de software"
+  title="Acerca de | Luis Arteaga"
+  description="Aprende más sobre Luis Arteaga y su experiencia en desarrollo de software"
 >
-	<div class="stack gap-20">
-		<main class="wrapper about">
-			<Hero
-				title="Acerca de"
-				tagline="Gracias por visitar. Lee a continuación para conocer más sobre mí y mi pasión por la tecnología."
-			>
-				<img
-					width="1553"
-					height="873"
-					src="/assets/at-work.jpg"
-					alt="Luis Arteaga trabajando con un colega"
-				/>
-			</Hero>
+  <div class="wrapper" style="padding-top: 6rem;">
+    <Hero
+      title="Acerca de"
+      tagline="Gracias por visitar. Lee a continuación para conocer más sobre mí y mi pasión por la tecnología."
+      size="md"
+    >
+      <img
+        width="1553"
+        height="873"
+        src="/assets/at-work.jpg"
+        alt="Luis Arteaga trabajando con un colega"
+        class="about-hero-img"
+      />
+    </Hero>
 
-			<section>
-				<h2 class="section-title">Mi Historia</h2>
-				<div class="content">
-					<p>
-						Soy un Ingeniero de Sistemas que encontró su verdadera
-						vocación en el mundo del <strong>DevOps</strong> y la <strong
-							>Arquitectura Cloud</strong
-						>. Más allá de los títulos, me define la curiosidad y la
-						satisfacción de ver cómo una infraestructura bien
-						diseñada puede potenciar el desarrollo de software.
-					</p>
-					<p>
-						Me he enfocado en estas áreas no solo por su demanda,
-						sino porque disfruto genuinamente resolviendo problemas
-						de automatización y eficiencia. Mi objetivo es seguir
-						aprendiendo y construyendo sistemas que sean robustos,
-						escalables y fáciles de mantener.
-					</p>
-				</div>
-			</section>
+    <div class="about-content">
+      <section class="about-section animate-in">
+        <h2 class="about-section-title">Mi Historia</h2>
+        <div class="about-section-body">
+          <p>
+            Soy un Ingeniero de Sistemas que encontró su verdadera vocación en el mundo del <strong>DevOps</strong> y la <strong>Arquitectura Cloud</strong>. Más allá de los títulos, me define la curiosidad y la satisfacción de ver cómo una infraestructura bien diseñada puede potenciar el desarrollo de software.
+          </p>
+          <p>
+            Me he enfocado en estas áreas no solo por su demanda, sino porque disfruto genuinamente resolviendo problemas de automatización y eficiencia. Mi objetivo es seguir aprendiendo y construyendo sistemas que sean robustos, escalables y fáciles de mantener.
+          </p>
+        </div>
+      </section>
 
-			<section>
-				<h2 class="section-title">Educación</h2>
-				<div class="content education-grid">
-					<div class="edu-card">
-						<Icon icon="trophy" size="1.5em" />
-						<div>
-							<h3>Ingeniería de Sistemas</h3>
-							<p class="institution">
-								Universidad del Sinú - Elías Bechara Zainúm
-							</p>
-							<p class="details">
-								Graduado con honores y Becado.
-							</p>
-							<p class="project">
-								Proyecto destacado: Diseño e implementación de
-								un asistente virtual (chatbot) para el Centro
-								educativo Mata de Caña.
-							</p>
-						</div>
-					</div>
-					<div class="edu-card">
-						<Icon icon="terminal-window" size="1.5em" />
-						<div>
-							<h3>Técnico en Sistemas</h3>
-							<p class="institution">Politécnico Indes</p>
-							<p class="details">
-								Operador de sistemas teleinformáticos y
-								aplicaciones multimedia.
-							</p>
-						</div>
-					</div>
-				</div>
-			</section>
+      <section class="about-section animate-in">
+        <h2 class="about-section-title">Educación</h2>
+        <div class="about-section-body">
+          <div class="edu-card">
+            <div class="edu-dot"></div>
+            <Icon icon="trophy" size="1.5rem" />
+            <div>
+              <h3>Ingeniería de Sistemas</h3>
+              <p class="edu-institution">Universidad del Sinú - Elías Bechara Zainúm</p>
+              <p class="edu-detail">Graduado con honores y Becado.</p>
+              <p class="edu-project">Proyecto destacado: Diseño e implementación de un asistente virtual (chatbot) para el Centro educativo Mata de Caña.</p>
+            </div>
+          </div>
+          <div class="edu-card">
+            <div class="edu-dot"></div>
+            <Icon icon="terminal-window" size="1.5rem" />
+            <div>
+              <h3>Técnico en Sistemas</h3>
+              <p class="edu-institution">Politécnico Indes</p>
+              <p class="edu-detail">Operador de sistemas teleinformáticos y aplicaciones multimedia.</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-			<section>
-				<h2 class="section-title">Habilidades</h2>
-				<div class="content">
-					<div class="skills-category">
-						<h3>Enfoque Principal</h3>
-						<div class="pills">
-							<Pill>AWS</Pill>
-							<Pill>Python</Pill>
-							<Pill>Automatización</Pill>
-						</div>
-					</div>
-					<div class="skills-category">
-						<h3>Herramientas</h3>
-						<div class="pills">
-							<Pill>Git</Pill>
-							<Pill>Linux</Pill>
-							<Pill>Bash</Pill>
-							<Pill>Docker</Pill>
-						</div>
-					</div>
-					<div class="skills-category">
-						<h3>Aprendiendo Activamente</h3>
-						<div class="pills">
-							<Pill>AWS</Pill>
-							<Pill>CI/CD Pipelines</Pill>
-							<Pill>Azure</Pill>
-						</div>
-					</div>
-				</div>
-			</section>
-		</main>
+      <section class="about-section animate-in">
+        <h2 class="about-section-title">Habilidades</h2>
+        <div class="about-section-body">
+          <div class="skills-category">
+            <h3>Enfoque Principal</h3>
+            <div class="pills-row">
+              <Pill variant="accent">AWS</Pill>
+              <Pill variant="accent">Python</Pill>
+              <Pill variant="accent">Automatización</Pill>
+            </div>
+          </div>
+          <div class="skills-category">
+            <h3>Herramientas</h3>
+            <div class="pills-row">
+              <Pill variant="subtle">Git</Pill>
+              <Pill variant="subtle">Linux</Pill>
+              <Pill variant="subtle">Bash</Pill>
+              <Pill variant="subtle">Docker</Pill>
+            </div>
+          </div>
+          <div class="skills-category">
+            <h3>Aprendiendo Activamente</h3>
+            <div class="pills-row">
+              <Pill variant="subtle">AWS</Pill>
+              <Pill variant="subtle">CI/CD Pipelines</Pill>
+              <Pill variant="subtle">Azure</Pill>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
 
-		<ContactCTA />
-	</div>
+  <ContactCTA />
 </BaseLayout>
 
 <style>
-	.about {
-		display: flex;
-		flex-direction: column;
-		gap: 3.5rem;
-	}
+  .about-hero-img {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 1.25rem;
+    margin-top: 1.5rem;
+  }
 
-	img {
-		margin-top: 1.5rem;
-		border-radius: 1.5rem;
-		box-shadow: var(--shadow-md);
-	}
+  .about-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3.5rem;
+    padding: 3rem 0;
+    max-width: 48rem;
+    margin: 0 auto;
+  }
 
-	section {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-		color: var(--gray-200);
-	}
+  .about-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 
-	.section-title {
-		grid-column-start: 1;
-		font-size: var(--text-xl);
-		color: var(--gray-0);
-	}
+  .about-section-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    color: var(--color-text-primary);
+  }
 
-	.content {
-		grid-column: 2 / 4;
-	}
+  .about-section-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    color: var(--color-text-secondary);
+    font-size: 1.05rem;
+    line-height: 1.7;
+  }
 
-	/* Education Styles - Clean & Minimalist */
-	.education-grid {
-		display: flex;
-		flex-direction: column;
-		gap: 2rem;
-	}
+  .about-section-body strong {
+    color: var(--color-accent);
+  }
 
-	.edu-card {
-		display: flex;
-		gap: 1.5rem;
-		padding-left: 1.5rem;
-		border-left: 2px solid var(--accent-regular);
-		align-items: flex-start;
-		position: relative;
-	}
+  .edu-card {
+    display: flex;
+    gap: 1.25rem;
+    padding: 1.5rem;
+    background: var(--color-surface-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    border-left: 3px solid var(--color-accent);
+    position: relative;
+  }
 
-	/* Optional: Add a subtle dot on the line */
-	.edu-card::before {
-		content: "";
-		position: absolute;
-		left: -5px;
-		top: 0;
-		width: 8px;
-		height: 8px;
-		border-radius: 50%;
-		background: var(--accent-regular);
-	}
+  .edu-dot {
+    display: none;
+  }
 
-	.edu-card h3 {
-		font-size: var(--text-lg);
-		color: var(--gray-100);
-		margin-bottom: 0.25rem;
-		line-height: 1.2;
-	}
+  .edu-card h3 {
+    font-size: 1.125rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
 
-	.institution {
-		color: var(--accent-regular);
-		font-weight: 500;
-		margin-bottom: 0.5rem;
-		font-size: var(--text-md);
-	}
+  .edu-institution {
+    color: var(--color-accent);
+    font-weight: 500;
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+  }
 
-	.details {
-		color: var(--gray-300);
-		font-size: var(--text-sm);
-		margin-bottom: 0.5rem;
-	}
+  .edu-detail {
+    font-size: 0.9rem;
+    color: var(--color-text-tertiary);
+    margin-bottom: 0.25rem;
+  }
 
-	.project {
-		font-size: var(--text-sm);
-		font-style: italic;
-		color: var(--gray-400);
-		margin-top: 0.25rem;
-	}
+  .edu-project {
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--color-text-tertiary);
+  }
 
-	/* Skills Styles */
-	.skills-category {
-		margin-bottom: 2.5rem;
-	}
+  .skills-category {
+    margin-bottom: 1.5rem;
+  }
 
-	.skills-category h3 {
-		font-size: var(--text-md);
-		color: var(--gray-200);
-		margin-bottom: 1rem;
-		font-weight: 600;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-	}
+  .skills-category:last-child {
+    margin-bottom: 0;
+  }
 
-	.pills {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.75rem;
-	}
+  .skills-category h3 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
 
-	@media (min-width: 50em) {
-		.about {
-			display: grid;
-			grid-template-columns: 1fr 60% 1fr;
-		}
-
-		.about > :global(:first-child) {
-			grid-column-start: 2;
-		}
-
-		section {
-			display: contents;
-			font-size: var(--text-lg);
-		}
-	}
+  .pills-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
 </style>

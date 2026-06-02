@@ -10,7 +10,11 @@ export interface Props {
 }
 
 const { color = "currentcolor", gradient, icon, size } = Astro.props;
-const iconPath = iconPaths[icon as keyof typeof iconPaths];
+const raw = iconPaths[icon as keyof typeof iconPaths];
+
+const svgMatch = raw.match(/<svg\s[^>]*?viewBox="([^"]+)"/);
+const viewBox = svgMatch ? svgMatch[1] : "0 0 256 256";
+const content = svgMatch ? raw.replace(/<svg[^>]*>/i, "").replace(/<\/svg>/i, "") : raw;
 
 const attrs: HTMLAttributes<"svg"> = {};
 if (size) attrs.style = { "--size": size };
@@ -23,22 +27,22 @@ const gradientId =
 	xmlns="http://www.w3.org/2000/svg"
 	width="40"
 	height="40"
-	viewBox="0 0 256 256"
+	viewBox={viewBox}
 	aria-hidden="true"
 	stroke={gradient ? `url(#${gradientId})` : color}
 	fill={gradient ? `url(#${gradientId})` : color}
 	{...attrs}
 >
-	<g set:html={iconPath} />
+	<g set:html={content} />
 	{
 		gradient && (
 			<linearGradient
 				id={gradientId}
-				x1="23"
-				x2="235"
-				y1="43"
-				y2="202"
-				gradientUnits="userSpaceOnUse"
+				x1="0"
+				x2="1"
+				y1="0"
+				y2="1"
+				gradientUnits="objectBoundingBox"
 			>
 				<stop stop-color="var(--gradient-stop-1)" />
 				<stop offset=".5" stop-color="var(--gradient-stop-2)" />

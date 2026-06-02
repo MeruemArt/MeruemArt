@@ -1,8 +1,19 @@
 ---
-import Hero from '../components/Hero.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Not Found" description="404 Error — this page was not found">
-	<Hero title="Page Not Found" tagline="Not found" />
+  <div class="wrapper" style="padding-top: 10rem; text-align: center;">
+    <div class="animate-in">
+      <h1 style="font-family: var(--font-display); font-size: clamp(4rem, 10vw, 8rem); font-weight: 800; letter-spacing: -0.05em; background: var(--gradient-accent); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; line-height: 1;">
+        404
+      </h1>
+      <p style="font-size: 1.25rem; color: var(--color-text-secondary); margin: 1rem 0 2rem;">
+        Página no encontrada
+      </p>
+      <a href="/" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 2rem; border-radius: 999rem; background: var(--gradient-accent); color: white; text-decoration: none; font-weight: 600;">
+        Volver al inicio
+      </a>
+    </div>
+  </div>
 </BaseLayout>

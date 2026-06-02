@@ -16,8 +16,8 @@ import Icon from './Icon.astro';
 		border: 0;
 		border-radius: 999rem;
 		padding: 0;
-		background-color: var(--gray-999);
-		box-shadow: inset 0 0 0 1px var(--accent-overlay);
+		background: var(--color-surface-secondary);
+		border: 1px solid var(--color-border-light);
 		cursor: pointer;
 	}
 
@@ -25,19 +25,19 @@ import Icon from './Icon.astro';
 		z-index: 1;
 		position: relative;
 		display: flex;
-		padding: 0.5rem;
-		width: 2rem;
-		height: 2rem;
-		font-size: 1rem;
-		color: var(--accent-overlay);
+		padding: 0.375rem;
+		width: 1.75rem;
+		height: 1.75rem;
+		font-size: 0.9rem;
+		color: var(--color-text-tertiary);
 	}
 
 	.icon.light::before {
 		content: '';
 		z-index: -1;
 		position: absolute;
-		inset: 0;
-		background-color: var(--accent-regular);
+		inset: 1px;
+		background: var(--gradient-accent);
 		border-radius: 999rem;
 	}
 
@@ -46,9 +46,8 @@ import Icon from './Icon.astro';
 	}
 
 	:global(.theme-dark) .icon.dark,
-	:global(html:not(.theme-dark)) .icon.light,
-	button[aria-pressed='false'] .icon.light {
-		color: var(--accent-text-over);
+	:global(html:not(.theme-dark)) .icon.light {
+		color: white;
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
@@ -66,28 +65,43 @@ import Icon from './Icon.astro';
 </style>
 
 <script>
+	function getThemePref() {
+		try {
+			if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+				return localStorage.getItem('theme');
+			}
+			if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+				return 'dark';
+			}
+		} catch(e) {}
+		return 'light';
+	}
+
 	class ThemeToggle extends HTMLElement {
-		constructor() {
-			super();
+		connectedCallback() {
+			if (this._initialized) return;
+			this._initialized = true;
 
 			const button = this.querySelector('button')!;
 
-			/** Set the theme to dark/light mode. */
-			const setTheme = (dark: boolean) => {
+			const setTheme = (dark) => {
 				document.documentElement.classList[dark ? 'add' : 'remove']('theme-dark');
 				button.setAttribute('aria-pressed', String(dark));
 			};
 
-			// Toggle the theme when a user clicks the button.
-			button.addEventListener('click', () => setTheme(!this.isDark()));
+			const isDark = () => document.documentElement.classList.contains('theme-dark');
 
-			// Initialize button state to reflect current theme.
-			setTheme(this.isDark());
-		}
+			setTheme(getThemePref() === 'dark');
 
-		isDark() {
-			return document.documentElement.classList.contains('theme-dark');
+			button.addEventListener('click', () => setTheme(!isDark()));
+
+			document.addEventListener('astro:page-load', () => {
+				setTheme(getThemePref() === 'dark');
+			});
 		}
 	}
-	customElements.define('theme-toggle', ThemeToggle);
+
+	if (!customElements.get('theme-toggle')) {
+		customElements.define('theme-toggle', ThemeToggle);
+	}
 </script>

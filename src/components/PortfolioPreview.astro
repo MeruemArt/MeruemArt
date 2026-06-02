@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from "astro:content";
-
 import { Image } from "astro:assets";
 
 interface Props {
@@ -10,62 +9,91 @@ interface Props {
 const { data, slug } = Astro.props.project;
 ---
 
-<a class="card" href={`/work/${slug}`}>
-  <span class="title">{data.title}</span>
+<a href={`/work/${slug}`} class="portfolio-card">
+  <span class="portfolio-card-title">{data.title}</span>
   <Image
     src={data.img}
     alt={data.img_alt || ""}
     loading="lazy"
     decoding="async"
+    class="portfolio-card-img"
   />
+  <div class="portfolio-card-overlay">
+    <span class="portfolio-card-cta">Ver proyecto →</span>
+  </div>
 </a>
 
 <style>
-  .card {
+  .portfolio-card {
     display: grid;
     grid-template: auto 1fr / auto 1fr;
-    height: 11rem;
-    background: var(--gradient-subtle);
-    border: 1px solid var(--gray-800);
-    border-radius: 0.75rem;
+    height: 14rem;
+    border-radius: 1rem;
     overflow: hidden;
-    box-shadow: var(--shadow-sm);
     text-decoration: none;
-    font-family: var(--font-body);
-    font-size: var(--text-lg);
-    font-weight: 500;
-    transition: box-shadow var(--theme-transition);
+    position: relative;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
   }
 
-  .card:hover {
-    box-shadow: var(--shadow-md);
+  .portfolio-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 16px 48px var(--color-accent-glow);
   }
 
-  .title {
+  .portfolio-card-title {
     grid-area: 1 / 1 / 2 / 2;
-    z-index: 1;
-    margin: 0.5rem;
+    z-index: 2;
+    margin: 0.75rem;
     padding: 0.5rem 1rem;
-    background: var(--gray-999);
-    color: var(--gray-200);
-    border-radius: 0.375rem;
+    background: var(--color-glass-bg);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--color-glass-border);
+    color: var(--color-text-primary);
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-radius: 0.5rem;
+    align-self: start;
+    justify-self: start;
   }
 
-  img {
+  .portfolio-card-img {
     grid-area: 1 / 1 / 3 / 3;
     width: 100%;
     height: 100%;
     object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  .portfolio-card:hover .portfolio-card-img {
+    transform: scale(1.1);
+  }
+
+  .portfolio-card-overlay {
+    grid-area: 1 / 1 / 3 / 3;
+    z-index: 1;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1.5rem;
+    background: linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .portfolio-card:hover .portfolio-card-overlay {
+    opacity: 1;
+  }
+
+  .portfolio-card-cta {
+    color: white;
+    font-weight: 600;
+    font-size: 1rem;
   }
 
   @media (min-width: 50em) {
-    .card {
+    .portfolio-card {
       height: 22rem;
-      border-radius: 4.5rem;
-    }
-
-    .title {
-      border-radius: 0.9375rem;
+      border-radius: 1.5rem;
     }
   }
 </style>

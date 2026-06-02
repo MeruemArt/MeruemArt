@@ -1,0 +1,90 @@
+---
+interface Props {
+  class?: string;
+  glare?: boolean;
+}
+
+const { glare = true } = Astro.props;
+---
+
+<div class:list={["tilt-card relative", Astro.props.class]}>
+  <div class="tilt-card-inner relative w-full h-full overflow-hidden rounded-2xl">
+    <div class="tilt-card-content relative z-10">
+      <slot />
+    </div>
+    {glare && <div class="tilt-card-glare absolute inset-0 z-20 pointer-events-none opacity-0 transition-opacity duration-300" />}
+  </div>
+</div>
+
+<script>
+  function initTiltCards() {
+    var cards = document.querySelectorAll(".tilt-card");
+    var cleanups = [];
+
+    cards.forEach(function(card) {
+      var inner = card.querySelector(".tilt-card-inner");
+      var glare = card.querySelector(".tilt-card-glare");
+      if (!inner) return;
+
+      function handleMouseMove(e) {
+        var rect = card.getBoundingClientRect();
+        var x = e.clientX - rect.left;
+        var y = e.clientY - rect.top;
+        var centerX = rect.width / 2;
+        var centerY = rect.height / 2;
+        var rotateX = ((y - centerY) / centerY) * -10;
+        var rotateY = ((x - centerX) / centerX) * 10;
+
+        inner.style.transform = "perspective(1000px) rotateX(" + rotateX + "deg) rotateY(" + rotateY + "deg) scale3d(1.02, 1.02, 1.02)";
+
+        if (glare) {
+          var glareX = (x / rect.width) * 100;
+          var glareY = (y / rect.height) * 100;
+          glare.style.background = "radial-gradient(circle at " + glareX + "% " + glareY + "%, rgba(255,255,255,0.15) 0%, transparent 60%)";
+          glare.style.opacity = "1";
+        }
+      }
+
+      function handleMouseLeave() {
+        inner.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
+        if (glare) {
+          glare.style.opacity = "0";
+        }
+      }
+
+      card.addEventListener("mousemove", handleMouseMove);
+      card.addEventListener("mouseleave", handleMouseLeave);
+
+      cleanups.push(function() {
+        card.removeEventListener("mousemove", handleMouseMove);
+        card.removeEventListener("mouseleave", handleMouseLeave);
+      });
+    });
+
+    return function() {
+      cleanups.forEach(function(fn) { fn(); });
+    };
+  }
+
+  var cleanupTilt = initTiltCards();
+
+  document.addEventListener("astro:after-swap", function() {
+    if (typeof cleanupTilt === "function") cleanupTilt();
+    setTimeout(function() { cleanupTilt = initTiltCards(); }, 0);
+  });
+</script>
+
+<style>
+  .tilt-card-inner {
+    transition: transform 0.2s ease-out;
+    transform-style: preserve-3d;
+  }
+
+  .tilt-card-content {
+    transform: translateZ(30px);
+  }
+
+  .tilt-card-glare {
+    mix-blend-mode: overlay;
+  }
+</style>

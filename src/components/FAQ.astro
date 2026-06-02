@@ -2,169 +2,125 @@
 import Icon from "./Icon.astro";
 ---
 
-<section class="box skills">
-    <div class="stack gap-2 lg:gap-4">
-        <Icon
-            icon="terminal-window"
-            color="var(--accent-regular)"
-            size="2.5rem"
-            gradient
-        />
-        <h2>Preguntas Frecuentes</h2>
-        <p>
-            Resuelvo tus dudas sobre mis servicios como Desarrollador DevOps y
-            Cloud Architect.
-        </p>
-    </div>
-    <div class="stack gap-4 lg:gap-8">
-        <details>
-            <summary
-                >¿Qué servicios ofrece Luis Arteaga como Desarrollador DevOps?</summary
-            >
-            <p>
-                Como Desarrollador DevOps, Luis Arteaga ofrece una gama completa
-                de servicios enfocados en la automatización, integración
-                continua y despliegue continuo (CI/CD). Me especializo en
-                optimizar el ciclo de vida del desarrollo de software,
-                asegurando entregas más rápidas y fiables mediante el uso de
-                herramientas modernas y prácticas de infraestructura como
-                código.
-            </p>
-        </details>
-        <details>
-            <summary
-                >¿Cómo puede un Cloud Architect mejorar mi infraestructura en
-                AWS?</summary
-            >
-            <p>
-                Un Cloud Architect diseña soluciones robustas, escalables y
-                seguras en la nube. Mi enfoque en AWS permite a las empresas
-                migrar, modernizar y gestionar sus cargas de trabajo de manera
-                eficiente, reduciendo costos operativos y mejorando la
-                disponibilidad y el rendimiento de sus aplicaciones críticas.
-            </p>
-        </details>
-        <details>
-            <summary
-                >¿Qué experiencia tiene en automatización con Python?</summary
-            >
-            <p>
-                Cuento con amplia experiencia utilizando Python para automatizar
-                tareas operativas, crear scripts de mantenimiento y desarrollar
-                herramientas personalizadas que facilitan la gestión de
-                sistemas. Python es una herramienta clave en mi arsenal para
-                resolver problemas complejos de infraestructura y mejorar la
-                eficiencia operativa.
-            </p>
-        </details>
-        <details>
-            <summary
-                >¿Por qué es importante la Infraestructura como Código (IaC)?</summary
-            >
-            <p>
-                La Infraestructura como Código (IaC) es fundamental para
-                gestionar entornos modernos. Permite versionar, replicar y
-                auditar la infraestructura de la misma manera que el código de
-                la aplicación. Utilizo herramientas como Azure DevOps y
-                CloudFormation para garantizar que los despliegues sean
-                consistentes, predecibles y libres de errores manuales.
-            </p>
-        </details>
-        <details>
-            <summary
-                >¿Ofreces consultoría personalizada para proyectos específicos?</summary
-            >
-            <p>
-                Sí, ofrezco consultoría personalizada para evaluar las
-                necesidades específicas de tu proyecto. Ya sea que necesites
-                optimizar una arquitectura existente o construir una desde cero,
-                trabajo contigo para definir la mejor estrategia tecnológica
-                alineada con tus objetivos de negocio.
-            </p>
-        </details>
-    </div>
+<section class="faq-section section-padding wrapper">
+  <div class="faq-header animate-in">
+    <Icon icon="terminal-window" size="2.5rem" gradient />
+    <h2 class="faq-title">Preguntas Frecuentes</h2>
+    <p class="faq-subtitle">Resuelvo tus dudas sobre mis servicios como Desarrollador DevOps y Cloud Architect.</p>
+  </div>
+  <div class="faq-list animate-in">
+    <details class="faq-item">
+      <summary class="faq-question">¿Qué servicios ofrece Luis Arteaga como Desarrollador DevOps?</summary>
+      <div class="faq-answer">
+        <p>Como Desarrollador DevOps, Luis Arteaga ofrece una gama completa de servicios enfocados en la automatización, integración continua y despliegue continuo (CI/CD). Me especializo en optimizar el ciclo de vida del desarrollo de software, asegurando entregas más rápidas y fiables mediante el uso de herramientas modernas y prácticas de infraestructura como código.</p>
+      </div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-question">¿Cómo puede un Cloud Architect mejorar mi infraestructura en AWS?</summary>
+      <div class="faq-answer">
+        <p>Un Cloud Architect diseña soluciones robustas, escalables y seguras en la nube. Mi enfoque en AWS permite a las empresas migrar, modernizar y gestionar sus cargas de trabajo de manera eficiente, reduciendo costos operativos y mejorando la disponibilidad y el rendimiento de sus aplicaciones críticas.</p>
+      </div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-question">¿Qué experiencia tiene en automatización con Python?</summary>
+      <div class="faq-answer">
+        <p>Cuento con amplia experiencia utilizando Python para automatizar tareas operativas, crear scripts de mantenimiento y desarrollar herramientas personalizadas que facilitan la gestión de sistemas. Python es una herramienta clave en mi arsenal para resolver problemas complejos de infraestructura y mejorar la eficiencia operativa.</p>
+      </div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-question">¿Por qué es importante la Infraestructura como Código (IaC)?</summary>
+      <div class="faq-answer">
+        <p>La Infraestructura como Código (IaC) es fundamental para gestionar entornos modernos. Permite versionar, replicar y auditar la infraestructura de la misma manera que el código de la aplicación. Utilizo herramientas como Azure DevOps y CloudFormation para garantizar que los despliegues sean consistentes, predecibles y libres de errores manuales.</p>
+      </div>
+    </details>
+    <details class="faq-item">
+      <summary class="faq-question">¿Ofreces consultoría personalizada para proyectos específicos?</summary>
+      <div class="faq-answer">
+        <p>Sí, ofrezco consultoría personalizada para evaluar las necesidades específicas de tu proyecto. Ya sea que necesites optimizar una arquitectura existente o construir una desde cero, trabajo contigo para definir la mejor estrategia tecnológica alineada con tus objetivos de negocio.</p>
+      </div>
+    </details>
+  </div>
 </section>
 
 <style>
-    .box {
-        border: 1px solid var(--gray-800);
-        border-radius: 0.75rem;
-        padding: 1.5rem;
-        background-color: var(--gray-999_40);
-        box-shadow: var(--shadow-sm);
-    }
+  .faq-header {
+    text-align: center;
+    max-width: 40rem;
+    margin: 0 auto 3rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
 
-    .skills {
-        display: flex;
-        flex-direction: column;
-        gap: 3rem;
-    }
+  .faq-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+  }
 
-    .skills h2 {
-        font-size: var(--text-lg);
-    }
+  .faq-subtitle {
+    color: var(--color-text-secondary);
+    font-size: 1.1rem;
+  }
 
-    .skills p {
-        color: var(--gray-400);
-    }
+  .faq-list {
+    max-width: 48rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background: var(--color-surface-secondary);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    overflow: hidden;
+  }
 
-    @media (min-width: 50em) {
-        .box {
-            border-radius: 1.5rem;
-            padding: 2.5rem;
-        }
+  .faq-item {
+    border-bottom: 1px solid var(--color-border-light);
+    transition: background-color 0.2s;
+  }
 
-        .skills {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 5rem;
-        }
+  .faq-item:last-child {
+    border-bottom: none;
+  }
 
-        .skills h2 {
-            font-size: var(--text-2xl);
-        }
-    }
+  .faq-item:hover {
+    background: var(--color-surface);
+  }
 
-    details {
-        border-bottom: 1px solid var(--gray-800);
-        padding-bottom: 1rem;
-    }
+  .faq-question {
+    cursor: pointer;
+    padding: 1.25rem 1.5rem;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    user-select: none;
+  }
 
-    details:last-child {
-        border-bottom: none;
-    }
+  .faq-question::-webkit-details-marker {
+    display: none;
+  }
 
-    summary {
-        cursor: pointer;
-        font-weight: bold;
-        color: var(--gray-200);
-        list-style: none;
-        position: relative;
-        padding-right: 2rem;
-        font-size: var(--text-md);
-    }
+  .faq-question::after {
+    content: "+";
+    font-size: 1.25rem;
+    color: var(--color-accent);
+    font-weight: 700;
+    transition: transform 0.2s ease;
+  }
 
-    summary::-webkit-details-marker {
-        display: none;
-    }
+  .faq-item[open] .faq-question::after {
+    content: "−";
+  }
 
-    summary::after {
-        content: "+";
-        position: absolute;
-        right: 0;
-        top: 0;
-        font-size: 1.5rem;
-        line-height: 1;
-        color: var(--accent-regular);
-    }
-
-    details[open] summary::after {
-        content: "-";
-    }
-
-    details p {
-        margin-top: 1rem;
-        color: var(--gray-300);
-        line-height: 1.6;
-    }
+  .faq-answer {
+    padding: 0 1.5rem 1.25rem;
+    color: var(--color-text-secondary);
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
 </style>

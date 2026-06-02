@@ -1,73 +1,65 @@
 ---
-import Icon from './Icon.astro';
+import Icon from "./Icon.astro";
 const currentYear = new Date().getFullYear();
 ---
 
-<footer>
-	<div class="group">
-		<p>
-			Based on Jeanine White's template in <a href="https://astro.build/">Astro</a>
-			<Icon icon="rocket-launch" size="1.2em" />
-		</p>
-		<p>&copy; {currentYear} Luis Arteaga</p>
-	</div>
-	<p class="socials">
-		<a href="https://twitter.com/me"> Twitter</a>
-		<a href="https://github.com/MeruemArt"> GitHub</a>
-	</p>
+<footer class="footer">
+  <div class="wrapper footer-inner">
+    <div class="footer-brand">
+      <p class="copyright">&copy; {currentYear} Luis Arteaga</p>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/MeruemArt" target="_blank" rel="noopener noreferrer" class="footer-link" aria-label="GitHub">
+        <Icon icon="github-logo" size="1.3em" />
+      </a>
+      <a href="https://www.linkedin.com/in/luis-arteaga-07/" target="_blank" rel="noopener noreferrer" class="footer-link" aria-label="LinkedIn">
+        <Icon icon="linkedin-logo" size="1.3em" />
+      </a>
+    </div>
+  </div>
 </footer>
+
 <style>
-	footer {
-		display: flex;
-		flex-direction: column;
-		gap: 3rem;
-		margin-top: auto;
-		padding: 3rem 2rem 3rem;
-		text-align: center;
-		color: var(--gray-400);
-		font-size: var(--text-sm);
-	}
+  .footer {
+    border-top: 1px solid var(--color-border);
+    padding: 2rem 0;
+    margin-top: 5rem;
+  }
 
-	footer a {
-		color: var(--gray-400);
-		text-decoration: 1px solid underline transparent;
-		text-underline-offset: 0.25em;
-		transition: text-decoration-color var(--theme-transition);
-	}
+  .footer-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+  }
 
-	footer a:hover,
-	footer a:focus {
-		text-decoration-color: currentColor;
-	}
+  .copyright {
+    color: var(--color-text-tertiary);
+    font-size: 0.875rem;
+  }
 
-	.group {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-	}
+  .footer-links {
+    display: flex;
+    gap: 0.75rem;
+  }
 
-	.socials {
-		display: flex;
-		justify-content: center;
-		gap: 1rem;
-		flex-wrap: wrap;
-	}
+  .footer-link {
+    display: flex;
+    padding: 0.5rem;
+    border-radius: 0.75rem;
+    color: var(--color-text-tertiary);
+    transition: color 0.2s, background-color 0.2s;
+  }
 
-	@media (min-width: 50em) {
-		footer {
-			flex-direction: row;
-			justify-content: space-between;
-			padding: 2.5rem 5rem;
-		}
+  .footer-link:hover {
+    color: var(--color-accent);
+    background: var(--color-accent-glow);
+  }
 
-		.group {
-			flex-direction: row;
-			gap: 1rem;
-			flex-wrap: wrap;
-		}
-
-		.socials {
-			justify-content: flex-end;
-		}
-	}
+  @media (min-width: 50em) {
+    .footer-inner {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
 </style>

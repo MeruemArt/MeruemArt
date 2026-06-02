@@ -2,38 +2,41 @@
 import { getCollection } from 'astro:content';
 
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-import ContactCTA from '../components/ContactCTA.astro';
-import PortfolioPreview from '../components/PortfolioPreview.astro';
 import Hero from '../components/Hero.astro';
 import Grid from '../components/Grid.astro';
+import PortfolioPreview from '../components/PortfolioPreview.astro';
+import ContactCTA from '../components/ContactCTA.astro';
 
 const projects = (await getCollection('work')).sort(
-	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
 );
 ---
 
 <BaseLayout
-	title="Menciones | Luis Arteaga"
-	description="algunas menciones."
+  title="Menciones | Luis Arteaga"
+  description="Menciones y felicitaciones en mi trabajo."
 >
-	<div class="stack gap-20">
-		<main class="wrapper stack gap-8">
-			<Hero
-				title="Menciones"
-				tagline="algunas menciones y felicitaciones en mi trabajo."
-				align="start"
-			/>
-			<Grid variant="offset">
-				{
-					projects.map((project) => (
-						<li>
-							<PortfolioPreview project={project} />
-						</li>
-					))
-				}
-			</Grid>
-		</main>
-		<ContactCTA />
-	</div>
+  <div class="wrapper" style="padding-top: 6rem;">
+    <Hero
+      title="Menciones"
+      tagline="Menciones y felicitaciones en mi trabajo."
+      align="start"
+    />
+
+    <div class="mentions-grid animate-in">
+      <Grid variant="offset">
+        {projects.map((project) => (
+          <li><PortfolioPreview project={project} /></li>
+        ))}
+      </Grid>
+    </div>
+  </div>
+
+  <ContactCTA />
 </BaseLayout>
+
+<style>
+  .mentions-grid {
+    padding: 2rem 0 4rem;
+  }
+</style>

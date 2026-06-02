@@ -1,0 +1,14 @@
+---
+interface Props {
+  class?: string;
+  glow?: boolean;
+  strong?: boolean;
+}
+
+const { glow, strong, ...attrs } = Astro.props;
+const cls = strong ? "glass-strong" : "glass";
+---
+
+<div class:list={[cls, glow && "glow", "rounded-2xl", Astro.props.class]} {...attrs}>
+  <slot />
+</div>
