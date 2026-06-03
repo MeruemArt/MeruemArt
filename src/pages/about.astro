@@ -4,6 +4,8 @@ import Hero from "../components/Hero.astro";
 import Pill from "../components/Pill.astro";
 import Icon from "../components/Icon.astro";
 import ContactCTA from "../components/ContactCTA.astro";
+import { Image } from "astro:assets";
+import whatsappIcon from "../assets/whatsapp-icon.svg";
 ---
 
 <BaseLayout
@@ -101,6 +103,19 @@ import ContactCTA from "../components/ContactCTA.astro";
     </div>
   </div>
 
+  <a
+    href="https://api.whatsapp.com/send/?phone=%2B573186405618&text=Hola%20Luis.%0AVi%20tu%20p%C3%A1gina%2C%20me%20interesa%20contactarte%20%F0%9F%91%A8%F0%9F%8F%BB%E2%80%8D%F0%9F%92%BB.&type=phone_number&app_absent=0"
+    class="whatsapp-button"
+    target="_blank"
+  >
+    <Image
+      src={whatsappIcon}
+      alt="Icono de Whatsapp"
+      width={64}
+      height={64}
+      loading="eager"
+    />
+  </a>
   <ContactCTA />
 </BaseLayout>
 
@@ -208,5 +223,24 @@ import ContactCTA from "../components/ContactCTA.astro";
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
+  }
+
+  .whatsapp-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 220;
+  }
+
+  .whatsapp-button img {
+    width: 56px;
+    height: 56px;
+  }
+
+  @media (min-width: 50em) {
+    .whatsapp-button img {
+      width: 64px;
+      height: 64px;
+    }
   }
 </style>
