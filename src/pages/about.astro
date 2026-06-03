@@ -8,12 +8,12 @@ import ContactCTA from "../components/ContactCTA.astro";
 
 <BaseLayout
   title="Acerca de | Luis Arteaga"
-  description="Aprende más sobre Luis Arteaga y su experiencia en desarrollo de software"
+  description="Conoce más sobre Luis Arteaga, DevOps Engineer con experiencia en AWS, Azure DevOps, IaC y automatización CI/CD"
 >
   <div class="wrapper" style="padding-top: 6rem;">
     <Hero
       title="Acerca de"
-      tagline="Gracias por visitar. Lee a continuación para conocer más sobre mí y mi pasión por la tecnología."
+      tagline="Gracias por visitar. Soy DevOps Engineer con más de 4 años de experiencia en AWS, Azure DevOps y automatización."
       size="md"
     >
       <img
@@ -30,7 +30,7 @@ import ContactCTA from "../components/ContactCTA.astro";
         <h2 class="about-section-title">Resumen</h2>
         <div class="about-section-body">
           <p>
-            Developer especializado en DevOps con más de 3 años de experiencia implementando soluciones de Infrastructure as Code (IaC) en AWS. Experto en CloudFormation, seguridad cloud, y automatización de pipelines CI/CD con Azure DevOps. Historial comprobado resolviendo vulnerabilidades críticas de seguridad, diseñando arquitecturas multi-región resilientes, y mejorando la calidad del código mediante testing automatizado. Enfoque en estandarización de procesos, optimización de recursos cloud, y colaboración efectiva en equipos multidisciplinarios.
+            DevOps Engineer con más de 4 años de experiencia en Infrastructure as Code (IaC), CI/CD y seguridad cloud en AWS y Azure DevOps. Experto en diseño de plantillas CI/CD parametrizadas (Angular, .NET/EKS, Next.js), integración de herramientas DevSecOps (Veracode, Trivy, SonarCloud), y automatización de procesos operativos con PowerShell. Historial comprobado resolviendo vulnerabilidades críticas de seguridad en AWS, diseñando arquitecturas multi-región resilientes, estandarizando pipelines y reduciendo carga operativa mediante automatización de Work Items en Azure DevOps. Enfoque en estandarización, optimización de recursos cloud, y mejora continua de calidad de código.
           </p>
         </div>
       </section>
@@ -40,14 +40,34 @@ import ContactCTA from "../components/ContactCTA.astro";
         <div class="about-section-body">
           <div class="exp-card">
             <div class="exp-header">
+              <h3>DevOps Engineer</h3>
+              <p class="exp-company">Inter Rapidisimo — Bogotá, Colombia</p>
+              <p class="exp-date">Mar 2026 — Presente</p>
+            </div>
+            <ul class="exp-logros">
+              <li>Diseñé e implementé 3 plantillas CI/CD parametrizadas (Angular, .NET/EKS, Next.js) en Azure DevOps YAML, estandarizando el pipeline de software para toda la organización y eliminando cientos de líneas de código duplicado entre proyectos.</li>
+              <li>Integré herramientas DevSecOps (Veracode SAST, Trivy SCA, SonarCloud, SBOM) en todos los pipelines, automatizando la detección temprana de vulnerabilidades y mejorando la postura de seguridad en el ciclo de desarrollo.</li>
+              <li>Desarrollé un sistema de 12 scripts PowerShell que automatiza el ciclo de vida completo de Work Items en Azure DevOps (creación, transición de estados, validación de tiempos con festivos colombianos, comentarios y monitoreo post-despliegue), reduciendo significativamente la carga operativa manual del equipo de operaciones.</li>
+              <li>Diseñé y propuse una arquitectura CD moderna basada en YAML para despliegues en EKS, reemplazando Release Pipelines clásicos y cubriendo el ciclo completo: namespaces, Fargate, service accounts, deployments, ingress y health checks.</li>
+              <li>Implementé validación automatizada de variables entre entornos (Desarrollo, QA, Producción) detectando desviaciones de configuración antes de cada despliegue, previniendo errores por configuraciones inconsistentes.</li>
+              <li>Definí umbrales de calidad (Quality Gates) en SonarCloud con 3 niveles (A, B, C) y configuré cobertura de pruebas con Coverlet + ReportGenerator, estableciendo estándares de calidad de código medibles para todos los proyectos.</li>
+            </ul>
+          </div>
+          <div class="exp-card">
+            <div class="exp-header">
               <h3>Developer</h3>
               <p class="exp-company">Cobis Topaz — Montería, Colombia</p>
               <p class="exp-date">Mar 2022 — Mar 2026</p>
             </div>
             <ul class="exp-logros">
               <li>Resolví más de 10 vulnerabilidades críticas de AWS Security Hub en infraestructura CloudFormation, mejorando la postura de seguridad en 40%.</li>
-              <li>Diseñé e implementé arquitectura multi-región (us-east-1, us-west-2) con replicación S3 y DynamoDB global, reduciendo RPO a menos de 1 hora con 99.9% de disponibilidad.</li>
-              <li>Implementé pipelines CI/CD en Azure DevOps para 8 microservicios, reduciendo tiempo de despliegue de 45 a 15 minutos (67% de mejora).</li>
+              <li>Configuré DeletionProtectionEnabled para instancia Nexus crítica y ajusté roles IAM de Chatbot, asegurando cumplimiento con AWS Well-Architected Framework.</li>
+              <li>Diseñé e implementé arquitectura multi-región con replicación automática de buckets S3 y tablas DynamoDB globales, reduciendo RPO a menos de 1 hora.</li>
+              <li>Refactoricé template padre de CloudFormation optimizando uso de recursos, eliminando más de 30 recursos redundantes y reduciendo costos en 800 dólares mensuales.</li>
+              <li>Estandaricé más de 50 templates convirtiendo documentos SSM a YAML y eliminando más de 200 líneas de código duplicado, mejorando mantenibilidad en 35%.</li>
+              <li>Desarrollé suite de más de 15 test unitarios para Lambdas Python críticas, aumentando cobertura de código de 0% a 85%.</li>
+              <li>Implementé soporte para despliegue de artifacts CWC base en pipelines Azure DevOps, habilitando CI/CD para 8 microservicios.</li>
+              <li>Colaboré en diseño de dashboards CloudWatch y contribuí al desarrollo de Lambda de auto-escalado inteligente para agentes Azure DevOps, reduciendo costos de compute en 25%.</li>
             </ul>
           </div>
         </div>
