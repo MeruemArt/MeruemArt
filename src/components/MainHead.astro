@@ -1,13 +1,11 @@
 ---
 import "../styles/global.css";
 import "@fontsource/public-sans/400.css";
-import "@fontsource/public-sans/500.css";
 import "@fontsource/public-sans/600.css";
 import "@fontsource/public-sans/700.css";
-import "@fontsource/rubik/400.css";
-import "@fontsource/rubik/500.css";
-import "@fontsource/rubik/600.css";
 import "@fontsource/rubik/700.css";
+import publicSans400Url from "@fontsource/public-sans/files/public-sans-latin-400-normal.woff2?url";
+import rubik700Url from "@fontsource/rubik/files/rubik-latin-700-normal.woff2?url";
 
 interface Props {
   title?: string | undefined;
@@ -46,6 +44,9 @@ const {
 <meta name="keywords" content="DevOps, AWS, Python, Automatización, IaC, CloudFormation, CI/CD, Luis Arteaga, Desarrollador Cloud, Azure, Pipelines, Docker" />
 
 <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+<link rel="preload" as="font" type="font/woff2" href={publicSans400Url} crossorigin />
+<link rel="preload" as="font" type="font/woff2" href={rubik700Url} crossorigin />
 
 <script is:inline>
   (function() {
