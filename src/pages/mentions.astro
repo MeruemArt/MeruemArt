@@ -1,15 +1,9 @@
 ---
-import { getCollection } from 'astro:content';
-
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import Grid from '../components/Grid.astro';
-import PortfolioPreview from '../components/PortfolioPreview.astro';
 import ContactCTA from '../components/ContactCTA.astro';
 
-const projects = (await getCollection('work')).sort(
-  (a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
-);
+const images = Array.from({ length: 9 }, (_, i) => `/assets/mentions/starmeup-${i + 1}.png`);
 ---
 
 <BaseLayout
@@ -24,11 +18,11 @@ const projects = (await getCollection('work')).sort(
     />
 
     <div class="mentions-grid animate-in">
-      <Grid variant="offset">
-        {projects.map((project) => (
-          <li><PortfolioPreview project={project} /></li>
-        ))}
-      </Grid>
+      {images.map((src) => (
+        <div class="mention-card">
+          <img src={src} alt="Reconocimiento" loading="lazy" />
+        </div>
+      ))}
     </div>
   </div>
 
@@ -38,5 +32,23 @@ const projects = (await getCollection('work')).sort(
 <style>
   .mentions-grid {
     padding: 2rem 0 4rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+  }
+  .mention-card {
+    border-radius: 12px;
+    overflow: hidden;
+    background: var(--color-surface);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    transition: transform 0.2s;
+  }
+  .mention-card:hover {
+    transform: translateY(-4px);
+  }
+  .mention-card img {
+    width: 100%;
+    height: auto;
+    display: block;
   }
 </style>

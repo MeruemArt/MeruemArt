@@ -9,7 +9,7 @@ import TechnicalSkills from "../components/TechnicalSkills.astro";
 import PortfolioPreview from "../components/PortfolioPreview.astro";
 import Grid from "../components/Grid.astro";
 import CallToAction from "../components/CallToAction.astro";
-import FAQ from "../components/FAQ.astro";
+
 import ContactCTA from "../components/ContactCTA.astro";
 
 const projects = (await getCollection("work"))
@@ -22,8 +22,8 @@ import cobisLogo from "../assets/cobis.svg";
 ---
 
 <BaseLayout
-  title="Luis Arteaga | Desarrollador DevOps & Cloud Architect"
-  description="Portafolio de Luis Arteaga, experto en DevOps, AWS, Python y automatización de infraestructura."
+  title="Luis Arteaga | Ingeniero DevOps"
+  description="Ayudo a empresas a desplegar software más rápido y sin errores automatizando su infraestructura en la nube."
 >
   <div class="wrapper" style="padding-top: 6rem;">
     <section class="hero-section">
@@ -35,15 +35,16 @@ import cobisLogo from "../assets/cobis.svg";
           </div>
           <h1 class="hero-title">
             Luis Arteaga<br />
-            <span class="gradient-text">Desarrollador DevOps</span>
+            <span class="gradient-text">Ingeniero DevOps</span>
           </h1>
           <p class="hero-subtitle">
-            Especializado en automatización, infraestructura como código (IaC) y gestión de servidores en AWS
+            Ayudo a empresas a desplegar software más rápido y sin errores automatizando su infraestructura en la nube.
           </p>
           <div class="hero-pills">
             <Pill><Icon icon="aws" size="1.2em" /> AWS</Pill>
             <Pill><Icon icon="python" size="1.2em" /> Python</Pill>
             <Pill><Icon icon="git" size="1.2em" /> Git</Pill>
+            <Pill><Icon icon="azure_devops" size="1.2em" /> Azure DevOps</Pill>
           </div>
         </div>
         <div class="hero-image-wrapper">
@@ -140,7 +141,6 @@ import cobisLogo from "../assets/cobis.svg";
         </div>
       </section>
 
-      <FAQ />
     </div>
 
     <ContactCTA />

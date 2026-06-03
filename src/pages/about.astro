@@ -27,14 +27,29 @@ import ContactCTA from "../components/ContactCTA.astro";
 
     <div class="about-content">
       <section class="about-section animate-in">
-        <h2 class="about-section-title">Mi Historia</h2>
+        <h2 class="about-section-title">Resumen</h2>
         <div class="about-section-body">
           <p>
-            Soy un Ingeniero de Sistemas que encontró su verdadera vocación en el mundo del <strong>DevOps</strong> y la <strong>Arquitectura Cloud</strong>. Más allá de los títulos, me define la curiosidad y la satisfacción de ver cómo una infraestructura bien diseñada puede potenciar el desarrollo de software.
+            Developer especializado en DevOps con más de 3 años de experiencia implementando soluciones de Infrastructure as Code (IaC) en AWS. Experto en CloudFormation, seguridad cloud, y automatización de pipelines CI/CD con Azure DevOps. Historial comprobado resolviendo vulnerabilidades críticas de seguridad, diseñando arquitecturas multi-región resilientes, y mejorando la calidad del código mediante testing automatizado. Enfoque en estandarización de procesos, optimización de recursos cloud, y colaboración efectiva en equipos multidisciplinarios.
           </p>
-          <p>
-            Me he enfocado en estas áreas no solo por su demanda, sino porque disfruto genuinamente resolviendo problemas de automatización y eficiencia. Mi objetivo es seguir aprendiendo y construyendo sistemas que sean robustos, escalables y fáciles de mantener.
-          </p>
+        </div>
+      </section>
+
+      <section class="about-section animate-in">
+        <h2 class="about-section-title">Experiencia</h2>
+        <div class="about-section-body">
+          <div class="exp-card">
+            <div class="exp-header">
+              <h3>Developer</h3>
+              <p class="exp-company">Cobis Topaz — Montería, Colombia</p>
+              <p class="exp-date">Mar 2022 — Mar 2026</p>
+            </div>
+            <ul class="exp-logros">
+              <li>Resolví más de 10 vulnerabilidades críticas de AWS Security Hub en infraestructura CloudFormation, mejorando la postura de seguridad en 40%.</li>
+              <li>Diseñé e implementé arquitectura multi-región (us-east-1, us-west-2) con replicación S3 y DynamoDB global, reduciendo RPO a menos de 1 hora con 99.9% de disponibilidad.</li>
+              <li>Implementé pipelines CI/CD en Azure DevOps para 8 microservicios, reduciendo tiempo de despliegue de 45 a 15 minutos (67% de mejora).</li>
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -63,36 +78,6 @@ import ContactCTA from "../components/ContactCTA.astro";
         </div>
       </section>
 
-      <section class="about-section animate-in">
-        <h2 class="about-section-title">Habilidades</h2>
-        <div class="about-section-body">
-          <div class="skills-category">
-            <h3>Enfoque Principal</h3>
-            <div class="pills-row">
-              <Pill variant="accent">AWS</Pill>
-              <Pill variant="accent">Python</Pill>
-              <Pill variant="accent">Automatización</Pill>
-            </div>
-          </div>
-          <div class="skills-category">
-            <h3>Herramientas</h3>
-            <div class="pills-row">
-              <Pill variant="subtle">Git</Pill>
-              <Pill variant="subtle">Linux</Pill>
-              <Pill variant="subtle">Bash</Pill>
-              <Pill variant="subtle">Docker</Pill>
-            </div>
-          </div>
-          <div class="skills-category">
-            <h3>Aprendiendo Activamente</h3>
-            <div class="pills-row">
-              <Pill variant="subtle">AWS</Pill>
-              <Pill variant="subtle">CI/CD Pipelines</Pill>
-              <Pill variant="subtle">Azure</Pill>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   </div>
 
