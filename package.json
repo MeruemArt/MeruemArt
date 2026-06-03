@@ -17,6 +17,7 @@
     "astro": "^5.15.9",
     "astro-social-share": "^2.2.0",
     "meruemart": "file:",
+    "@tailwindcss/oxide-linux-x64-gnu": "^4.3.0",
     "tailwindcss": "^4.3.0"
   }
 }
