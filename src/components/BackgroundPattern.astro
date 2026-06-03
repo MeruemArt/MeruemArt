@@ -5,7 +5,7 @@
 <!-- Left Container -->
 <div class="pattern-container pattern-left">
     <!-- Base Images -->
-    <!-- <img
+    <img
         alt="Numbers pattern"
         class="pattern-img light-only"
         fetchpriority="high"
@@ -18,7 +18,7 @@
         fetchpriority="high"
         loading="eager"
         src="/assets/backgrounds/numbers-pattern.avif"
-    /> -->
+    />
 
     <!-- Light Overlay (Ellipses) -->
     <div class="overlay-container light-only mask-pattern">
@@ -44,7 +44,7 @@
 <!-- Right Container (Mirrored) -->
 <div class="pattern-container pattern-right">
     <!-- Base Images -->
-    <!-- <img
+    <img
         alt="Numbers pattern"
         class="pattern-img light-only"
         fetchpriority="high"
@@ -57,7 +57,7 @@
         fetchpriority="high"
         loading="eager"
         src="/assets/backgrounds/numbers-pattern.avif"
-    /> -->
+    />
 
     <!-- Light Overlay (Ellipses) -->
     <div class="overlay-container light-only mask-pattern">
@@ -149,6 +149,7 @@
         position: absolute;
         inset: 0;
         object-fit: cover;
+        opacity: 0.2;
     }
 
     /* Theme Visibility */
@@ -166,10 +167,9 @@
         display: block;
     }
 
-    /* Additional opacity for dark mode base image
     :global(.theme-dark) .pattern-img.dark-only {
-        opacity: 1;
-    } */
+        opacity: 0.2;
+    }
 
     /* Overlay Container */
     .overlay-container {
@@ -194,7 +194,7 @@
     /* Ellipses Base */
     .ellipse {
         position: absolute;
-        background-color: var(--accent-regular);
+        background-color: var(--color-accent);
         filter: blur(40px); /* Increased blur for bigger glow */
         opacity: 0; /* Start hidden */
         border-radius: 50%;
@@ -202,9 +202,9 @@
 
     :global(.theme-dark) .ellipse {
         background-color: var(
-            --accent-dark
-        ); /* Recommended: Bright Lilac for visible glow */
-        box-shadow: 0 0 40px var(--accent-dark);
+            --color-accent-dark
+        );
+        box-shadow: 0 0 40px var(--color-accent-dark);
     }
 
     /* Ellipse Dimensions & Positions - Staggered Rising Wave */
