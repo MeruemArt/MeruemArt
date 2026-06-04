@@ -1,25 +1,26 @@
 ---
-
+import { Image } from "astro:assets";
+import numbersPattern from "../assets/backgrounds/numbers-pattern.avif";
 ---
 
 <!-- Left Container -->
 <div class="pattern-container pattern-left">
     <!-- Base Images -->
-    <img
+    <Image
         alt=""
         class="pattern-img light-only"
         loading="lazy"
-        src="/assets/backgrounds/numbers-pattern.avif"
+        src={numbersPattern}
     />
-    <img
+    <Image
         alt=""
         class="pattern-img dark-only"
         loading="lazy"
-        src="/assets/backgrounds/numbers-pattern.avif"
+        src={numbersPattern}
     />
 
     <!-- Light Overlay (Ellipses) -->
-    <div class="overlay-container light-only mask-pattern">
+    <div class="overlay-container light-only mask-pattern" style={`-webkit-mask-image: url(${numbersPattern.src}); mask-image: url(${numbersPattern.src});`}>
         <div>
             <div class="ellipse ellipse-1"></div>
             <div class="ellipse ellipse-2"></div>
@@ -29,7 +30,7 @@
     </div>
 
     <!-- Dark Overlay (Ellipses) -->
-    <div class="overlay-container dark-only mask-pattern">
+    <div class="overlay-container dark-only mask-pattern" style={`-webkit-mask-image: url(${numbersPattern.src}); mask-image: url(${numbersPattern.src});`}>
         <div>
             <div class="ellipse ellipse-1"></div>
             <div class="ellipse ellipse-2"></div>
@@ -42,21 +43,21 @@
 <!-- Right Container (Mirrored) -->
 <div class="pattern-container pattern-right">
     <!-- Base Images -->
-    <img
+    <Image
         alt=""
         class="pattern-img light-only"
         loading="lazy"
-        src="/assets/backgrounds/numbers-pattern.avif"
+        src={numbersPattern}
     />
-    <img
+    <Image
         alt=""
         class="pattern-img dark-only"
         loading="lazy"
-        src="/assets/backgrounds/numbers-pattern.avif"
+        src={numbersPattern}
     />
 
     <!-- Light Overlay (Ellipses) -->
-    <div class="overlay-container light-only mask-pattern">
+    <div class="overlay-container light-only mask-pattern" style={`-webkit-mask-image: url(${numbersPattern.src}); mask-image: url(${numbersPattern.src});`}>
         <div>
             <div class="ellipse ellipse-1"></div>
             <div class="ellipse ellipse-2"></div>
@@ -66,7 +67,7 @@
     </div>
 
     <!-- Dark Overlay (Ellipses) -->
-    <div class="overlay-container dark-only mask-pattern">
+    <div class="overlay-container dark-only mask-pattern" style={`-webkit-mask-image: url(${numbersPattern.src}); mask-image: url(${numbersPattern.src});`}>
         <div>
             <div class="ellipse ellipse-1"></div>
             <div class="ellipse ellipse-2"></div>
@@ -177,8 +178,6 @@
 
     /* Mask Pattern */
     .mask-pattern {
-        -webkit-mask-image: url("/assets/backgrounds/numbers-pattern.avif");
-        mask-image: url("/assets/backgrounds/numbers-pattern.avif");
         -webkit-mask-size: cover;
         mask-size: cover;
         -webkit-mask-repeat: no-repeat;
