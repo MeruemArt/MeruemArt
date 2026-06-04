@@ -69,8 +69,10 @@ import cobisLogo from "../assets/cobis.svg";
   </div>
 
   <a
-    href="https://web.whatsapp.com/send/?phone=%2B573186405618&text=Hola+Luis.%0AVi+tu+p%C3%A1gina%2C+me+interesa+contactarte+%F0%9F%91%A8%F0%9F%8F%BB%E2%80%8D%F0%9F%92%BB.&type=phone_number&app_absent=0"    class="whatsapp-button"
+    href="https://web.whatsapp.com/send/?phone=%2B573186405618&text=Hola+Luis.%0AVi+tu+p%C3%A1gina%2C+me+interesa+contactarte+%F0%9F%91%A8%F0%9F%8F%BB%E2%80%8D%F0%9F%92%BB.&type=phone_number&app_absent=0"
+    class="whatsapp-button"
     target="_blank"
+    id="whatsapp-link"
   >
     <Image
       src={whatsappIcon}
@@ -80,6 +82,13 @@ import cobisLogo from "../assets/cobis.svg";
       loading="eager"
     />
   </a>
+
+  <script>
+    const link = document.getElementById("whatsapp-link");
+    if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+      link.href = link.href.replace("web.whatsapp.com", "api.whatsapp.com");
+    }
+  </script>
 
   <main>
     <div class="wrapper" style="padding-top: 3rem;">
