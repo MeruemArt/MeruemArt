@@ -1,245 +1,203 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import Hero from "../components/Hero.astro";
-import Pill from "../components/Pill.astro";
-import Icon from "../components/Icon.astro";
-import ContactCTA from "../components/ContactCTA.astro";
 import { Image } from "astro:assets";
-import whatsappIcon from "../assets/whatsapp-icon.svg";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ContactCTA from "../components/ContactCTA.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import atWork from "../assets/at-work.jpg";
+
+const CV = "/assets/Luis_Carlos_Arteaga_Espitia_CV.pdf";
+
+const experiencia = [
+  {
+    periodo: "2026 —",
+    titulo: "DevOps Engineer",
+    empresa: "Inter Rapidisimo — Bogotá, Colombia",
+    fecha: "Mar 2026 — Presente",
+    logros: [
+      "Diseñé plantillas CI/CD parametrizadas y reutilizables en Azure DevOps YAML para Angular, Next.js, PHP, .NET (ECS y EKS), Python serverless (SAM), microservicios de IA (AgentCore) y migraciones SQL, estandarizando el pipeline para toda la organización.",
+      "Integré Veracode (SAST y autoempaquetado), Trivy (SCA), SonarCloud y SBOM en todos los pipelines, y cacheé los binarios de Veracode CLI y Trivy con la tarea Cache@2 para acelerar cada ejecución.",
+      "Diseñé la etapa CD para microservicios Python serverless sobre AWS SAM (Lambda y layers gestionadas con uv), con despliegue por ambiente (dev/qa/prd), inyección de variables y validación que aborta ante placeholders sin resolver.",
+      "Construí el despliegue a EKS (namespaces, service accounts, ingress, health checks y Fargate) y a ECS/ECR para .NET, reemplazando Release Pipelines clásicos por YAML y asumiendo rol multi-cuenta (dev/qa/prod) con verificación de identidad.",
+      "Desarrollé un orquestador de migraciones SQL multi-statement con suite de pruebas (pytest y cobertura) y lint con sqlfluff, más Git tagging con versionamiento semántico.",
+      "Definí Quality Gates en SonarCloud con tres niveles y configuré cobertura con Coverlet y ReportGenerator, estableciendo estándares medibles para todos los proyectos.",
+      "Desarrollé un sistema de 12 scripts PowerShell que automatiza el ciclo de vida completo de Work Items en Azure DevOps, incluyendo validación de tiempos con festivos colombianos y monitoreo post-despliegue.",
+    ],
+  },
+  {
+    periodo: "2022 — 2026",
+    titulo: "Developer",
+    empresa: "Cobis Topaz — Montería, Colombia",
+    fecha: "Mar 2022 — Mar 2026",
+    logros: [
+      "Resolví más de 10 vulnerabilidades críticas de AWS Security Hub en infraestructura CloudFormation, mejorando la postura de seguridad en 40%.",
+      "Diseñé e implementé arquitectura multi-región con replicación automática de buckets S3 y tablas DynamoDB globales, reduciendo el RPO a menos de 1 hora.",
+      "Refactoricé el template padre de CloudFormation optimizando uso de recursos, eliminando más de 30 recursos redundantes y reduciendo costos en 800 dólares mensuales.",
+      "Estandaricé más de 50 templates convirtiendo documentos SSM a YAML y eliminando más de 200 líneas de código duplicado, mejorando la mantenibilidad en 35%.",
+      "Desarrollé una suite de más de 15 tests unitarios para Lambdas críticas en Python, aumentando la cobertura de código de 0% a 85%.",
+      "Implementé soporte para despliegue de artifacts CWC base en pipelines de Azure DevOps, habilitando CI/CD para 8 microservicios.",
+      "Configuré DeletionProtectionEnabled para una instancia Nexus crítica y ajusté roles IAM de Chatbot, asegurando cumplimiento con AWS Well-Architected Framework.",
+      "Contribuí al diseño de dashboards CloudWatch y al desarrollo de una Lambda de autoescalado inteligente para agentes de Azure DevOps, reduciendo costos de cómputo en 25%.",
+    ],
+  },
+];
+
+const educacion = [
+  {
+    titulo: "Ingeniería de Sistemas",
+    institucion: "Universidad del Sinú — Elías Bechara Zainúm",
+    detalle: "Graduado con honores y becado.",
+    destacado:
+      "Proyecto destacado: diseño e implementación de un asistente virtual (chatbot) para el Centro educativo Mata de Caña.",
+  },
+  {
+    titulo: "Técnico en Sistemas",
+    institucion: "Politécnico Indes",
+    detalle: "Operador de sistemas teleinformáticos y aplicaciones multimedia.",
+  },
+];
 ---
 
 <BaseLayout
   title="Acerca de | Luis Arteaga"
-  description="Conoce más sobre Luis Arteaga, DevOps Engineer con experiencia en AWS, Azure DevOps, IaC y automatización CI/CD"
+  description="DevOps Engineer con más de 4 años de experiencia en AWS, Azure DevOps, IaC y automatización CI/CD."
 >
-  <div class="wrapper" style="padding-top: 6rem;">
-    <Hero
-      title="Acerca de"
-      tagline="Gracias por visitar. Soy DevOps Engineer con más de 4 años de experiencia en AWS, Azure DevOps y automatización."
-      size="md"
-    >
-      <img
-        width="1553"
-        height="873"
-        src="/assets/at-work.jpg"
-        alt="Luis Arteaga trabajando con un colega"
-        class="about-hero-img"
-      />
-    </Hero>
-
-    <div class="about-content">
-      <section class="about-section animate-in">
-        <h2 class="about-section-title">Resumen</h2>
-        <div class="about-section-body">
-          <p>
-            DevOps Engineer con más de 4 años de experiencia en Infrastructure as Code (IaC), CI/CD y seguridad cloud en AWS y Azure DevOps. Experto en diseño de plantillas CI/CD parametrizadas (Angular, .NET/EKS, Next.js), integración de herramientas DevSecOps (Veracode, Trivy, SonarCloud), y automatización de procesos operativos con PowerShell. Historial comprobado resolviendo vulnerabilidades críticas de seguridad en AWS, diseñando arquitecturas multi-región resilientes, estandarizando pipelines y reduciendo carga operativa mediante automatización de Work Items en Azure DevOps. Enfoque en estandarización, optimización de recursos cloud, y mejora continua de calidad de código.
+  <div class="shell">
+    <div class="column">
+      <section class="hero">
+        <div class="hero-text">
+          <h1 class="hero-title">Luis Arteaga</h1>
+          <p class="hero-lede">
+            DevOps Engineer con más de cuatro años de experiencia en
+            infraestructura como código, CI/CD y seguridad cloud en AWS y Azure
+            DevOps. Mi trabajo es que el despliegue deje de ser un ritual
+            manual y pase a ser una propiedad del pipeline.
           </p>
         </div>
-      </section>
 
-      <section class="about-section animate-in">
-        <h2 class="about-section-title">Experiencia</h2>
-        <div class="about-section-body">
-          <div class="exp-card">
-            <div class="exp-header">
-              <h3>DevOps Engineer</h3>
-              <p class="exp-company">Inter Rapidisimo — Bogotá, Colombia</p>
-              <p class="exp-date">Mar 2026 — Presente</p>
-            </div>
-            <ul class="exp-logros">
-              <li>Diseñé e implementé 3 plantillas CI/CD parametrizadas (Angular, .NET/EKS, Next.js) en Azure DevOps YAML, estandarizando el pipeline de software para toda la organización y eliminando cientos de líneas de código duplicado entre proyectos.</li>
-              <li>Integré herramientas DevSecOps (Veracode SAST, Trivy SCA, SonarCloud, SBOM) en todos los pipelines, automatizando la detección temprana de vulnerabilidades y mejorando la postura de seguridad en el ciclo de desarrollo.</li>
-              <li>Desarrollé un sistema de 12 scripts PowerShell que automatiza el ciclo de vida completo de Work Items en Azure DevOps (creación, transición de estados, validación de tiempos con festivos colombianos, comentarios y monitoreo post-despliegue), reduciendo significativamente la carga operativa manual del equipo de operaciones.</li>
-              <li>Diseñé y propuse una arquitectura CD moderna basada en YAML para despliegues en EKS, reemplazando Release Pipelines clásicos y cubriendo el ciclo completo: namespaces, Fargate, service accounts, deployments, ingress y health checks.</li>
-              <li>Implementé validación automatizada de variables entre entornos (Desarrollo, QA, Producción) detectando desviaciones de configuración antes de cada despliegue, previniendo errores por configuraciones inconsistentes.</li>
-              <li>Definí umbrales de calidad (Quality Gates) en SonarCloud con 3 niveles (A, B, C) y configuré cobertura de pruebas con Coverlet + ReportGenerator, estableciendo estándares de calidad de código medibles para todos los proyectos.</li>
-            </ul>
-          </div>
-          <div class="exp-card">
-            <div class="exp-header">
-              <h3>Developer</h3>
-              <p class="exp-company">Cobis Topaz — Montería, Colombia</p>
-              <p class="exp-date">Mar 2022 — Mar 2026</p>
-            </div>
-            <ul class="exp-logros">
-              <li>Resolví más de 10 vulnerabilidades críticas de AWS Security Hub en infraestructura CloudFormation, mejorando la postura de seguridad en 40%.</li>
-              <li>Configuré DeletionProtectionEnabled para instancia Nexus crítica y ajusté roles IAM de Chatbot, asegurando cumplimiento con AWS Well-Architected Framework.</li>
-              <li>Diseñé e implementé arquitectura multi-región con replicación automática de buckets S3 y tablas DynamoDB globales, reduciendo RPO a menos de 1 hora.</li>
-              <li>Refactoricé template padre de CloudFormation optimizando uso de recursos, eliminando más de 30 recursos redundantes y reduciendo costos en 800 dólares mensuales.</li>
-              <li>Estandaricé más de 50 templates convirtiendo documentos SSM a YAML y eliminando más de 200 líneas de código duplicado, mejorando mantenibilidad en 35%.</li>
-              <li>Desarrollé suite de más de 15 test unitarios para Lambdas Python críticas, aumentando cobertura de código de 0% a 85%.</li>
-              <li>Implementé soporte para despliegue de artifacts CWC base en pipelines Azure DevOps, habilitando CI/CD para 8 microservicios.</li>
-              <li>Colaboré en diseño de dashboards CloudWatch y contribuí al desarrollo de Lambda de auto-escalado inteligente para agentes Azure DevOps, reduciendo costos de compute en 25%.</li>
-            </ul>
-          </div>
+        <div class="hero-figure">
+          <Image
+            src={atWork}
+            alt="Luis Arteaga trabajando con un colega"
+            width={320}
+            height={180}
+            densities={[1, 2]}
+            loading="lazy"
+            decoding="async"
+            class="about-photo"
+          />
         </div>
       </section>
 
-      <section class="about-section animate-in">
-        <h2 class="about-section-title">Educación</h2>
-        <div class="about-section-body">
-          <div class="edu-card">
-            <div class="edu-dot"></div>
-            <Icon icon="trophy" size="1.5rem" />
-            <div>
-              <h3>Ingeniería de Sistemas</h3>
-              <p class="edu-institution">Universidad del Sinú - Elías Bechara Zainúm</p>
-              <p class="edu-detail">Graduado con honores y Becado.</p>
-              <p class="edu-project">Proyecto destacado: Diseño e implementación de un asistente virtual (chatbot) para el Centro educativo Mata de Caña.</p>
-            </div>
+      <aside class="rail">
+        <dl class="rail-facts">
+          <div class="fact">
+            <dt>Rol</dt>
+            <dd>DevOps Engineer</dd>
           </div>
-          <div class="edu-card">
-            <div class="edu-dot"></div>
-            <Icon icon="terminal-window" size="1.5rem" />
-            <div>
-              <h3>Técnico en Sistemas</h3>
-              <p class="edu-institution">Politécnico Indes</p>
-              <p class="edu-detail">Operador de sistemas teleinformáticos y aplicaciones multimedia.</p>
-            </div>
+          <div class="fact">
+            <dt>Foco</dt>
+            <dd>CI/CD · Cloud · Automatización</dd>
           </div>
-        </div>
+          <div class="fact">
+            <dt>Sector</dt>
+            <dd>Banca y logística</dd>
+          </div>
+          <div class="fact">
+            <dt>Base</dt>
+            <dd>Montería, Colombia</dd>
+          </div>
+        </dl>
+        <a class="rail-link" href={CV} download>
+          Currículum <span aria-hidden="true">↓</span>
+        </a>
+      </aside>
+
+      <section class="block">
+        <h2 class="block-title">Experiencia</h2>
+        <ol class="rows">
+          {
+            experiencia.map((e) => (
+              <li class="row">
+                <p class="row-mark">{e.periodo}</p>
+                <div class="row-body">
+                  <h3 class="row-title">{e.titulo}</h3>
+                  <p class="row-meta">
+                    {e.empresa} · {e.fecha}
+                  </p>
+                  <ul class="logros">
+                    {e.logros.map((l) => (
+                      <li>{l}</li>
+                    ))}
+                  </ul>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
       </section>
 
+      <section class="block">
+        <h2 class="block-title">Educación</h2>
+        <ol class="rows">
+          {
+            educacion.map((e) => (
+              <li class="row">
+                <div class="row-body">
+                  <h3 class="row-title">{e.titulo}</h3>
+                  <p class="row-meta">{e.institucion}</p>
+                  <p class="row-detail">{e.detalle}</p>
+                  {e.destacado && <p class="row-detail">{e.destacado}</p>}
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <ContactCTA />
     </div>
   </div>
 
-  <a
-    href="https://web.whatsapp.com/send/?phone=%2B573186405618&text=Hola+Luis.%0AVi+tu+p%C3%A1gina%2C+me+interesa+contactarte+%F0%9F%91%A8%F0%9F%8F%BB%E2%80%8D%F0%9F%92%BB.&type=phone_number&app_absent=0"    class="whatsapp-button"
-    target="_blank"
-  >
-    <Image
-      src={whatsappIcon}
-      alt="Icono de Whatsapp"
-      width={64}
-      height={64}
-      loading="eager"
-    />
-  </a>
-  <ContactCTA />
+  <WhatsAppButton />
 </BaseLayout>
 
 <style>
-  .about-hero-img {
-    width: 100%;
-    max-height: 400px;
-    object-fit: cover;
-    border-radius: 1.25rem;
-    margin-top: 1.5rem;
+  /* El hero, el titulo y la entradilla viven en shell.css: aqui no se
+     redefinen. Ver el comentario de por que. */
+
+  /* La foto de trabajo entra al hero con el mismo reparto que el retrato del
+     inicio: la imagen en la columna de titulos y el texto en la de
+     contenido, ambos alineados al pie. Reutilizar el patron es lo que hace
+     que las dos paginas se lean como el mismo sistema y no como dos recursos
+     pegados. Por eso el titulo y la entradilla van envueltos en .hero-text:
+     sueltos ocuparian las dos columnas y la foto no tendria sitio al lado
+     del texto. */
+  .hero-figure {
+    min-width: 0;
   }
 
-  .about-content {
-    display: flex;
-    flex-direction: column;
-    gap: 3.5rem;
-    padding: 3rem 0;
-    max-width: 48rem;
-    margin: 0 auto;
-  }
-
-  .about-section {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .about-section-title {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    color: var(--color-text-primary);
-  }
-
-  .about-section-body {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    color: var(--color-text-secondary);
-    font-size: 1.05rem;
-    line-height: 1.7;
-  }
-
-  .about-section-body strong {
-    color: var(--color-accent);
-  }
-
-  .edu-card {
-    display: flex;
-    gap: 1.25rem;
-    padding: 1.5rem;
-    background: var(--color-surface-secondary);
-    border: 1px solid var(--color-border);
-    border-radius: 1rem;
-    border-left: 3px solid var(--color-accent);
-    position: relative;
-  }
-
-  .edu-dot {
-    display: none;
-  }
-
-  .edu-card h3 {
-    font-size: 1.125rem;
-    font-weight: 600;
-    margin-bottom: 0.25rem;
-  }
-
-  .edu-institution {
-    color: var(--color-accent);
-    font-weight: 500;
-    font-size: 0.95rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .edu-detail {
-    font-size: 0.9rem;
-    color: var(--color-text-tertiary);
-    margin-bottom: 0.25rem;
-  }
-
-  .edu-project {
-    font-size: 0.9rem;
-    font-style: italic;
-    color: var(--color-text-tertiary);
-  }
-
-  .skills-category {
-    margin-bottom: 1.5rem;
-  }
-
-  .skills-category:last-child {
-    margin-bottom: 0;
-  }
-
-  .skills-category h3 {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--color-text-primary);
-    margin-bottom: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .pills-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  .whatsapp-button {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 220;
-  }
-
-  .whatsapp-button img {
-    width: 56px;
-    height: 56px;
-  }
-
-  @media (min-width: 50em) {
-    .whatsapp-button img {
-      width: 64px;
-      height: 64px;
+  @media (min-width: 64em) {
+    .hero-figure {
+      grid-column: 1;
+      grid-row: 1;
     }
+
+    .hero-text {
+      grid-column: 2;
+      grid-row: 1;
+    }
+  }
+
+  /* 20rem es el ancho exacto de la columna de titulos. */
+  .about-photo {
+    display: block;
+    width: 100%;
+    max-width: 20rem;
+    height: auto;
+    aspect-ratio: 1553 / 873;
+    object-fit: cover;
+    border-radius: 1.5rem;
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow-card);
   }
 </style>

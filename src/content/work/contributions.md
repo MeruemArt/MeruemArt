@@ -4,6 +4,7 @@ publishDate: 2023-03-04 00:00:00
 img: ../../assets/starmeup-1.png
 img_alt: Hacer la diferencia
 description: |
+  Reconocimiento interno a la forma de contribution en los equipos de batch y auditoría de Cobis Topaz. Describe una práctica de trabajo, no un proyecto de cliente.
 tags:
   - Development 
   - Batch

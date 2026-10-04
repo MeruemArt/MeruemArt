@@ -4,6 +4,7 @@ publishDate: 2019-12-01 00:00:00
 img: ../../assets/starmeup-7.png
 img_alt: Innovar con el cliente
 description: |
+  Reconocimiento por el trato y el acompañamiento en soporte a usuarios finales. Describe una práctica de trabajo, no un proyecto de cliente.
 tags:
   - Serverless
   - Support

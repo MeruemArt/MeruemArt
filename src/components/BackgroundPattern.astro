@@ -168,7 +168,12 @@ import numbersPattern from "../assets/backgrounds/numbers-pattern.avif";
         opacity: 0.2;
     }
 
-    /* Overlay Container */
+    /* La iluminacion que sube por detras del patron. Las elipses no
+       llevan color literal: toman --color-accent-glow, que ya trae el
+       alpha por tema (violeta 0.28 en claro, lima 0.22 en oscuro), asi que
+       el mismo glow se adapta sin duplicar valores.
+       El token usado antes era var(--color-accent-dark) sin los guiones:
+       una declaracion invalida, por eso el glow oscuro no aparecia. */
     .overlay-container {
         position: absolute;
         inset: 0;
@@ -176,7 +181,6 @@ import numbersPattern from "../assets/backgrounds/numbers-pattern.avif";
         height: 100%;
     }
 
-    /* Mask Pattern */
     .mask-pattern {
         -webkit-mask-size: cover;
         mask-size: cover;
@@ -186,20 +190,25 @@ import numbersPattern from "../assets/backgrounds/numbers-pattern.avif";
         mask-position: center;
     }
 
-    /* Ellipses Base */
     .ellipse {
         position: absolute;
-        background-color: var(--color-accent);
-        filter: blur(40px); /* Increased blur for bigger glow */
-        opacity: 0; /* Start hidden */
+        background-color: var(--color-accent-glow);
+        filter: blur(40px);
+        opacity: 0;
         border-radius: 50%;
     }
 
     :global(.theme-dark) .ellipse {
-        background-color: var(
-            --color-accent-dark
-        );
-        box-shadow: 0 0 40px var(--color-accent-dark);
+        box-shadow: 0 0 40px var(--color-accent-glow);
+    }
+
+    /* Peak de opacidad por tema: el glow es ambiente, no protagonistico. */
+    .light-only .ellipse {
+        --peak: 0.85;
+    }
+
+    :global(.theme-dark) .dark-only .ellipse {
+        --peak: 0.7;
     }
 
     /* Ellipse Dimensions & Positions - Staggered Rising Wave */
@@ -236,20 +245,19 @@ import numbersPattern from "../assets/backgrounds/numbers-pattern.avif";
         animation-delay: 5s;
     }
 
-    /* Animations */
     @keyframes wave-rise {
         0% {
             transform: translateY(120%);
             opacity: 0;
         }
         20% {
-            opacity: 1; /* Max opacity */
+            opacity: var(--peak, 0.8);
         }
         80% {
-            opacity: 1; /* Max opacity */
+            opacity: var(--peak, 0.8);
         }
         100% {
-            transform: translateY(-800px); /* Move way up */
+            transform: translateY(-800px);
             opacity: 0;
         }
     }

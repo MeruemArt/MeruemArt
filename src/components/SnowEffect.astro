@@ -1,219 +1,158 @@
 ---
-
 ---
 
-<div id="snow-container"></div>
+<div id="snow-container" aria-hidden="true"></div>
 
 <script>
-  const container = document.getElementById("snow-container");
+  /* Nevada estacional: activa en noviembre, diciembre y enero.
+     Para validarla sin esperar a diciembre hay dos formas:
+       1. FECHA_DE_PRUEBA = new Date(2026, 11, 25)  → fija la fecha
+       2. /?snow=1                                    → la fuerza en el sitio
+     Sin ninguna de las dos corre con la fecha real. */
 
-  function isMobileDevice() {
+  declare global {
+    interface Window {
+      __snowTimer?: number;
+    }
+  }
+
+  const FECHA_DE_PRUEBA: Date | null = null;
+
+  /* Ventana de la nevada, en hora local del visitante: se enciende el 1 de
+     diciembre a las 00:00 y se apaga el 6 de enero a las 23:59. Si el fin
+     era 11:59 del mediodia, cambiar hora a 11 y minuto a 59. */
+  const INICIO = { mes: 11, dia: 1 };
+  const FIN = { mes: 0, dia: 6, hora: 23, minuto: 59 };
+
+  function enVentanaNavidad(fecha: Date) {
+    const mes = fecha.getMonth();
+    const minutoDelDia = fecha.getHours() * 60 + fecha.getMinutes();
+
+    if (mes === INICIO.mes) return fecha.getDate() >= INICIO.dia;
+
+    if (mes === FIN.mes) {
+      if (fecha.getDate() < FIN.dia) return true;
+      if (fecha.getDate() > FIN.dia) return false;
+      return minutoDelDia <= FIN.hora * 60 + FIN.minuto;
+    }
+
+    return false;
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const forzar = params.has("snow");
+
+  const ahora = FECHA_DE_PRUEBA ?? new Date();
+  const visible =
+    forzar || FECHA_DE_PRUEBA !== null || enVentanaNavidad(ahora);
+
+  const motionOk = !window.matchMedia(
+    "(prefers-reduced-motion: reduce)",
+  ).matches;
+
+  function esMovil() {
     return (
       /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
         navigator.userAgent,
       ) || window.innerWidth < 768
     );
   }
-  const snowflakes = ["❅", "❄"];
-  const newLocal = snowflakes[Math.floor(Math.random() * snowflakes.length)];
-  function createSnowflake() {
-    if (!container) return;
 
-    const snowflake = document.createElement("div");
-    snowflake.classList.add("snowflake");
-    snowflake.textContent = newLocal;
+  const flakes = ["❅", "❄"];
+  const movil = esMovil();
 
-    const isMobile = isMobileDevice();
+  function crearCopo(container: HTMLElement) {
+    const copo = document.createElement("div");
+    copo.className = "snowflake";
 
-    snowflake.style.left = Math.random() * 100 + "vw";
-    const duration = Math.random() * 3 + 5;
-    snowflake.style.setProperty("--fall-duration", duration + "s");
-    snowflake.style.opacity = Math.random().toString();
+    const glifo = document.createElement("span");
+    glifo.textContent = flakes[Math.floor(Math.random() * flakes.length)];
+    copo.appendChild(glifo);
 
-    const sizeRange = isMobile
-      ? Math.random() * 20 + 15
-      : Math.random() * 20 + 20;
-    snowflake.style.fontSize = sizeRange + "px";
+    const duracion = Math.random() * 3 + 5;
 
-    const swayDistance = Math.random() * 120 + 40;
-    const swayDirection = Math.random() > 0.5 ? 1 : -1;
-    snowflake.style.setProperty(
-      "--sway-distance",
-      swayDistance * swayDirection + "px",
-    );
+    copo.style.left = Math.random() * 100 + "vw";
+    copo.style.fontSize =
+      (movil ? Math.random() * 14 + 14 : Math.random() * 18 + 18) + "px";
+    copo.style.opacity = (Math.random() * 0.45 + 0.35).toFixed(2);
+    copo.style.setProperty("--fall-duration", duracion + "s");
+    copo.style.setProperty("--sway-distance", Math.random() * 90 + 40 + "px");
+    copo.style.setProperty("--sway-duration", (duracion * 0.6).toFixed(2) + "s");
 
-    container.appendChild(snowflake);
-
-    setTimeout(() => {
-      snowflake.remove();
-    }, duration * 1000);
+    container.appendChild(copo);
+    setTimeout(() => copo.remove(), duracion * 1000);
   }
 
   function initSnowEffect() {
-    const now = new Date();
-    const month = now.getMonth();
-
-    if (month === 10 || month === 11 || month === 0) {
-      const interval = isMobileDevice() ? 600 : 200;
-      setInterval(createSnowflake, interval);
+    if (window.__snowTimer) {
+      clearInterval(window.__snowTimer);
+      window.__snowTimer = undefined;
     }
+
+    const container = document.getElementById("snow-container");
+    if (!container) return;
+    container.replaceChildren();
+
+    if (!visible || !motionOk) return;
+
+    window.__snowTimer = setInterval(
+      () => crearCopo(container),
+      movil ? 600 : 220,
+    );
+    crearCopo(container);
   }
 
+  /* Con ViewTransitions el contenedor se vuelve a insertar en cada
+     navegación, así que se reinicia en astro:page-load. Es idempotente:
+     limpia el intervalo anterior antes de crear otro. */
+  document.addEventListener("astro:page-load", initSnowEffect);
   initSnowEffect();
 </script>
 
 <style is:global>
+  /* Por delante del contenido, por detrás de la interfaz, y sin capturar
+     clics: de ahí pointer-events none y un z-index acotado. */
   #snow-container {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     pointer-events: none;
-    z-index: 9999;
+    z-index: 20;
     overflow: hidden;
   }
 
+  /* El color sale del tema: copos claros en oscuro, grafitos en claro.
+     Con blanco fijo la nevada era 1.06:1 sobre crema, es decir invisible. */
   .snowflake {
     position: absolute;
-    top: -10px;
-    color: white;
+    top: -3rem;
+    color: var(--color-text-primary);
     user-select: none;
-    animation: fall-sway var(--fall-duration, 4s) linear forwards;
+    animation: snow-fall var(--fall-duration, 6s) linear forwards;
   }
 
-  @keyframes fall-sway {
-    0% {
-      transform: translateY(0vh) translateX(0);
+  .snowflake > span {
+    display: block;
+    animation: snow-sway var(--sway-duration, 3s) ease-in-out infinite;
+  }
+
+  /* Dos animaciones en vez de cuarenta keyframes: la caída va en el
+     contenedor y el vaivén en el hijo, porque dos transforms no se suman
+     dentro del mismo elemento. */
+  @keyframes snow-fall {
+    from {
+      transform: translateY(-10vh);
     }
-    3% {
-      transform: translateY(3vh)
-        translateX(calc(0.28 * var(--sway-distance, 20px)));
+    to {
+      transform: translateY(110vh);
     }
-    6% {
-      transform: translateY(6vh)
-        translateX(calc(0.54 * var(--sway-distance, 20px)));
+  }
+
+  @keyframes snow-sway {
+    from {
+      transform: translateX(calc(var(--sway-distance, 40px) * -1));
     }
-    9% {
-      transform: translateY(9vh)
-        translateX(calc(0.76 * var(--sway-distance, 20px)));
-    }
-    12% {
-      transform: translateY(12vh)
-        translateX(calc(0.91 * var(--sway-distance, 20px)));
-    }
-    15% {
-      transform: translateY(15vh)
-        translateX(calc(0.99 * var(--sway-distance, 20px)));
-    }
-    18% {
-      transform: translateY(18vh)
-        translateX(calc(0.99 * var(--sway-distance, 20px)));
-    }
-    21% {
-      transform: translateY(21vh)
-        translateX(calc(0.91 * var(--sway-distance, 20px)));
-    }
-    24% {
-      transform: translateY(24vh)
-        translateX(calc(0.76 * var(--sway-distance, 20px)));
-    }
-    27% {
-      transform: translateY(27vh)
-        translateX(calc(0.54 * var(--sway-distance, 20px)));
-    }
-    30% {
-      transform: translateY(30vh)
-        translateX(calc(0.28 * var(--sway-distance, 20px)));
-    }
-    33% {
-      transform: translateY(33vh) translateX(0);
-    }
-    36% {
-      transform: translateY(36vh)
-        translateX(calc(-0.28 * var(--sway-distance, 20px)));
-    }
-    39% {
-      transform: translateY(39vh)
-        translateX(calc(-0.54 * var(--sway-distance, 20px)));
-    }
-    42% {
-      transform: translateY(42vh)
-        translateX(calc(-0.76 * var(--sway-distance, 20px)));
-    }
-    45% {
-      transform: translateY(45vh)
-        translateX(calc(-0.91 * var(--sway-distance, 20px)));
-    }
-    48% {
-      transform: translateY(48vh)
-        translateX(calc(-0.99 * var(--sway-distance, 20px)));
-    }
-    51% {
-      transform: translateY(51vh)
-        translateX(calc(-0.99 * var(--sway-distance, 20px)));
-    }
-    54% {
-      transform: translateY(54vh)
-        translateX(calc(-0.91 * var(--sway-distance, 20px)));
-    }
-    57% {
-      transform: translateY(57vh)
-        translateX(calc(-0.76 * var(--sway-distance, 20px)));
-    }
-    60% {
-      transform: translateY(60vh)
-        translateX(calc(-0.54 * var(--sway-distance, 20px)));
-    }
-    63% {
-      transform: translateY(63vh)
-        translateX(calc(-0.28 * var(--sway-distance, 20px)));
-    }
-    66% {
-      transform: translateY(66vh) translateX(0);
-    }
-    69% {
-      transform: translateY(69vh)
-        translateX(calc(0.28 * var(--sway-distance, 20px)));
-    }
-    72% {
-      transform: translateY(72vh)
-        translateX(calc(0.54 * var(--sway-distance, 20px)));
-    }
-    75% {
-      transform: translateY(75vh)
-        translateX(calc(0.76 * var(--sway-distance, 20px)));
-    }
-    78% {
-      transform: translateY(78vh)
-        translateX(calc(0.91 * var(--sway-distance, 20px)));
-    }
-    81% {
-      transform: translateY(81vh)
-        translateX(calc(0.99 * var(--sway-distance, 20px)));
-    }
-    84% {
-      transform: translateY(84vh)
-        translateX(calc(0.99 * var(--sway-distance, 20px)));
-    }
-    87% {
-      transform: translateY(87vh)
-        translateX(calc(0.91 * var(--sway-distance, 20px)));
-    }
-    90% {
-      transform: translateY(90vh)
-        translateX(calc(0.76 * var(--sway-distance, 20px)));
-    }
-    93% {
-      transform: translateY(93vh)
-        translateX(calc(0.54 * var(--sway-distance, 20px)));
-    }
-    96% {
-      transform: translateY(96vh)
-        translateX(calc(0.28 * var(--sway-distance, 20px)));
-    }
-    100% {
-      transform: translateY(calc(100vh + 40px)) translateX(0);
+    to {
+      transform: translateX(var(--sway-distance, 40px));
     }
   }
 </style>

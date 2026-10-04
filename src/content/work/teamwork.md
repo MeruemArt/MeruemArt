@@ -4,6 +4,7 @@ publishDate: 2019-10-02 00:00:00
 img: ../../assets/starmeup-6.png
 img_alt: Gran equipos
 description: |
+  Reconocimiento al trabajo en equipo dentro de los squads de Kratos y tokenización. Describe una práctica de trabajo, no un proyecto de cliente.
 tags:
   - tokenization
   - serverless

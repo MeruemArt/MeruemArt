@@ -1,91 +1,270 @@
 ---
 import Icon from "./Icon.astro";
+
+const WHATSAPP =
+  "https://web.whatsapp.com/send/?phone=%2B573186405618&text=Hola+Luis.%0AVi+tu+p%C3%A1gina%2C+me+interesa+contactarte+%F0%9F%91%A8%F0%9F%8F%BB%E2%80%8D%F0%9F%92%BB.&type=phone_number&app_absent=0";
+
+const CV = "/assets/Luis_Carlos_Arteaga_Espitia_CV.pdf";
 ---
 
-<section class="contact-section section-padding">
-  <div class="wrapper contact-inner">
-    <div class="contact-text animate-in">
-      <h2 class="contact-title">¿Tienes un proyecto en mente?</h2>
-      <p class="contact-subtitle">Hagamos que tu infraestructura trabaje por ti.</p>
+<section class="block contact-block">
+  <h2 class="block-title">Hablemos</h2>
+
+  <div class="contact-body">
+    <p class="contact-lede">
+      Cuéntame qué tienes que desplegar y lo revisamos. WhatsApp es el canal
+      más rápido; si prefieres dejar tu proyecto por escrito, el formulario
+      queda aquí debajo.
+    </p>
+
+    <div class="contact-actions">
+      <a class="btn-primary" href={WHATSAPP} target="_blank" rel="noopener">
+        Escríbeme por WhatsApp
+      </a>
+      <a class="btn-quiet" href={CV} download>Descargar currículum</a>
     </div>
 
-    <form data-netlify="true" method="post" class="contact-form animate-in">
-      <div class="form-row">
-        <input type="text" name="name" placeholder="Tu nombre" autocomplete="name" required class="form-input" />
-        <input type="email" name="email" placeholder="Tu correo electrónico" autocomplete="email" required class="form-input" />
-      </div>
-      <textarea name="message" placeholder="Tu mensaje" required rows="4" class="form-input form-textarea"></textarea>
-      <button type="submit" class="submit-btn">
-        Envíame un mensaje
-        <Icon icon="paper-plane-tilt" size="1.2em" />
-      </button>
-    </form>
+    <details class="contact-details">
+      <summary class="contact-summary">
+        Prefiero el formulario
+        <span class="chevron" aria-hidden="true"></span>
+      </summary>
+
+      <form
+        data-netlify="true"
+        name="contacto"
+        method="post"
+        class="contact-form"
+        data-contact-form
+      >
+        <input type="hidden" name="form-name" value="contacto" />
+        <p class="form-honeypot" aria-hidden="true">
+          <label>No dejes esto vacío: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+        </p>
+
+        <div class="form-row">
+          <p class="form-field">
+            <label class="form-label" for="contact-name">Tu nombre</label>
+            <input
+              type="text"
+              id="contact-name"
+              name="name"
+              autocomplete="name"
+              required
+              class="form-input"
+            />
+          </p>
+          <p class="form-field">
+            <label class="form-label" for="contact-email">Tu correo</label>
+            <input
+              type="email"
+              id="contact-email"
+              name="email"
+              autocomplete="email"
+              required
+              class="form-input"
+            />
+          </p>
+        </div>
+
+        <p class="form-field">
+          <label class="form-label" for="contact-message">Tu mensaje</label>
+          <textarea
+            id="contact-message"
+            name="message"
+            required
+            rows="4"
+            class="form-input form-textarea"
+          ></textarea>
+        </p>
+
+        <button type="submit" class="submit-btn" data-submit>
+          <span data-submit-label>Enviar mensaje</span>
+          <Icon icon="paper-plane-tilt" size="1.2em" />
+        </button>
+
+        <p class="form-status" role="status" aria-live="polite" data-status></p>
+      </form>
+    </details>
   </div>
 </section>
 
+<script>
+  /* Netlify devuelve una pagina sin estilo al enviar el formulario de forma
+     nativa. Interceptarlo permite confirmar el envio en el sitio y, sobre
+     todo, no perder lo que la persona escribio. Sin JS el formulario sigue
+     funcionando: solo cambia adonde aterriza. */
+  function bindContactForm() {
+    const form = document.querySelector<HTMLFormElement>("[data-contact-form]");
+    if (!form || form.dataset.bound === "true") return;
+
+    const status = form.querySelector<HTMLElement>("[data-status]");
+    const submit = form.querySelector<HTMLButtonElement>("[data-submit]");
+    const label = form.querySelector<HTMLElement>("[data-submit-label]");
+    if (!status || !submit || !label) return;
+
+    form.dataset.bound = "true";
+
+    form.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const original = label.textContent;
+      submit.disabled = true;
+      label.textContent = "Enviando…";
+      status.textContent = "";
+
+      try {
+        const response = await fetch("/", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: new URLSearchParams(new FormData(form) as any).toString(),
+        });
+        if (!response.ok) throw new Error(String(response.status));
+
+        form.reset();
+        label.textContent = "Mensaje enviado";
+        status.textContent =
+          "Gracias. Te respondo por correo, normalmente en menos de un día hábil.";
+      } catch {
+        label.textContent = original ?? "Enviar mensaje";
+        status.textContent =
+          "No pude enviar el mensaje. Escríbeme por WhatsApp o intenta de nuevo.";
+      } finally {
+        submit.disabled = false;
+      }
+    });
+  }
+
+  bindContactForm();
+  document.addEventListener("astro:page-load", bindContactForm);
+</script>
+
 <style>
-  .contact-section {
-    background: var(--color-surface-secondary);
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
+  /* El bloque vive en la grilla del shell: hereda la columna de contenido
+     en vez de abrir su propia fila de 896px. Por eso el contenedor interno
+     ya no lleva max-width. */
+  .contact-body {
+    min-width: 0;
   }
 
-  .contact-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 3rem;
-    max-width: 36rem;
-  }
-
-  .contact-text {
-    text-align: center;
-  }
-
-  .contact-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3vw, 2.25rem);
-    margin-bottom: 0.75rem;
-  }
-
-  .contact-subtitle {
+  .contact-lede {
+    max-width: var(--measure);
     color: var(--color-text-secondary);
-    font-size: 1.1rem;
+    margin-bottom: var(--space-lg);
+  }
+
+  .contact-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-sm) var(--space-md);
+  }
+
+  /* El formulario es el canal secundario: se abre a peticion, no compite
+     con el boton de WhatsApp por la atencion. */
+  .contact-details {
+    margin-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+    padding-top: var(--space-md);
+  }
+
+  .contact-summary {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2xs);
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    list-style: none;
+    padding: var(--space-2xs) 0;
+  }
+
+  .contact-summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .contact-summary :global(svg) {
+    transition: transform 0.2s ease;
+  }
+
+  /* Chevron en CSS: no dependemos de que exista un icono "caret" y asi el
+     estado abierto/closed se anima sin JS. */
+  .chevron {
+    width: 0.45em;
+    height: 0.45em;
+    border-right: 1.5px solid currentcolor;
+    border-bottom: 1.5px solid currentcolor;
+    transform: translateY(-0.15em) rotate(45deg);
+    transition: transform 0.2s ease;
+  }
+
+  .contact-details[open] .chevron {
+    transform: translateY(0.1em) rotate(225deg);
+  }
+
+  .contact-summary:hover {
+    color: var(--color-accent);
   }
 
   .contact-form {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    width: 100%;
+    gap: var(--space-md);
+    margin-top: var(--space-lg);
+    max-width: var(--measure);
   }
 
   .form-row {
+    display: grid;
+    gap: var(--space-md);
+  }
+
+  .form-field {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: var(--space-3xs);
+    margin: 0;
+    min-width: 0;
+  }
+
+  .form-label {
+    font-family: var(--font-sans);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-text-secondary);
+  }
+
+  .form-honeypot {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
   }
 
   .form-input {
     width: 100%;
     padding: 0.875rem 1.125rem;
-    background: var(--color-surface);
-    border: 1px solid var(--color-border);
+    background: var(--color-surface-secondary);
+    /* 3:1 contra la superficie: un borde decorativo deja de ser legible
+       cuando el campo es lo que hay que rellenar. */
+    border: 1px solid var(--color-border-strong);
     border-radius: 0.75rem;
     color: var(--color-text-primary);
-    font-size: 1rem;
+    font-size: var(--text-base);
     font-family: inherit;
     transition: border-color 0.2s, box-shadow 0.2s;
-    outline: none;
   }
 
   .form-input::placeholder {
     color: var(--color-text-tertiary);
   }
 
-  .form-input:focus {
+  .form-input:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
     border-color: var(--color-accent);
-    box-shadow: 0 0 0 3px var(--color-accent-glow);
   }
 
   .form-textarea {
@@ -94,34 +273,51 @@ import Icon from "./Icon.astro";
   }
 
   .submit-btn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    padding: 0.875rem 2rem;
+    gap: var(--space-2xs);
+    padding: 0.875rem 1.75rem;
     border: none;
     border-radius: 999rem;
-    background: var(--gradient-accent);
-    color: white;
+    background: var(--color-accent);
+    color: var(--color-on-accent);
+    font-family: var(--font-sans);
     font-weight: 600;
-    font-size: 1rem;
+    font-size: var(--text-sm);
     cursor: pointer;
-    transition: transform 0.2s, box-shadow 0.2s;
     align-self: flex-start;
+    transition: transform 0.2s, box-shadow 0.2s;
   }
 
-  .submit-btn:hover {
+  .submit-btn:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 8px 24px var(--color-accent-glow);
+    box-shadow: var(--shadow-accent);
   }
 
-  @media (min-width: 50em) {
-    .form-row {
-      flex-direction: row;
-    }
+  .submit-btn:disabled {
+    opacity: 0.7;
+    cursor: progress;
+  }
 
-    .form-row .form-input {
-      width: 50%;
+  .submit-btn:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 3px;
+  }
+
+  .form-status {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-text-secondary);
+  }
+
+  .form-status:empty {
+    display: none;
+  }
+
+  @media (min-width: 30em) {
+    .form-row {
+      grid-template-columns: 1fr 1fr;
     }
   }
 </style>
