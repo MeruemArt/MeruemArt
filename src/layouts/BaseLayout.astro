@@ -4,6 +4,7 @@ import Nav from "../components/Nav.astro";
 import BackgroundPattern from "../components/BackgroundPattern.astro";
 import SnowEffect from "../components/SnowEffect.astro";
 import Footer from "../components/Footer.astro";
+import numbersPattern from "../assets/backgrounds/numbers-pattern.avif";
 import { ViewTransitions } from "astro:transitions";
 
 interface Props {
@@ -17,6 +18,10 @@ const { title, description } = Astro.props;
 <html lang="es" class="theme-transition-base">
   <head>
     <MainHead title={title} description={description} />
+    {/* El patron de fondo es el elemento LCP: entra por CSS, donde no hay
+        forma de marcar fetchpriority, asi que se precarga aqui para que no
+        dependa de que el parser llegue hasta la regla que lo pinta. */}
+    <link rel="preload" as="image" href={numbersPattern.src} fetchpriority="high" />
     <ViewTransitions />
   </head>
   <body>
