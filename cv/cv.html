@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<title>Luis Carlos Arteaga Espitia - CV</title>
+<style>
+  /* El CV original lo generaba Typst con XCharter, que no esta instalada en
+     esta maquina. Noto Serif es la serif mas neutra y legible disponible;
+     para volver a XCharter basta con ponerla de primera en la lista. */
+  @page { size: letter; margin: 14mm 15mm; }
+
+  :root { --ink: #1a1a1a; --muted: #555; --rule: #c9c9c9; }
+
+  * { box-sizing: border-box; }
+
+  html {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  body {
+    margin: 0;
+    font-family: "Noto Serif", "Liberation Serif", "DejaVu Serif", serif;
+    font-size: 9.2pt;
+    line-height: 1.36;
+    color: var(--ink);
+  }
+
+  .updated {
+    text-align: right;
+    font-size: 8.4pt;
+    font-style: italic;
+    color: var(--muted);
+    margin-bottom: 7pt;
+  }
+
+  header h1 {
+    font-size: 17pt;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    margin: 0 0 3pt;
+  }
+
+  .contact { font-size: 9pt; color: var(--muted); line-height: 1.55; }
+
+  h2 {
+    font-size: 9pt;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 12pt 0 5pt;
+    padding-bottom: 2.5pt;
+    border-bottom: 0.6pt solid var(--rule);
+  }
+
+  p { margin: 0 0 6pt; text-align: justify; }
+
+  ul { margin: 0 0 8pt; padding-left: 13pt; }
+
+  li { margin-bottom: 3pt; text-align: justify; }
+
+  .entry { margin-bottom: 7pt; break-inside: avoid; }
+
+  .entry-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10pt;
+    margin-bottom: 3pt;
+  }
+
+  .entry-role { font-weight: 700; }
+
+  .entry-meta { color: var(--muted); white-space: nowrap; }
+
+  .entry-sub { color: var(--muted); margin-bottom: 4pt; }
+
+  .courses { column-count: 2; column-gap: 22pt; margin-bottom: 4pt; }
+
+  .courses .course {
+    break-inside: avoid;
+    margin-bottom: 4pt;
+  }
+
+  .courses .course-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 8pt;
+  }
+
+  .courses .provider { color: var(--muted); }
+
+  .skills { margin: 0; }
+  .skills div { margin-bottom: 3pt; text-align: justify; }
+  .skills dt { display: inline; font-weight: 700; font-style: normal; }
+  .skills dd { display: inline; margin: 0; }
+</style>
+</head>
+<body>
+<p class="updated">Last updated in Oct 2026</p>
+
+<header>
+  <h1>Luis Carlos Arteaga Espitia</h1>
+  <p class="contact">
+    Montería, Colombia | lucartes1997@gmail.com | 318 6405618 | meruemart.cloud<br />
+    linkedin.com/in/luis-arteaga-07 | github.com/MeruemArt
+  </p>
+</header>
+
+<h2>Summary</h2>
+<p>
+DevOps Engineer con más de 4 años de experiencia en Infrastructure as Code (IaC), CI/CD y seguridad cloud en AWS y Azure DevOps. Experto en diseño de plantillas CI/CD parametrizadas (Angular, Next.js, .NET/ECS, EKS, Python/SAM, PHP, IA con AgentCore y SQL), integración de herramientas DevSecOps (Veracode, Trivy, SonarCloud), y automatización de procesos operativos con PowerShell. Historial comprobado resolviendo vulnerabilidades críticas de seguridad en AWS, diseñando arquitecturas multi-región resilientes, estandarizando pipelines y reduciendo carga operativa mediante automatización de Work Items en Azure DevOps. Enfoque en estandarización, optimización de recursos cloud, y mejora continua de calidad de código.
+</p>
+
+<h2>Experience</h2>
+<div class="entry">
+  <div class="entry-head">
+    <span class="entry-role">DevOps engineer, Inter Rapidisimo</span>
+    <span class="entry-meta">Bogotá, Colombia &nbsp;·&nbsp; Mar 2026 – present</span>
+  </div>
+  <ul>
+    <li>Diseñé e implementé 8 plantillas CI/CD parametrizadas (Angular, Next.js, .NET/ECS, EKS, Python/SAM, PHP, IA con AgentCore y SQL) en Azure DevOps YAML, estandarizando el pipeline de software para toda la organización y eliminando cientos de líneas de código duplicado entre proyectos.</li>
+    <li>Integré herramientas DevSecOps (Veracode SAST, Trivy SCA, SonarCloud, SBOM) en todos los pipelines, automatizando la detección temprana de vulnerabilidades y mejorando la postura de seguridad en el ciclo de desarrollo.</li>
+    <li>Construí el pipeline de CD de Python sobre AWS SAM y Lambda, con resolución de dependencias (uv), pruebas unitarias (pytest) y verificación de estilo (flake8) ejecutadas antes de cada despliegue.</li>
+    <li>Desarrollé un sistema de 12 scripts PowerShell que automatiza el ciclo de vida completo de Work Items en Azure DevOps (creación, transición de estados, validación de tiempos con festivos colombianos, comentarios y monitoreo post-despliegue), reduciendo significativamente la carga operativa manual del equipo de operaciones.</li>
+    <li>Diseñé y propuse una arquitectura CD moderna basada en YAML para despliegues en EKS, reemplazando Release Pipelines clásicos y cubriendo el ciclo completo: namespaces, Fargate, service accounts, deployments, ingress y health checks.</li>
+    <li>Automaticé los despliegues en EKS (Fargate) y ECS sobre imágenes en ECR, asumiendo roles entre cuentas de AWS para separar los entornos y conservar la trazabilidad de cada promoción.</li>
+    <li>Implementé validación automatizada de variables entre entornos (Desarrollo, QA, Producción) detectando desviaciones de configuración antes de cada despliegue, previniendo errores por configuraciones inconsistentes.</li>
+    <li>Estandaricé el versionado del código con etiquetas semánticas en Git y un orquestador de despliegue de esquemas SQL, llevando la migración de base de datos al mismo pipeline que el código de aplicación.</li>
+    <li>Definí umbrales de calidad (Quality Gates) en SonarCloud con 3 niveles (A, B, C) y configuré cobertura de pruebas con Coverlet + ReportGenerator, estableciendo estándares de calidad de código medibles para todos los proyectos.</li>
+  </ul>
+</div>
+<div class="entry">
+  <div class="entry-head">
+    <span class="entry-role">Developer, Cobis Topaz</span>
+    <span class="entry-meta">Montería, Colombia &nbsp;·&nbsp; Mar 2022 – Mar 2026</span>
+  </div>
+  <ul>
+    <li>Resolví más de 10 vulnerabilidades críticas de AWS Security Hub en infraestructura CloudFormation, mejorando la postura de seguridad en 40%.</li>
+    <li>Configuré DeletionProtectionEnabled para instancia Nexus crítica y ajusté roles IAM de Chatbot, asegurando cumplimiento con AWS Well-Architected Framework.</li>
+    <li>Diseñé e implementé arquitectura multi-región con replicación automática de buckets S3 y tablas DynamoDB globales, reduciendo RPO a menos de 1 hora.</li>
+    <li>Refactoricé template padre de CloudFormation optimizando uso de recursos, eliminando más de 30 recursos redundantes y reduciendo costos en 800 dólares mensuales.</li>
+    <li>Estandaricé más de 50 templates convirtiendo documentos SSM a YAML y eliminando más de 200 líneas de código duplicado, mejorando mantenibilidad en 35%.</li>
+    <li>Desarrollé suite de más de 15 test unitarios para Lambdas Python críticas, aumentando cobertura de código de 0% a 85%.</li>
+    <li>Implementé soporte para despliegue de artifacts CWC base en pipelines Azure DevOps, habilitando CI/CD para 8 microservicios.</li>
+    <li>Colaboré en diseño de dashboards CloudWatch y contribuí al desarrollo de Lambda de auto-escalado inteligente para agentes Azure DevOps, reduciendo costos de compute en 25%.</li>
+  </ul>
+</div>
+
+<h2>Education</h2>
+
+<div class="entry">
+  <div class="entry-head">
+    <span class="entry-role">Universidad del Sinú - Elías Bechara Zainúm</span>
+    <span class="entry-meta">Montería, Colombia &nbsp;·&nbsp; Oct 2016 – Jul 2022</span>
+  </div>
+  <p class="entry-sub">BSc in Ingeniería de Sistemas</p>
+  <ul>
+    <li>Trabajo de grado: Diseño e implementación de un asistente virtual (chatbot) para la comunidad educativa.</li>
+  </ul>
+</div>
+<h2>Coursework</h2>
+
+<div class="courses">
+  <div class="course"><div class="course-top"><span>DevOps on AWS and Project Management</span> <span class="entry-meta">Ene 2024</span></div>
+    <div class="provider">Coursera, Amazon Web Services</div>
+  </div>
+  <div class="course"><div class="course-top"><span>AWS Certified Solutions Architect – Associate</span> <span class="entry-meta">Nov 2023</span></div>
+    <div class="provider">AWS Skill Builder</div>
+  </div>
+  <div class="course"><div class="course-top"><span>AWS Cloud Practitioner Essentials</span> <span class="entry-meta">May 2023</span></div>
+    <div class="provider">AWS Skill Builder</div>
+  </div>
+  <div class="course"><div class="course-top"><span>Security of the Cloud - Technical</span> <span class="entry-meta">May 2023</span></div>
+    <div class="provider">AWS Skill Builder</div>
+  </div>
+  <div class="course"><div class="course-top"><span>Introduction to Serverless Development</span> <span class="entry-meta">May 2023</span></div>
+    <div class="provider">AWS Skill Builder</div>
+  </div>
+  <div class="course"><div class="course-top"><span>AWS Security Hub Primer</span> <span class="entry-meta">Ago 2022</span></div>
+    <div class="provider">AWS Skill Builder</div>
+  </div>
+  <div class="course"><div class="course-top"><span>Cloud Computing</span> <span class="entry-meta">Abr 2021</span></div>
+    <div class="provider">Google Activate</div>
+  </div>
+</div>
+
+<h2>Skills</h2>
+
+<dl class="skills">
+  <div><dt>Cloud and Infrastructure:</dt> <dd>AWS (CloudFormation, Lambda, Step Functions, ECS/ECR, Fargate, EKS, EC2, S3, DynamoDB, EventBridge, Systems Manager, Batch, Glue, Athena), Multi-Region Architecture, Disaster Recovery</dd></div>
+  <div><dt>DevOps and CI/CD:</dt> <dd>Azure DevOps Pipelines, AWS CLI, AWS SAM, AWS CDK, Git, Docker, Infrastructure as Code (IaC), plantillas CI/CD parametrizadas (Angular, Next.js, .NET, PHP, Python)</dd></div>
+  <div><dt>Security and Compliance:</dt> <dd>AWS Security Hub, Inspector, KMS, SSL/TLS, Veracode SAST, Trivy SCA, SBOM, SonarCloud, SonarQube, Vulnerability Management</dd></div>
+  <div><dt>Monitoring and Observability:</dt> <dd>CloudWatch (Dashboards, Alarms, Logs, Agent), AWS X-Ray, Metrics Collection, Log Aggregation</dd></div>
+  <div><dt>Programming and Scripting:</dt> <dd>Python, PowerShell, YAML, JSON</dd></div>
+  <div><dt>Databases and Storage:</dt> <dd>DynamoDB, S3, MySQL, Liquibase, Athena</dd></div>
+  <div><dt>Soft Skills:</dt> <dd>Comunicación efectiva, resolución de problemas, trabajo en equipo, adaptabilidad, documentación técnica</dd></div>
+</dl>
+
+</body>
+</html>

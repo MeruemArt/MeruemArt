@@ -1,393 +1,311 @@
 ---
-import { getCollection } from "astro:content";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import Hero from "../components/Hero.astro";
-import Icon from "../components/Icon.astro";
-import Pill from "../components/Pill.astro";
-import Skills from "../components/Skills.astro";
-import TechnicalSkills from "../components/TechnicalSkills.astro";
-import PortfolioPreview from "../components/PortfolioPreview.astro";
-import Grid from "../components/Grid.astro";
-import CallToAction from "../components/CallToAction.astro";
-
 import ContactCTA from "../components/ContactCTA.astro";
-
-const projects = (await getCollection("work"))
-  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
-  .slice(0, 4);
+import WhatsAppButton from "../components/WhatsAppButton.astro";
 
 import { Image } from "astro:assets";
 import portraitImg from "../assets/portrait.webp";
-import whatsappIcon from "../assets/whatsapp-icon.svg";
 import cobisLogo from "../assets/cobis.svg";
+
+/* El registro cuantificado. Cada cifra sale de /about/, donde ya está
+   publicada y es verificable. No se infla ni se redondea. */
+const CV = "/assets/Luis_Carlos_Arteaga_Espitia_CV.pdf";
+
+const resultados = [
+  {
+    area: "Estandarización",
+    cifra: "8 plantillas CI/CD para todo el portafolio",
+    detalle:
+      "Azure DevOps parametrizado para Angular, Next.js, PHP, .NET (ECS/EKS), Python serverless (SAM), IA (AgentCore) y SQL, con DevSecOps (Veracode, Trivy, SonarCloud) en todos los pipelines.",
+  },
+  {
+    area: "Seguridad",
+    cifra: "10+ vulnerabilidades críticas resueltas",
+    detalle:
+      "Infraestructura en CloudFormation auditada con AWS Security Hub. La postura de seguridad mejoró 40%.",
+  },
+  {
+    area: "Costos",
+    cifra: "USD 800 al mes y 25% menos cómputo",
+    detalle:
+      "Refactoricé el template padre de CloudFormation eliminando más de 30 recursos redundantes, y una Lambda de autoescalado inteligente para agentes de Azure DevOps.",
+  },
+  {
+    area: "Fiabilidad",
+    cifra: "RPO por debajo de 1 hora",
+    detalle:
+      "Arquitectura multi-región con replicación automática de buckets S3 y tablas DynamoDB globales.",
+  },
+  {
+    area: "Calidad",
+    cifra: "Cobertura de código de 0% a 85%",
+    detalle:
+      "Suite de más de 15 tests unitarios para Lambdas críticas en Python, con Quality Gates de tres niveles en SonarCloud.",
+  },
+  {
+    area: "Mantenibilidad",
+    cifra: "50+ templates estandarizados",
+    detalle:
+      "Documentos SSM convertidos a YAML, más de 200 líneas de duplicación eliminadas y 35% de mejora en mantenibilidad.",
+  },
+  {
+    area: "Automatización",
+    cifra: "12 scripts PowerShell",
+    detalle:
+      "Automatizan el ciclo de vida completo de Work Items en Azure DevOps, con validación de tiempos usando festivos colombianos.",
+  },
+];
+
+const servicios = [
+  {
+    herramienta: "Azure DevOps · CloudFormation",
+    titulo: "Infraestructura como Código",
+    detalle:
+      "Diseño y despliegue de arquitecturas resilientes con plantillas CI/CD parametrizadas, environments replicables y promotion gates entre ramas.",
+  },
+  {
+    herramienta: "AWS",
+    titulo: "Arquitectura Cloud Native",
+    detalle:
+      "Arquitectura y despliegue de soluciones escalables y seguras en AWS: landings, redes privadas, IAM con mínimo privilegio y observabilidad.",
+  },
+  {
+    herramienta: "Python · Bash · PowerShell",
+    titulo: "Automatización y CI/CD",
+    detalle:
+      "Pipelines eficientes, integración DevSecOps y automatización de operaciones que reemplazan trabajo manual repetitivo por código testeable.",
+  },
+];
+
+const stack = [
+  "AWS",
+  "Azure DevOps",
+  "CloudFormation",
+  "SAM",
+  "EKS",
+  "Python",
+  "PowerShell",
+  "Docker",
+  "Git",
+];
 ---
 
 <BaseLayout
   title="Luis Arteaga | Ingeniero DevOps"
   description="Ayudo a empresas a desplegar software más rápido y sin errores automatizando su infraestructura en la nube."
 >
-  <div class="wrapper" style="padding-top: 6rem;">
-    <section class="hero-section">
-      <div class="hero-main animate-in">
+  <div class="shell">
+    <div class="column">
+      <section class="hero">
         <div class="hero-text">
-          <div class="hero-badge" style="display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.375rem 1rem; border-radius: 999rem; font-size: 0.85rem; font-weight: 600; background: var(--color-accent-dark); color: #fff; margin-bottom: 1rem; width: fit-content;">
-            <span style="width: 8px; height: 8px; border-radius: 50%; background: #fff; animation: glow-pulse 2s ease-in-out infinite;"></span>
-            Disponible para proyectos
-          </div>
           <h1 class="hero-title">
             Luis Arteaga<br />
-            <span class="gradient-text">Ingeniero DevOps</span>
+            <span class="hero-role">Ingeniero DevOps</span>
           </h1>
-          <p class="hero-subtitle">
-            Ayudo a empresas a desplegar software más rápido y sin errores automatizando su infraestructura en la nube.
+
+          <p class="hero-lede">
+            Ayudo a empresas a desplegar software más rápido y sin errores
+            automatizando su infraestructura en la nube.
           </p>
-          <div class="hero-pills">
-            <Pill><Icon icon="aws" size="1.2em" /> AWS</Pill>
-            <Pill><Icon icon="python" size="1.2em" /> Python</Pill>
-            <Pill><Icon icon="git" size="1.2em" /> Git</Pill>
-            <Pill><Icon icon="azure_devops" size="1.2em" /> Azure DevOps</Pill>
-          </div>
         </div>
-        <div class="hero-image-wrapper">
-          <div class="hero-glow"></div>
+
+        <div class="hero-figure">
           <Image
             src={portraitImg}
             alt="Luis Arteaga"
-            width={480}
-            height={620}
+            width={579}
+            height={577}
             loading="eager"
             fetchpriority="high"
-            sizes="(max-width: 50em) 280px, 380px"
+            sizes="(max-width: 62em) 200px, 260px"
             class="hero-portrait"
           />
         </div>
-      </div>
-    </section>
+      </section>
 
-    <Skills />
-    <TechnicalSkills />
-  </div>
-
-  <a
-    href="https://web.whatsapp.com/send/?phone=%2B573186405618&text=Hola+Luis.%0AVi+tu+p%C3%A1gina%2C+me+interesa+contactarte+%F0%9F%91%A8%F0%9F%8F%BB%E2%80%8D%F0%9F%92%BB.&type=phone_number&app_absent=0"
-    class="whatsapp-button"
-    target="_blank"
-    id="whatsapp-link"
-  >
-    <Image
-      src={whatsappIcon}
-      alt="Icono de Whatsapp"
-      width={64}
-      height={64}
-      loading="eager"
-    />
-  </a>
-
-  <script>
-    const link = document.getElementById("whatsapp-link");
-    if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-      link.href = link.href.replace("web.whatsapp.com", "api.whatsapp.com");
-    }
-  </script>
-
-  <main>
-    <div class="wrapper" style="padding-top: 3rem;">
-      <div class="pdf-section animate-in">
-        <span id="pdf-label" class="sr-only">Visor de currículum profesional en PDF</span>
-        <object
-          aria-labelledby="pdf-label"
-          title="Currículum profesional de Luis Arteaga"
-          data="/assets/Luis_Carlos_Arteaga_Espitia_CV.pdf"
-          type="application/pdf"
-          width="100%"
-          height="600px"
-          style="border-radius: 1rem; border: 1px solid var(--color-border);"
-        >
-          <p style="padding: 2rem; text-align: center;">
-            Para obtener una visión más completa de mi experiencia y habilidades,
-            <a href="/assets/Luis_Carlos_Arteaga_Espitia_CV.pdf" style="color: var(--color-accent);">descargue mi currículum completo</a>.
-          </p>
-        </object>
-      </div>
-
-      <section class="section-padding mentions-section animate-in">
-        <div class="mentions-header">
-          <div class="mentions-text">
-            <h2 class="section-title">Menciones</h2>
-            <p class="section-desc">He tenido la suerte de recibir elogios por mi trabajo en varias publicaciones.</p>
+      <aside class="rail">
+        <dl class="rail-facts">
+          <div class="fact">
+            <dt>Rol</dt>
+            <dd>Ingeniero DevOps</dd>
           </div>
-          <CallToAction href="/mentions/">
-            Ver todo <Icon icon="arrow-right" size="1.2em" />
-          </CallToAction>
-        </div>
+          <div class="fact">
+            <dt>Foco</dt>
+            <dd>CI/CD · Cloud · Automatización</dd>
+          </div>
+          <div class="fact">
+            <dt>Sector</dt>
+            <dd>Banca y logística</dd>
+          </div>
+          <div class="fact">
+            <dt>Base</dt>
+            <dd>Montería, Colombia</dd>
+          </div>
+          <div class="fact">
+            <dt>Stack</dt>
+            <dd class="rail-stack">{stack.join(" · ")}</dd>
+          </div>
+        </dl>
+        <a class="rail-link" href={CV} download>
+          Currículum <span aria-hidden="true">↓</span>
+        </a>
+      </aside>
 
-        <div class="mentions-gallery">
+      <section class="block">
+        <h2 class="block-title">Resultados</h2>
+        <p class="block-note">
+          Medidos en producción, en banca y logística. El detalle está en <a
+            class="text-link"
+            href="/about/">acerca de</a
+          >.
+        </p>
+        <ol class="rows">
+          {
+            resultados.map((r) => (
+              <li class="row">
+                <p class="row-mark">{r.area}</p>
+                <div class="row-body">
+                  <h3 class="row-title">{r.cifra}</h3>
+                  <p class="row-detail">{r.detalle}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <section class="block">
+        <h2 class="block-title">Qué hago</h2>
+        <ol class="rows">
+          {
+            servicios.map((s) => (
+              <li class="row">
+                <p class="row-mark">{s.herramienta}</p>
+                <div class="row-body">
+                  <h3 class="row-title">{s.titulo}</h3>
+                  <p class="row-detail">{s.detalle}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+      </section>
+
+      <section class="block mentions">
+        <h2 class="block-title">Menciones</h2>
+        <div class="mentions-body">
           <Image
             src={cobisLogo}
-            alt="Cobis Logo"
+            alt="Cobis"
             width={808}
             height={153}
             class="cobis-logo"
           />
-          <Grid variant="offset">
-            {projects.map((project) => (
-              <li><PortfolioPreview project={project} /></li>
-            ))}
-          </Grid>
+          <p class="mentions-text">
+            He tenido la suerte de recibir elogios por mi trabajo en varias
+            publicaciones.
+          </p>
+          <a class="text-link" href="/mentions/">Ver todas <span aria-hidden="true">→</span></a>
         </div>
       </section>
 
-      <section class="section-padding services-section animate-in">
-        <div class="services-header">
-          <h2 class="section-title">Servicios</h2>
-          <p class="section-desc">Ofrezco soluciones tecnológicas a medida para potenciar tu negocio.</p>
-        </div>
-
-        <div class="services-grid">
-          <article class="service-card card-hover">
-            <div class="service-icon">
-              <Icon icon="terminal-window" size="2.5rem" gradient />
-            </div>
-            <h3>Infraestructura como Código</h3>
-            <p>Diseño y despliegue de arquitecturas resilientes con Azure DevOps, CloudFormation y plantillas CI/CD parametrizadas.</p>
-          </article>
-          <article class="service-card card-hover">
-            <div class="service-icon">
-              <Icon icon="aws" size="2.5rem" gradient />
-            </div>
-            <h3>Arquitectura Cloud Native</h3>
-            <p>Arquitectura y despliegue de soluciones escalables y seguras en AWS.</p>
-          </article>
-          <article class="service-card card-hover">
-            <div class="service-icon">
-              <Icon icon="python" size="2.5rem" gradient />
-            </div>
-            <h3>Automatización y CI/CD</h3>
-            <p>Pipelines eficientes, integración DevSecOps y automatización de operaciones con Python, Bash y PowerShell.</p>
-          </article>
-        </div>
-      </section>
-
+      <ContactCTA />
     </div>
+  </div>
 
-    <ContactCTA />
-  </main>
+  <WhatsAppButton />
 </BaseLayout>
 
 <style>
-  .hero-section {
-    padding: 2rem 0 3rem;
-  }
-
-  .hero-main {
-    display: flex;
-    flex-direction: column-reverse;
-    align-items: center;
-    gap: 2rem;
+  /* ── Hero del inicio ─────────────────────────────────── */
+  /* El h1, la entradilla y el ritmo del hero viven en shell.css. Aqui solo
+     lo que es propio de esta pagina: el retrato y el indicador de estado. */
+  .hero-figure {
+    min-width: 0;
+    margin-bottom: 0.5rem;
   }
 
   .hero-text {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 1rem;
+    min-width: 0;
   }
 
-  .hero-title {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 6vw, 3.5rem);
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    line-height: 1.1;
-    color: var(--color-text-primary);
+  /* La entradilla del hero da el tono; el dato que sigue es la primera cifra. */
+
+  /* El stack vive en el rail como metadato, no como sección: una lista de
+     herramientas es evidencia, nunca la afirmación. */
+  /* El stack es el unico lugar que conserva la monoespaciada: una lista de
+     herramientas se lee como un manifiesto, no como prosa. En minusculas,
+     nunca en mayusculas; es la firma tecnica sin volver frio el resto. */
+  .rail-stack {
+    font-family: var(--font-label);
+    font-size: var(--text-xs);
+    line-height: 1.75;
+    letter-spacing: 0.01em;
   }
 
-  .hero-subtitle {
-    max-width: 40ch;
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    color: var(--color-text-secondary);
+  /* Bajo el título de sección, una línea que orienta qué va a leer el
+     visitante. Nunca compite con las filas. */
+  .block-note {
+    max-width: var(--measure);
+    margin-bottom: 1.5rem;
+    color: var(--color-text-tertiary);
+    font-size: var(--text-sm);
     line-height: 1.6;
   }
 
-  .hero-pills {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-    justify-content: center;
-    margin-top: 0.5rem;
-  }
-
-  .hero-image-wrapper {
-    position: relative;
-    flex-shrink: 0;
-  }
-
-  .hero-glow {
-    position: absolute;
-    inset: -20px;
-    border-radius: 50%;
-    background: var(--color-accent-glow);
-    filter: blur(40px);
-    animation: glow-pulse 3s ease-in-out infinite;
-    z-index: -1;
-  }
-
+  /* El retrato ocupa el ancho de la columna de titulos y sostiene su propio
+     plano con la elevacion del tema: la sombra es un token, no un literal,
+     asi que acompana la temperatura del fondo. */
   .hero-portrait {
-    width: min(280px, 60vw);
+    display: block;
+    width: 100%;
+    max-width: 20rem;
     height: auto;
-    aspect-ratio: 9 / 8.8;
+    aspect-ratio: 579 / 577;
     object-fit: cover;
     object-position: top;
-    border-radius: 45% 55% 63% 37% / 47% 53% 47% 53%;
-  }
-
-  .mentions-section {
-    border-top: 1px solid var(--color-border);
-  }
-
-  .mentions-header {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .section-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3vw, 2.25rem);
-    margin-bottom: 0.5rem;
-  }
-
-  .section-desc {
-    color: var(--color-text-secondary);
-    font-size: 1.1rem;
-    max-width: 40ch;
-  }
-
-  .mentions-gallery {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-  }
-
-  .cobis-logo {
-    max-height: 3rem;
-    width: auto;
-    align-self: flex-start;
-    opacity: 0.7;
-  }
-
-  .services-section {
-    border-top: 1px solid var(--color-border);
-  }
-
-  .services-header {
-    text-align: center;
-    margin-bottom: 2.5rem;
-  }
-
-  .services-header .section-desc {
-    margin: 0 auto;
-  }
-
-  .services-grid {
-    display: grid;
-    gap: 1.5rem;
-  }
-
-  .service-card {
-    padding: 2rem;
-    background: var(--color-surface-secondary);
+    border-radius: 1.5rem;
     border: 1px solid var(--color-border);
-    border-radius: 1.25rem;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+    box-shadow: var(--shadow-card);
   }
 
-  .service-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50%;
-    background: var(--color-accent-glow);
-    margin-bottom: 0.5rem;
-  }
-
-  .service-card h3 {
-    font-size: 1.25rem;
-    font-weight: 600;
-  }
-
-  .service-card p {
-    color: var(--color-text-secondary);
-    font-size: 0.95rem;
-    line-height: 1.6;
-  }
-
-  .whatsapp-button {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    z-index: 220;
-  }
-
-  .whatsapp-button img {
-    width: 56px;
-    height: 56px;
-  }
-
-  @media (min-width: 50em) {
-    .whatsapp-button img {
-      width: 64px;
-      height: 64px;
-    }
-  }
-
-  @media (min-width: 50em) {
-    .hero-main {
-      flex-direction: row;
-      justify-content: space-between;
-      gap: 4rem;
+  /* En el inicio el retrato SI ocupa la columna de titulos y el texto la de
+     contenido: es la unica pagina donde esa columna tiene una imagen. */
+  @media (min-width: 64em) {
+    .hero-figure {
+      grid-column: 1;
+      grid-row: 1;
     }
 
     .hero-text {
-      align-items: flex-start;
-      text-align: left;
-      flex: 1;
+      grid-column: 2;
+      grid-row: 1;
     }
+  }
 
-    .hero-pills {
-      justify-content: flex-start;
+  @media (max-width: 63.99em) {
+    .hero-figure {
+      max-width: 15rem;
     }
+  }
 
-    .hero-image-wrapper {
-      flex-shrink: 0;
-    }
+  /* ── Menciones ────────────────────────────────────────── */
+  .mentions-body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
 
-    .hero-portrait {
-      width: 380px;
-    }
+  .cobis-logo {
+    width: min(200px, 55vw);
+    height: auto;
+    opacity: 0.75;
+  }
 
-    .mentions-header {
-      flex-direction: row;
-      justify-content: space-between;
-      align-items: flex-end;
-    }
-
-    .services-grid {
-      grid-template-columns: repeat(3, 1fr);
-      gap: 2rem;
-    }
-
-    .pdf-section {
-      max-width: 48rem;
-      margin: 0 auto;
-    }
+  .mentions-text {
+    max-width: 52ch;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
   }
 </style>

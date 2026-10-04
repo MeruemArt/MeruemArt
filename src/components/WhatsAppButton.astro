@@ -1,0 +1,64 @@
+---
+import { Image } from "astro:assets";
+import whatsappIcon from "../assets/whatsapp-icon.svg";
+
+// wa.me resuelve solo: redirige a web.whatsapp.com en escritorio y a
+// api.whatsapp.com en movil. Por eso ya no hace falta detectar el agente.
+const href =
+  "https://wa.me/573186405618?text=Hola%20Luis.%20Vi%20tu%20p%C3%A1gina%2C%20me%20interesa%20contactarte%20%F0%9F%91%A8%F0%9F%8F%BB%E2%80%8D%F0%9F%92%BB.";
+---
+
+<a
+  href={href}
+  class="whatsapp-button"
+  target="_blank"
+  rel="noopener noreferrer"
+  id="whatsapp-link"
+  aria-label="Escribir por WhatsApp"
+>
+  <Image src={whatsappIcon} alt="" width={64} height={64} loading="eager" />
+</a>
+
+<style>
+  /* Boton de marca: circulo verde de WhatsApp con el glifo oficial en blanco.
+     No lleva borde ni soft UI a proposito. Las guias de WhatsApp piden el
+     asset sin modificar, y un contorno o una sombra tenue lo convertirian en
+     un icono propio.
+
+     El verde es #128c7e y no el #25d366 de las guias: con el canonico el
+     glifo blanco queda en 1.98:1 y el borde contra la crema en 1.87:1, los
+     dos por debajo del 3:1 de WCAG 1.4.11. Este tambien es un verde oficial
+     de su paleta y deja el glifo en 4.14:1, el borde en 3.90:1 en claro y
+     4.64:1 en oscuro. */
+  .whatsapp-button {
+    --whatsapp-green: #128c7e;
+    --whatsapp-green-hover: #0f6d63;
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 100;
+    width: 3.25rem;
+    height: 3.25rem;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--whatsapp-green);
+    box-shadow: var(--shadow-float);
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .whatsapp-button:hover {
+    transform: translateY(-3px);
+    background: var(--whatsapp-green-hover);
+    box-shadow: var(--shadow-lift);
+  }
+
+  .whatsapp-button:active {
+    transform: translateY(-1px);
+  }
+
+  .whatsapp-button img {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+</style>

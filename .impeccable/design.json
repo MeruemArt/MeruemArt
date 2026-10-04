@@ -1,0 +1,179 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-04T17:16:21.779Z",
+  "title": "Design System: MeruemArt — técnico (lima sobre verde casi negro)",
+  "extensions": {
+    "colorMeta": {
+      "accent": {
+        "role": "primary",
+        "displayName": "Lima de señal (tema oscuro)",
+        "canonical": "oklch(92.8% 0.2304 124.0)",
+        "lightValue": "#6b3fc4",
+        "darkValue": "#c8ff00",
+        "note": "El tema claro conserva el violeta. El tema oscuro, por defecto, usa el lima como única señal.",
+        "tonalRamp": [
+          "oklch(16% 0.06 124)",
+          "oklch(30% 0.11 124)",
+          "oklch(48% 0.17 124)",
+          "oklch(66% 0.22 124)",
+          "oklch(79% 0.23 124)",
+          "oklch(88% 0.22 124)",
+          "oklch(93% 0.23 124)",
+          "oklch(97% 0.12 124)"
+        ]
+      },
+      "on-accent": {
+        "role": "onPrimary",
+        "displayName": "Tinta sobre el acento",
+        "lightValue": "#ffffff",
+        "darkValue": "#06110d",
+        "note": "Un token, dos papeles. En claro el relleno es violeta profundo y el texto blanco; en oscuro el relleno es lima y el texto la tinta verde casi negra (16.24:1)."
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "family": "Space Grotesk Variable",
+        "role": "Grotesca geometrica: h1, titulos de seccion y de fila.",
+        "axes": "wght 300-700",
+        "loadedAs": "@fontsource-variable/space-grotesk/wght.css"
+      },
+      "body": {
+        "family": "Inter Variable",
+        "role": "Sans de lectura: cuerpo, entradilla, prosa.",
+        "axes": "wght 100-900, opsz (font-optical-sizing: auto)",
+        "loadedAs": "@fontsource-variable/inter/opsz.css"
+      },
+      "label": {
+        "family": "JetBrains Mono Variable",
+        "role": "Firma tecnica: solo el inventario de stack del rail. En minusculas, nunca en mayusculas.",
+        "axes": "wght 100-800",
+        "loadedAs": "@fontsource-variable/jetbrains-mono/wght.css"
+      }
+    }
+  },
+  "components": [
+    {
+      "name": "Shell",
+      "kind": "layout",
+      "refersTo": "shell",
+      "description": "El marco de la pagina. Dos columnas: 20rem de titulos y el resto de contenido. El retrato de la home y todos los .block-title caen en la columna de titulos, el contenido en la segunda. El rail vive DENTRO de .column, despues del hero: en movil asi cae entre la entradilla y el primer bloque, y en escritorio un order: -1 lo vuelve a subir a la banda de metadatos sin duplicar markup.",
+      "html": "<div class=\"shell\">\n  <div class=\"column\">\n    <section class=\"hero\"><h1 class=\"hero-title\">Luis Arteaga</h1></section>\n    <aside class=\"rail\"><dl class=\"rail-facts\"><div class=\"fact\"><dt>Rol</dt><dd>Ingeniero DevOps</dd></div></dl></aside>\n    <section class=\"block\">\n      <h2 class=\"block-title\">Que hago</h2>\n      <ol class=\"rows\"><li class=\"row\"><p class=\"row-mark\">AWS</p><div class=\"row-body\"><h3 class=\"row-title\">Infraestructura</h3><p class=\"row-detail\">Detalle</p></div></li></ol>\n    </section>\n  </div>\n</div>",
+      "css": "/* Sistema de composición del sitio.\n   Una sola grilla sostiene la pagina: una columna de 20rem para los\n   titulos de seccion y el retrato, y el resto para el contenido. Todo lo\n   que sea titulo —incluido el retrato del hero— cae en la misma columna,\n   asi que la pagina tiene una espina vertical legible en vez de bloques\n   sueltos que empiezan y acaban donde les place.\n   Compartido por /, /about/, /mentions/ y /work/[slug].\n\n   Sobre el ancho: el shell mide 72rem, no 82rem. Con 82rem la columna de\n   contenido llegaba a 888px mientras la prosa se topaba en 594px (66ch), y\n   quedaban 294px de vacío a la derecha de cada fila. Ese hueco no era aire\n   editorial, era una columna que la grilla prometia y la medida no\n   ocupaba. Estrechar el shell deja que la medida sea la columna. */\n.shell {\n--rail-col: 20rem;\n  --gutter: 3.5rem;\n  --measure: 66ch;\n  display: block;\n  width: 100%;\n  max-width: 72rem;\n  margin-inline: auto;\n  padding: 4.5rem 1.5rem 7rem;\n}\n\n/* El rail vive dentro de la columna para que en movil caiga despues del\n   hero y antes del primer bloque; en desktop se sube con order para\n   conservar la banda de metadatos arriba. */\n.shell .column,\n.shell .column article {\ndisplay: flex;\n  flex-direction: column;\n}\n\n/* Todo lo que se apoya en la grilla: hero y bloques comparten columnas. */\n.shell .hero,\n.shell .block {\ndisplay: grid;\n  grid-template-columns: minmax(0, 1fr);\n  column-gap: var(--gutter);\n}\n\n/* ── Bloques ─────────────────────────────────────────────── */\n/* El ritmo sale de la separacion, no de una linea divisoria por bloque:\n   cuatro rayas horizontales a la misma distancia leen como formulario.\n   El aire entre secciones hace el trabajo y las lineas se reservan para\n   los elementos que de verdad son una lista. */\n.block {\nmargin-bottom: var(--section);\n}\n\n.block:last-of-type {\nmargin-bottom: 0;\n}\n\n.block-title {\nfont-family: var(--font-display);\n  font-size: var(--text-title);\n  font-weight: 600;\n  letter-spacing: -0.02em;\n  color: var(--color-text-primary);\n  text-wrap: balance;\n  margin-bottom: 0;\n}\n\n/* Titulo a la izquierda, contenido a la derecha, desde 64em. */\n@media (min-width: 64em) {\n  .shell .column .rail {\n    order: -1;\n  }\n\n  .shell .hero,\n  .shell .block {\n    grid-template-columns: var(--rail-col) minmax(0, 1fr);\n  }\n\n  .shell .block > .block-title {\n    grid-column: 1;\n    position: sticky;\n    top: 2rem;\n    align-self: start;\n  }\n\n  .shell .block > :not(.block-title) {\n    grid-column: 2;\n  }\n}\n\n/* Apilado: el titulo precede a su contenido y el bloque respira. */\n@media (max-width: 63.99em) {\n  .shell .block {\n    row-gap: var(--space-lg);\n  }\n}\n\n/* ── Hero ────────────────────────────────────────────────── */\n/* Vive aqui y no en cada pagina: cuatro paginas declaraban su propia\n   version del hero con pesos y medidas distintas (800/80px en tres de\n   ellas, 600/88px en el inicio), y por eso el mismo titulo cambiaba de\n   tamano al navegar. Una sola definicion para las cuatro. */\n\n.shell .hero {\nalign-items: end;\n  padding-bottom: var(--space-xl);\n  margin-bottom: clamp(3.5rem, 6vw, 5.5rem);\n}\n\n.shell .hero-title {\nfont-family: var(--font-display);\n  font-size: var(--text-display);\n  font-weight: 600;\n  letter-spacing: -0.03em;\n  line-height: 1;\n  color: var(--color-text-primary);\n  text-wrap: balance;\n}\n\n.shell .hero-role {\ndisplay: block;\n  color: var(--color-accent);\n}\n\n/* La entradilla comparte el escalon --text-lg con el titulo de fila. No es\n   una colision: viven bajo jerarquias distintas (88px y 31px) y asi la\n   pagina entera se resuelve en seis tamanos en vez de quince. */\n.shell .hero-lede {\nmax-width: 54ch;\n  margin-top: var(--space-lg);\n  font-size: var(--text-lg);\n  line-height: 1.6;\n  color: var(--color-text-secondary);\n  text-wrap: pretty;\n}\n\n/* En las paginas sin retrato no hay nada en la columna de 20rem, asi que\n   el titulo y la entradilla ocupan las dos columnas. Si se quedaran en la\n   columna de titulos, un h1 de 88px tendria que partirse en tres lineas\n   dentro de 320px. En el inicio no aplica: alli van envueltos en\n   .hero-text, que es quien ocupa la segunda columna. */\n.shell .hero > .hero-title,\n.shell .hero > .hero-role,\n.shell .hero > .hero-lede {\ngrid-column: 1 / -1;\n}"
+    },
+    {
+      "name": "Hero",
+      "kind": "layout",
+      "refersTo": "hero",
+      "description": "Se define una sola vez en shell.css para las cuatro plantillas. En la home el retrato ocupa la columna de titulos y el texto la de contenido; en el resto el titulo hace grid-column 1 / -1 para no quedar en 320px.",
+      "html": "<section class=\"hero\">\n  <div class=\"hero-figure\"><img class=\"hero-portrait\" src=\"/assets/portrait.webp\" alt=\"\" /></div>\n  <div class=\"hero-text\">\n    <h1 class=\"hero-title\">Luis Arteaga<span class=\"hero-role\">Ingeniero DevOps</span></h1>\n    <p class=\"hero-lede\">Ayudo a empresas a desplegar software.</p>\n  </div>\n</section>",
+      "css": "/* Todo lo que se apoya en la grilla: hero y bloques comparten columnas. */\n.shell .hero,\n.shell .block {\ndisplay: grid;\n  grid-template-columns: minmax(0, 1fr);\n  column-gap: var(--gutter);\n}\n\n/* Titulo a la izquierda, contenido a la derecha, desde 64em. */\n@media (min-width: 64em) {\n  .shell .column .rail {\n    order: -1;\n  }\n\n  .shell .hero,\n  .shell .block {\n    grid-template-columns: var(--rail-col) minmax(0, 1fr);\n  }\n\n  .shell .block > .block-title {\n    grid-column: 1;\n    position: sticky;\n    top: 2rem;\n    align-self: start;\n  }\n\n  .shell .block > :not(.block-title) {\n    grid-column: 2;\n  }\n}\n\n/* Apilado: el titulo precede a su contenido y el bloque respira. */\n@media (max-width: 63.99em) {\n  .shell .block {\n    row-gap: var(--space-lg);\n  }\n}\n\n/* ── Hero ────────────────────────────────────────────────── */\n/* Vive aqui y no en cada pagina: cuatro paginas declaraban su propia\n   version del hero con pesos y medidas distintas (800/80px en tres de\n   ellas, 600/88px en el inicio), y por eso el mismo titulo cambiaba de\n   tamano al navegar. Una sola definicion para las cuatro. */\n\n.shell .hero {\nalign-items: end;\n  padding-bottom: var(--space-xl);\n  margin-bottom: clamp(3.5rem, 6vw, 5.5rem);\n}\n\n/* En las paginas sin retrato no hay nada en la columna de 20rem, asi que\n   el titulo y la entradilla ocupan las dos columnas. Si se quedaran en la\n   columna de titulos, un h1 de 88px tendria que partirse en tres lineas\n   dentro de 320px. En el inicio no aplica: alli van envueltos en\n   .hero-text, que es quien ocupa la segunda columna. */\n.shell .hero > .hero-title,\n.shell .hero > .hero-role,\n.shell .hero > .hero-lede {\ngrid-column: 1 / -1;\n}"
+    },
+    {
+      "name": "Portrait Frame",
+      "kind": "media",
+      "refersTo": "hero-portrait",
+      "description": "El retrato ocupa el ancho exacto de la columna de titulos en vez de un tamano arbitrario. Marco del tema y elevacion como token (--shadow-card), nunca un halo de color ni una sombra literal.",
+      "html": "<img class=\"hero-portrait\" src=\"/assets/portrait.webp\" alt=\"Luis Arteaga\" />",
+      "css": "/* ── Hero del inicio ─────────────────────────────────── */\n  /* El h1, la entradilla y el ritmo del hero viven en shell.css. Aqui solo\n     lo que es propio de esta pagina: el retrato y el indicador de estado. */\n  .hero-figure {\nmin-width: 0;\n    margin-bottom: 0.5rem;\n}\n\n/* El retrato ocupa el ancho de la columna de titulos y sostiene su propio\n     plano con la elevacion del tema: la sombra es un token, no un literal,\n     asi que acompana la temperatura del fondo. */\n  .hero-portrait {\ndisplay: block;\n    width: 100%;\n    max-width: 20rem;\n    height: auto;\n    aspect-ratio: 579 / 577;\n    object-fit: cover;\n    object-position: top;\n    border-radius: 1.5rem;\n    border: 1px solid var(--color-border);\n    box-shadow: var(--shadow-card);\n}"
+    },
+    {
+      "name": "Edge Glow",
+      "kind": "decoration",
+      "refersTo": "ellipse",
+      "description": "La iluminacion que sube por detras del patron de numeros en los dos bordes. Cuatro elipses con blur(40px) y una ascension escalonada (wave-rise, 7s a 12s). El color sale de --color-accent-glow, que ya trae el alpha por tema (violeta 0.28 en claro, lima 0.22 en oscuro), asi que el mismo glow se adapta sin duplicar valores. El token usado antes era var(--color-accent-dark) sin los guiones: una declaracion invalida, por eso el glow oscuro no aparecia nunca. Sigue siendo ambiente: el pico de opacidad es 0.85 en claro y 0.7 en oscuro, nunca 1.",
+      "html": "<div class=\"pattern-container pattern-left\">\n  <div class=\"overlay-container dark-only mask-pattern\">\n    <div>\n      <div class=\"ellipse ellipse-1\"></div>\n      <div class=\"ellipse ellipse-2\"></div>\n      <div class=\"ellipse ellipse-3\"></div>\n      <div class=\"ellipse ellipse-4\"></div>\n    </div>\n  </div>\n</div>",
+      "css": "/* La iluminacion que sube por detras del patron. Las elipses no\n       llevan color literal: toman --color-accent-glow, que ya trae el\n       alpha por tema (violeta 0.28 en claro, lima 0.22 en oscuro), asi que\n       el mismo glow se adapta sin duplicar valores.\n       El token usado antes era var(--color-accent-dark) sin los guiones:\n       una declaracion invalida, por eso el glow oscuro no aparecia. */\n    .overlay-container {\nposition: absolute;\n        inset: 0;\n        width: 100%;\n        height: 100%;\n}\n\n.mask-pattern {\n-webkit-mask-size: cover;\n        mask-size: cover;\n        -webkit-mask-repeat: no-repeat;\n        mask-repeat: no-repeat;\n        -webkit-mask-position: center;\n        mask-position: center;\n}\n\n.ellipse {\nposition: absolute;\n        background-color: var(--color-accent-glow);\n        filter: blur(40px);\n        opacity: 0;\n        border-radius: 50%;\n}\n\n:global(.theme-dark) .ellipse {\nbox-shadow: 0 0 40px var(--color-accent-glow);\n}\n\n/* Peak de opacidad por tema: el glow es ambiente, no protagonistico. */\n    .light-only .ellipse {\n--peak: 0.85;\n}\n\n:global(.theme-dark) .dark-only .ellipse {\n--peak: 0.7;\n}\n\n@keyframes wave-rise {\n0% {\n            transform: translateY(120%);\n            opacity: 0;\n        }\n        20% {\n            opacity: var(--peak, 0.8);\n        }\n        80% {\n            opacity: var(--peak, 0.8);\n        }\n        100% {\n            transform: translateY(-800px);\n            opacity: 0;\n        }\n}"
+    },
+    {
+      "name": "Snow Effect",
+      "kind": "decoration",
+      "refersTo": "snowflake",
+      "description": "Capa estacional del 1 de diciembre a las 00:00 hasta el 6 de enero a las 23:59, en hora local del visitante. El color del copo sale de --color-text-primary (claro en oscuro, grafito en claro) porque con blanco fijo la nevada era 1.06:1 sobre crema: invisible pero renderizando. Dos animaciones en vez de cuarenta keyframes: la caida va en .snowflake y el vaiven en su span, porque dos transforms no se suman en un mismo elemento. Se anula con prefers-reduced-motion, es idempotente bajo ViewTransitions (limpia el intervalo previo) y se fuerza con ?snow=1.",
+      "html": "<div id=\"snow-container\" aria-hidden=\"true\">\n  <div class=\"snowflake\" style=\"--fall-duration:6s\"><span>❄</span></div>\n</div>",
+      "css": "/* Por delante del contenido, por detrás de la interfaz, y sin capturar\n     clics: de ahí pointer-events none y un z-index acotado. */\n  #snow-container {\nposition: fixed;\n    inset: 0;\n    pointer-events: none;\n    z-index: 20;\n    overflow: hidden;\n}\n\n/* El color sale del tema: copos claros en oscuro, grafitos en claro.\n     Con blanco fijo la nevada era 1.06:1 sobre crema, es decir invisible. */\n  .snowflake {\nposition: absolute;\n    top: -3rem;\n    color: var(--color-text-primary);\n    user-select: none;\n    animation: snow-fall var(--fall-duration, 6s) linear forwards;\n}\n\n.snowflake > span {\ndisplay: block;\n    animation: snow-sway var(--sway-duration, 3s) ease-in-out infinite;\n}\n\n@keyframes snow-fall {\nfrom {\n      transform: translateY(-10vh);\n    }\n    to {\n      transform: translateY(110vh);\n    }\n}\n\n@keyframes snow-sway {\nfrom {\n      transform: translateX(calc(var(--sway-distance, 40px) * -1));\n    }\n    to {\n      transform: translateX(var(--sway-distance, 40px));\n    }\n}"
+    },
+    {
+      "name": "Work Photo",
+      "kind": "media",
+      "refersTo": "about-photo",
+      "description": "La foto de trabajo de /about/, con el mismo tratamiento que el retrato de la home: plano propio, borde del tema y --shadow-card. Vive en public/, asi que va como <img> con width y height explicitos para no desplazar el layout al cargar, y loading lazy porque esta bajo el fold.",
+      "html": "<figure class=\"about-photo\"><img src=\"/assets/at-work.jpg\" alt=\"Luis Arteaga trabajando con un colega\" width=\"1553\" height=\"873\" loading=\"lazy\" decoding=\"async\" /></figure>",
+      "css": "/* El hero, el titulo y la entradilla viven en shell.css: aqui no se\n     redefinen. Ver el comentario de por que. */\n\n  /* La foto de trabajo entra con el mismo tratamiento que el retrato del\n     inicio: plano propio, borde del tema y la elevacion como token. La\n     imagen vive en public/, asi que va como <img> con width y height\n     explicitos para no desplazar el layout al cargar. */\n  .about-photo {\nmargin: 0 0 var(--space-xl);\n}\n\n.about-photo img {\ndisplay: block;\n    width: 100%;\n    max-width: 46rem;\n    height: auto;\n    aspect-ratio: 1553 / 873;\n    object-fit: cover;\n    border-radius: 1.5rem;\n    border: 1px solid var(--color-border);\n    box-shadow: var(--shadow-card);\n}"
+    },
+    {
+      "name": "Section Row",
+      "kind": "list",
+      "refersTo": "row",
+      "description": "Fila de lista de una sola columna: la marca (area, herramienta o periodo) arriba, el titulo y el detalle debajo. La marca ya no va en versalitas monoespaciadas porque congelaba la pagina; hoy es sans y en su tono de apoyo. Al pasar por encima la fila se hunde en su propio plano y aflora una barra de acento de 2px, sin mover el texto un pixel: el texto cae en 537px y la barra 20px a su izquierda.",
+      "html": "<li class=\"row\">\n  <p class=\"row-mark\">2024</p>\n  <div class=\"row-body\">\n    <h3 class=\"row-title\">Titulo del trabajo</h3>\n    <p class=\"row-detail\">Una o dos frases de contexto, topadas a 66ch.</p>\n  </div>\n</li>",
+      "css": "/* ── Filas ───────────────────────────────────────────────── */\n.rows {\nlist-style: none;\n  margin: 0;\n  padding: 0;\n}\n\n.row {\ndisplay: grid;\n  grid-template-columns: minmax(0, 1fr);\n  gap: var(--space-2xs);\n  /* Indent colgante: el padding separa la barra de acento del texto y el\n     margen negativo lo devuelve, asi que el texto sigue cayendo en 537px\n     pero la barra vive 1.25rem a su izquierda en vez de pegada. */\n  padding: var(--row) 0 var(--row) var(--space-md);\n  margin-left: calc(-1 * var(--space-md));\n  border-top: 1px solid var(--color-border-light);\n  transition: background-color 0.25s ease, box-shadow 0.25s ease;\n}\n\n.rows > .row:last-child {\nborder-bottom: 1px solid var(--color-border-light);\n}\n\n/* La fila se hunde en su propio plano y aflora una barra de acento de 2px,\n   que da profundidad sin mover el texto un pixel. */\n.row:hover {\nbackground-color: var(--color-surface-secondary);\n  box-shadow: inset 2px 0 0 var(--color-accent);\n}\n\n/* La marca de fila (area, herramienta o periodo) orienta sin competir: ya no\n   se grita en mayusculas monoespaciadas. */\n.row-mark {\nfont-size: var(--text-sm);\n  font-weight: 600;\n  letter-spacing: 0.01em;\n  color: var(--color-text-tertiary);\n  font-variant-numeric: tabular-nums;\n}\n\n/* El titulo de fila debe leerse antes que su detalle. A --text-lg contra\n   --text-base el salto es de 1.35x; antes era 1.18x y una fila se leia\n   como un parrafo mas. Este selector es el que hace real la frase que\n   tenía escrita debajo. */\n.row-title {\nfont-family: var(--font-display);\n  font-size: var(--text-lg);\n  font-weight: 600;\n  letter-spacing: -0.01em;\n  line-height: 1.3;\n  color: var(--color-text-primary);\n  margin-bottom: var(--space-3xs);\n}\n\n.row-detail {\nmax-width: var(--measure);\n  color: var(--color-text-secondary);\n  font-size: var(--text-base);\n  line-height: 1.65;\n  text-wrap: pretty;\n}"
+    },
+    {
+      "name": "Rail Fact",
+      "kind": "data",
+      "refersTo": "fact",
+      "description": "Metadato del riel. Etiqueta y valor comparten la voz de lectura en sans y tono de apoyo: la distincion de peso y color es lo que hace legible cual es el rotulo y cual el dato. La monoespaciada quedo reservada para .rail-stack, en minusculas, porque una lista de herramientas se lee como manifiesto y no como prosa.",
+      "html": "<div class=\"fact\"><dt>Rol</dt><dd>Ingeniero DevOps</dd></div>",
+      "css": "/* ── Riel ────────────────────────────────────────────────── */\n/* Banda horizontal de metadatos sobre el contenido, no una columna\n   permanente: una columna de 10rem con tres hechos cortos dejaba un\n   canal vacio de altura completa y empujaba todo el contenido a un lado. */\n.rail {\ndisplay: flex;\n  flex-wrap: wrap;\n  align-items: baseline;\n  gap: var(--space-sm) var(--space-xl);\n  padding-bottom: var(--space-md);\n  margin-bottom: var(--space-xl);\n  border-bottom: 1px solid var(--color-border);\n}\n\n.fact {\ndisplay: flex;\n  align-items: baseline;\n  gap: var(--space-2xs);\n}\n\n/* La etiqueta ya no va en monoespaciada ni en mayusculas: era la parte mas\n   fria del sistema y lo hacia leer como un panel. Ahora es una linea sans\n   pequena y muda que orienta sin gritar; el valor lleva el peso. */\n.fact dt {\nfont-size: var(--text-xs);\n  font-weight: 600;\n  letter-spacing: 0.01em;\n  color: var(--color-text-tertiary);\n  white-space: nowrap;\n}\n\n.fact dd {\nmargin: 0;\n  font-size: var(--text-base);\n  line-height: 1.4;\n  color: var(--color-text-secondary);\n}"
+    },
+    {
+      "name": "Button Primary",
+      "kind": "action",
+      "refersTo": "btn-primary",
+      "description": "Relleno de gradiente. El texto SIEMPRE es var(--color-on-accent), nunca un color fijo: en oscuro el relleno es lima y el texto la tinta verde casi negra.",
+      "html": "<a class=\"btn-primary\" href=\"/contacto/\">Escríbeme</a>",
+      "css": "/* ── Botones ─────────────────────────────────────────────── */\n.btn-primary {\ndisplay: inline-flex;\n  align-items: center;\n  padding: 0.8rem 1.6rem;\n  border-radius: 999px;\n  background: var(--gradient-accent);\n  color: var(--color-on-accent);\n  font-family: var(--font-sans);\n  font-weight: 600;\n  font-size: var(--text-sm);\n  letter-spacing: 0.01em;\n  text-decoration: none;\n  transition: transform 0.2s ease, box-shadow 0.2s ease;\n}\n\n/* El halo es del propio acento, no una sombra negra generica: da\n   profundidad y ata el boton a la paleta. */\n.btn-primary:hover {\ntransform: translateY(-2px);\n  box-shadow: var(--shadow-accent);\n}"
+    },
+    {
+      "name": "Button Quiet",
+      "kind": "action",
+      "refersTo": "btn-quiet",
+      "description": "Enlace de prosa con subrayado que aparece al pasar por encima.",
+      "html": "<a class=\"btn-quiet\" href=\"/work/\">Ver todos</a>",
+      "css": "/* El CV es el artefacto verificable que un reclutador valida en segundos:\n   no es una nota al pie. Por eso va a --text-base y peso 600, no a 1rem/500. */\n.rail-link,\n.text-link {\ncolor: var(--color-accent);\n  font-family: inherit;\n  font-size: var(--text-base);\n  font-weight: 600;\n  width: fit-content;\n  text-decoration: none;\n  border-bottom: 1px solid transparent;\n  transition: border-color 0.2s ease;\n}\n\n.rail-link:hover,\n.text-link:hover {\nborder-bottom-color: currentColor;\n}\n\n.btn-quiet {\nfont-size: var(--text-sm);\n  font-weight: 500;\n  color: var(--color-text-secondary);\n  text-decoration: none;\n  border-bottom: 1px solid var(--color-border);\n  padding-bottom: 2px;\n  transition: color 0.2s ease, border-color 0.2s ease;\n}\n\n.btn-quiet:hover {\ncolor: var(--color-text-primary);\n  border-bottom-color: currentColor;\n}"
+    },
+    {
+      "name": "Input Field",
+      "kind": "form",
+      "refersTo": "form-input",
+      "description": "Campo del formulario de contacto. Superficie elevada, foco con anillo de marca.",
+      "html": "<input class=\"form-input\" type=\"email\" name=\"email\" placeholder=\"tu@correo.com\" />",
+      "css": ".form-input {\nwidth: 100%;\n    padding: 0.875rem 1.125rem;\n    background: var(--color-surface-secondary);\n    /* 3:1 contra la superficie: un borde decorativo deja de ser legible\n       cuando el campo es lo que hay que rellenar. */\n    border: 1px solid var(--color-border-strong);\n    border-radius: 0.75rem;\n    color: var(--color-text-primary);\n    font-size: var(--text-base);\n    font-family: inherit;\n    transition: border-color 0.2s, box-shadow 0.2s;\n}\n\n.form-input::placeholder {\ncolor: var(--color-text-tertiary);\n}\n\n.form-input:focus-visible {\noutline: 2px solid var(--color-accent);\n    outline-offset: 2px;\n    border-color: var(--color-accent);\n}\n\n.form-textarea {\nresize: vertical;\n    min-height: 120px;\n}\n\n.submit-btn {\ndisplay: inline-flex;\n    align-items: center;\n    justify-content: center;\n    gap: var(--space-2xs);\n    padding: 0.875rem 1.75rem;\n    border: none;\n    border-radius: 999rem;\n    background: var(--color-accent);\n    color: var(--color-on-accent);\n    font-family: var(--font-sans);\n    font-weight: 600;\n    font-size: var(--text-sm);\n    cursor: pointer;\n    align-self: flex-start;\n    transition: transform 0.2s, box-shadow 0.2s;\n}\n\n.submit-btn:hover:not(:disabled) {\ntransform: translateY(-2px);\n    box-shadow: var(--shadow-accent);\n}\n\n.submit-btn:disabled {\nopacity: 0.7;\n    cursor: progress;\n}\n\n.submit-btn:focus-visible {\noutline: 2px solid var(--color-accent);\n    outline-offset: 3px;\n}"
+    },
+    {
+      "name": "Nav Link",
+      "kind": "navigation",
+      "refersTo": "nav-link",
+      "description": "Sin capsula que envuelva los enlaces: era cromo de app. La pagina activa se marca con subrayado del color de acento, no con fondo, porque un tinte de acento bajaba el texto a 1.8:1 en oscuro.",
+      "html": "<a class=\"nav-link\" href=\"/\" aria-current=\"page\">Inicio</a>",
+      "css": "/* Sin capsuleja que envuelva los enlaces: el contenedor era cromo de app.\n     La pagina activa se marca con un tinte suave y el color de marca. */\n  .nav-links {\ndisplay: none;\n    list-style: none;\n    gap: 0.25rem;\n    padding: 0;\n    border-radius: 0;\n    background: none;\n    border: 0;\n}\n\n.nav-link {\ndisplay: inline-block;\n    padding: 0.45rem 0.85rem;\n    border-radius: 999px;\n    color: var(--color-text-secondary);\n    text-decoration: none;\n    font-size: var(--text-sm);\n    font-weight: 500;\n    transition: color 0.2s, background-color 0.2s;\n}\n\n.nav-link:hover {\ncolor: var(--color-text-primary);\n    background: var(--color-surface-secondary);\n}\n\n/* La pagina activa se marca con subrayado del color de marca: cambiar solo\n     el color del texto mantiene 6.3:1 en claro y 6.7:1 en oscuro, mientras\n     que un tinte de fondo bajaba el texto a ~1.8:1 en oscuro. */\n  .nav-link[aria-current=\"page\"] {\ncolor: var(--color-accent);\n    background: none;\n    box-shadow: inset 0 -1px 0 0 currentColor;\n}"
+    },
+    {
+      "name": "Footer",
+      "kind": "layout",
+      "refersTo": "footer",
+      "description": "Mismo ancho y padding que el shell, para que su borde izquierdo caiga en el mismo x que el contenido.",
+      "html": "<footer class=\"footer\"><div class=\"wrapper footer-inner\"><p class=\"copyright\">© 2026 Luis Arteaga</p><div class=\"footer-links\"><a class=\"footer-link\" href=\"#\">GitHub</a></div></div></footer>",
+      "css": "/* El footer cierra la pagina como un plano propio, no como una linea mas:\n     un pelin de superficie eleva el cierre y da profundidad sin cromo. */\n  .footer {\nbackground: var(--color-surface-secondary);\n    border-top: 1px solid var(--color-border);\n    padding: 2rem 0;\n    margin-top: 5rem;\n}\n\n.copyright {\ncolor: var(--color-text-secondary);\n    font-size: var(--text-sm);\n}\n\n.footer-link {\ndisplay: flex;\n    padding: 0.5rem;\n    border-radius: 0.75rem;\n    color: var(--color-text-tertiary);\n    transition: color 0.2s, background-color 0.2s;\n}\n\n/* Fondo neutro, no tinte de marca: el icono es un gráfico y necesita\n     3:1 contra el fondo, y el tinte de acento se lo bajaba en oscuro. */\n  .footer-link:hover {\ncolor: var(--color-accent);\n    background: var(--color-surface-secondary);\n}"
+    }
+  ],
+  "narrative": {
+    "direction": "Tecnica y calida. Una persona y su trabajo medido, no un panel de metricas. Base verde casi negra, lima como unica senal, sans de sistema y profundidad con elevaciones tintadas.",
+    "grid": "Dos columnas en 64em+: 20rem de titulos (y el retrato en la home) y el resto de contenido. Bordes medidos en 1440px: 161px y 537px, sin excepcion. Si aparece un tercer borde, algo se salio de la grilla.",
+    "rhythm": "El ritmo sale del aire (clamp(4rem, 7vw, 6.5rem) entre secciones), no de lineas divisorias. Las lineas se reservan para listas y para el riel.",
+    "hierarchy": "Escala medida a 1440px: h1 88px, titulo de seccion 31.2px, titulo de fila 22px, detalle 16.3px, marca 11.5px.",
+    "colorPolicy": "El lima es senal, no ambiente. Superficies: crema en claro (#fbf8f3) y verde casi negro en oscuro (#06110d). El par lima/verde-negro mide 16.24:1. Nada de gradiente sobre texto.",
+    "verification": [
+      "Contraste: 170 comprobaciones computadas en navegador, 0 fallando (AA) en claro y oscuro sobre 5 plantillas.",
+      "Desbordamiento: 0 en 32 combinaciones entre 320 y 1920px.",
+      "Longitud de linea: 41-79 caracteres por linea, topada a 66ch.",
+      "Alineacion: 1-2 bordes por pagina en las 5 plantillas."
+    ],
+    "nonNegotiables": [
+      "Los botones nunca llevan color de texto fijo: siempre var(--color-on-accent).",
+      "El estado activo de navegacion se marca con subrayado, no con fondo de color.",
+      "El hero se define una sola vez en shell.css.",
+      "La prosa se topa a 66ch."
+    ]
+  }
+}

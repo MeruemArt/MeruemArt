@@ -21,11 +21,6 @@ const { title, description } = Astro.props;
   </head>
   <body>
     <div class="relative min-h-screen">
-      <div class="fixed inset-0 pointer-events-none -z-10" aria-hidden="true">
-        <div class="absolute top-[-20%] left-[-10%] w-[60%] h-[60%] rounded-full opacity-20 blur-[120px]" style="background: var(--color-accent-glow)"></div>
-        <div class="absolute bottom-[-10%] right-[-10%] w-[50%] h-[50%] rounded-full opacity-10 blur-[100px]" style="background: var(--color-accent-dark)"></div>
-      </div>
-
       <Nav />
       <BackgroundPattern />
       <SnowEffect />
@@ -67,26 +62,6 @@ const { title, description } = Astro.props;
       });
 
       document.addEventListener('astro:page-load', applyTheme);
-
-      document.addEventListener('astro:after-swap', function() {
-        var els = document.querySelectorAll('.animate-in, .animate-in-left, .animate-in-right, .stagger-children');
-        els.forEach(function(el) { el.classList.remove('visible'); });
-      });
-
-      document.addEventListener('astro:page-load', function initAnimations() {
-        var els = document.querySelectorAll('.animate-in, .animate-in-left, .animate-in-right, .stagger-children');
-        if (els.length > 0) {
-          var observer = new IntersectionObserver(function(entries) {
-            entries.forEach(function(entry) {
-              if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-                observer.unobserve(entry.target);
-              }
-            });
-          }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
-          els.forEach(function(el) { observer.observe(el); });
-        }
-      });
     </script>
   </body>
 </html>

@@ -1,0 +1,390 @@
+/* Sistema de composición del sitio.
+   Una sola grilla sostiene la pagina: una columna de 20rem para los
+   titulos de seccion y el retrato, y el resto para el contenido. Todo lo
+   que sea titulo —incluido el retrato del hero— cae en la misma columna,
+   asi que la pagina tiene una espina vertical legible en vez de bloques
+   sueltos que empiezan y acaban donde les place.
+   Compartido por /, /about/, /mentions/ y /work/[slug].
+
+   Sobre el ancho: el shell mide 72rem, no 82rem. Con 82rem la columna de
+   contenido llegaba a 888px mientras la prosa se topaba en 594px (66ch), y
+   quedaban 294px de vacío a la derecha de cada fila. Ese hueco no era aire
+   editorial, era una columna que la grilla prometia y la medida no
+   ocupaba. Estrechar el shell deja que la medida sea la columna. */
+
+.shell {
+  --rail-col: 20rem;
+  --gutter: 3.5rem;
+  --measure: 66ch;
+  display: block;
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding: 4.5rem 1.5rem 7rem;
+}
+
+/* El rail vive dentro de la columna para que en movil caiga despues del
+   hero y antes del primer bloque; en desktop se sube con order para
+   conservar la banda de metadatos arriba. */
+.shell .column,
+.shell .column article {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Todo lo que se apoya en la grilla: hero y bloques comparten columnas. */
+.shell .hero,
+.shell .block {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: var(--gutter);
+}
+
+/* ── Riel ────────────────────────────────────────────────── */
+/* Banda horizontal de metadatos sobre el contenido, no una columna
+   permanente: una columna de 10rem con tres hechos cortos dejaba un
+   canal vacio de altura completa y empujaba todo el contenido a un lado. */
+.rail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-sm) var(--space-xl);
+  padding-bottom: var(--space-md);
+  margin-bottom: var(--space-xl);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.rail-facts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-sm) var(--space-xl);
+  margin: 0;
+}
+
+.fact {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2xs);
+}
+
+/* La etiqueta ya no va en monoespaciada ni en mayusculas: era la parte mas
+   fria del sistema y lo hacia leer como un panel. Ahora es una linea sans
+   pequena y muda que orienta sin gritar; el valor lleva el peso. */
+.fact dt {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--color-text-tertiary);
+  white-space: nowrap;
+}
+
+.fact dd {
+  margin: 0;
+  font-size: var(--text-base);
+  line-height: 1.4;
+  color: var(--color-text-secondary);
+}
+
+/* El CV es el artefacto verificable que un reclutador valida en segundos:
+   no es una nota al pie. Por eso va a --text-base y peso 600, no a 1rem/500. */
+.rail-link,
+.text-link {
+  color: var(--color-accent);
+  font-family: inherit;
+  font-size: var(--text-base);
+  font-weight: 600;
+  width: fit-content;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s ease;
+}
+
+.rail-link:hover,
+.text-link:hover {
+  border-bottom-color: currentColor;
+}
+
+/* ── Bloques ─────────────────────────────────────────────── */
+/* El ritmo sale de la separacion, no de una linea divisoria por bloque:
+   cuatro rayas horizontales a la misma distancia leen como formulario.
+   El aire entre secciones hace el trabajo y las lineas se reservan para
+   los elementos que de verdad son una lista. */
+.block {
+  margin-bottom: var(--section);
+}
+
+.block:last-of-type {
+  margin-bottom: 0;
+}
+
+.block-title {
+  font-family: var(--font-display);
+  font-size: var(--text-title);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--color-text-primary);
+  text-wrap: balance;
+  margin-bottom: 0;
+}
+
+/* Titulo a la izquierda, contenido a la derecha, desde 64em. */
+@media (min-width: 64em) {
+  .shell .column .rail {
+    order: -1;
+  }
+
+  .shell .hero,
+  .shell .block {
+    grid-template-columns: var(--rail-col) minmax(0, 1fr);
+  }
+
+  .shell .block > .block-title {
+    grid-column: 1;
+    position: sticky;
+    top: 2rem;
+    align-self: start;
+  }
+
+  .shell .block > :not(.block-title) {
+    grid-column: 2;
+  }
+}
+
+/* Apilado: el titulo precede a su contenido y el bloque respira. */
+@media (max-width: 63.99em) {
+  .shell .block {
+    row-gap: var(--space-lg);
+  }
+}
+
+/* ── Hero ────────────────────────────────────────────────── */
+/* Vive aqui y no en cada pagina: cuatro paginas declaraban su propia
+   version del hero con pesos y medidas distintas (800/80px en tres de
+   ellas, 600/88px en el inicio), y por eso el mismo titulo cambiaba de
+   tamano al navegar. Una sola definicion para las cuatro. */
+
+.shell .hero {
+  align-items: end;
+  padding-bottom: var(--space-xl);
+  margin-bottom: clamp(3.5rem, 6vw, 5.5rem);
+}
+
+.shell .hero-title {
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--color-text-primary);
+  text-wrap: balance;
+}
+
+.shell .hero-role {
+  display: block;
+  color: var(--color-accent);
+}
+
+/* La entradilla comparte el escalon --text-lg con el titulo de fila. No es
+   una colision: viven bajo jerarquias distintas (88px y 31px) y asi la
+   pagina entera se resuelve en seis tamanos en vez de quince. */
+.shell .hero-lede {
+  max-width: 54ch;
+  margin-top: var(--space-lg);
+  font-size: var(--text-lg);
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  text-wrap: pretty;
+}
+
+/* En las paginas sin retrato no hay nada en la columna de 20rem, asi que
+   el titulo y la entradilla ocupan las dos columnas. Si se quedaran en la
+   columna de titulos, un h1 de 88px tendria que partirse en tres lineas
+   dentro de 320px. En el inicio no aplica: alli van envueltos en
+   .hero-text, que es quien ocupa la segunda columna. */
+.shell .hero > .hero-title,
+.shell .hero > .hero-role,
+.shell .hero > .hero-lede {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 63.99em) {
+  .shell .hero {
+    row-gap: var(--space-xl);
+    padding-bottom: 0;
+    margin-bottom: var(--space-lg);
+  }
+}
+
+/* ── Filas ───────────────────────────────────────────────── */
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-2xs);
+  /* Indent colgante: el padding separa la barra de acento del texto y el
+     margen negativo lo devuelve, asi que el texto sigue cayendo en 537px
+     pero la barra vive 1.25rem a su izquierda en vez de pegada. */
+  padding: var(--row) 0 var(--row) var(--space-md);
+  margin-left: calc(-1 * var(--space-md));
+  border-top: 1px solid var(--color-border-light);
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.rows > .row:last-child {
+  border-bottom: 1px solid var(--color-border-light);
+}
+
+/* La fila se hunde en su propio plano y aflora una barra de acento de 2px,
+   que da profundidad sin mover el texto un pixel. */
+.row:hover {
+  background-color: var(--color-surface-secondary);
+  box-shadow: inset 2px 0 0 var(--color-accent);
+}
+
+/* La marca de fila (area, herramienta o periodo) orienta sin competir: ya no
+   se grita en mayusculas monoespaciadas. */
+.row-mark {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--color-text-tertiary);
+  font-variant-numeric: tabular-nums;
+}
+
+/* El titulo de fila debe leerse antes que su detalle. A --text-lg contra
+   --text-base el salto es de 1.35x; antes era 1.18x y una fila se leia
+   como un parrafo mas. Este selector es el que hace real la frase que
+   tenía escrita debajo. */
+.row-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-3xs);
+}
+
+.row-detail {
+  max-width: var(--measure);
+  color: var(--color-text-secondary);
+  font-size: var(--text-base);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.row-meta {
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
+  margin-bottom: var(--space-2xs);
+}
+
+/* Lista de logros dentro de una fila */
+.logros {
+  list-style: none;
+  margin: var(--space-sm) 0 0;
+  padding: 0;
+  max-width: var(--measure);
+}
+
+.logros li {
+  position: relative;
+  padding-left: 1.1rem;
+  margin-bottom: var(--space-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.logros li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 5px;
+  height: 1px;
+  background: var(--color-text-tertiary);
+}
+
+.logros li:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Tags ────────────────────────────────────────────────── */
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2xs);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.tags li {
+  padding: var(--space-3xs) var(--space-sm);
+  background: var(--color-surface-secondary);
+  border: 1px solid var(--color-border-light);
+  border-radius: 0.5rem;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Los tags llevan separador: sin el, "Development" y "Batch" se leen
+   pegados como una sola palabra. */
+.row-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3xs) var(--space-2xs);
+  font-size: var(--text-sm);
+  color: var(--color-text-tertiary);
+}
+
+.row-tags > span + span::before {
+  content: "·";
+  margin-right: var(--space-2xs);
+  color: var(--color-text-tertiary);
+}
+
+/* ── Botones ─────────────────────────────────────────────── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.8rem 1.6rem;
+  border-radius: 999px;
+  background: var(--gradient-accent);
+  color: var(--color-on-accent);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* El halo es del propio acento, no una sombra negra generica: da
+   profundidad y ata el boton a la paleta. */
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-accent);
+}
+
+.btn-quiet {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 2px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-quiet:hover {
+  color: var(--color-text-primary);
+  border-bottom-color: currentColor;
+}
