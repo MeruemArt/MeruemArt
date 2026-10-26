@@ -197,9 +197,10 @@ Dos, y las dos son ambiente: nunca informa y nunca sostiene texto.
   (violeta `0.28` en claro, lima `0.22` en oscuro): un solo token para dos
   climas. El pico de opacidad es `0.85` en claro y `0.7` en oscuro — se ve que
   está, no grita.
-- **Nevada** (`SnowEffect.astro`). Estacional: del **1 de diciembre 00:00 al
-  6 de enero 23:59**, hora local del visitante. Para probarla sin esperar a
-  diciembre: `/?snow=1`.
+- **Capa estacional**. Nevada (`SnowEffect.astro`): del **1 de diciembre
+  00:00 al 6 de enero 23:59**; Halloween (`HalloweenEffect.astro`): del **24
+  de octubre al 1 de noviembre**, hora local del visitante. Para probarlas:
+  `/?snow=1` y `/?halloween=1`.
 
 Las dos se anulan con `prefers-reduced-motion: reduce`.
 
@@ -230,6 +231,7 @@ Las dos se anulan con `prefers-reduced-motion: reduce`.
 | Retrato | `src/pages/index.astro` | 20rem, marco neutro |
 | Luz de borde | `src/components/BackgroundPattern.astro` | elipses tras el patrón, `--color-accent-glow` |
 | Nevada | `src/components/SnowEffect.astro` | 1 dic → 6 ene, `/?snow=1` para probarla |
+| Halloween | `src/components/HalloweenEffect.astro` | luna, 12 murciélagos y 4 faroles del 24 oct → 1 nov, `/?halloween=1` para probarla |
 | Foto de trabajo | `src/pages/about.astro` | `at-work.jpg`, mismo plano que el retrato |
 
 ## Pendiente

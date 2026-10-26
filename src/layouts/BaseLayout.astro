@@ -3,6 +3,7 @@ import MainHead from "../components/MainHead.astro";
 import Nav from "../components/Nav.astro";
 import BackgroundPattern from "../components/BackgroundPattern.astro";
 import SnowEffect from "../components/SnowEffect.astro";
+import HalloweenEffect from "../components/HalloweenEffect.astro";
 import Footer from "../components/Footer.astro";
 import numbersPattern from "../assets/backgrounds/numbers-pattern.avif";
 import { ViewTransitions } from "astro:transitions";
@@ -29,7 +30,8 @@ const { title, description } = Astro.props;
       <Nav />
       <BackgroundPattern />
       <SnowEffect />
-      <main>
+      <HalloweenEffect />
+      <main class="relative z-10">
         <slot />
       </main>
       <Footer />
