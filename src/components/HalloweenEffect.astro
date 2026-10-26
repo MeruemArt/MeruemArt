@@ -6,7 +6,7 @@
 </div>
 
 <script>
-  import { isHalloweenSeason } from "../utils/halloween-season.js";
+  import { getSeasonalEffect } from "../utils/seasonal-effect.js";
   import { getBatFrame, getLanternFrame } from "../utils/halloween-scene.js";
 
   const container = document.getElementById("halloween-container");
@@ -194,8 +194,11 @@
     }
 
     function updateEffect() {
-      const forced = new URLSearchParams(window.location.search).has("halloween");
-      const visible = !motionPreference.matches && (forced || isHalloweenSeason(new Date()));
+      const effect = getSeasonalEffect(
+        new Date(),
+        new URLSearchParams(window.location.search),
+      );
+      const visible = !motionPreference.matches && effect === "halloween";
       container.classList.toggle("is-active", visible);
 
       if (visible && !frameId) {

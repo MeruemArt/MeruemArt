@@ -4,7 +4,9 @@
 <div id="snow-container" aria-hidden="true"></div>
 
 <script>
-  /* Nevada estacional: activa en noviembre, diciembre y enero.
+  import { getSeasonalEffect } from "../utils/seasonal-effect.js";
+
+  /* Nevada estacional: la ventana de fechas vive en seasonal-effect.js.
      Para validarla sin esperar a diciembre hay dos formas:
        1. FECHA_DE_PRUEBA = new Date(2026, 11, 25)  → fija la fecha
        2. /?snow=1                                    → la fuerza en el sitio
@@ -18,37 +20,10 @@
 
   const FECHA_DE_PRUEBA: Date | null = null;
 
-  /* Ventana de la nevada, en hora local del visitante: se enciende el 1 de
-     diciembre a las 00:00 y se apaga el 6 de enero a las 23:59. Si el fin
-     era 11:59 del mediodia, cambiar hora a 11 y minuto a 59. */
-  const INICIO = { mes: 11, dia: 1 };
-  const FIN = { mes: 0, dia: 6, hora: 23, minuto: 59 };
-
-  function enVentanaNavidad(fecha: Date) {
-    const mes = fecha.getMonth();
-    const minutoDelDia = fecha.getHours() * 60 + fecha.getMinutes();
-
-    if (mes === INICIO.mes) return fecha.getDate() >= INICIO.dia;
-
-    if (mes === FIN.mes) {
-      if (fecha.getDate() < FIN.dia) return true;
-      if (fecha.getDate() > FIN.dia) return false;
-      return minutoDelDia <= FIN.hora * 60 + FIN.minuto;
-    }
-
-    return false;
-  }
-
   const params = new URLSearchParams(window.location.search);
-  const forzar = params.has("snow");
+  const visible = getSeasonalEffect(FECHA_DE_PRUEBA ?? new Date(), params) === "snow";
 
-  const ahora = FECHA_DE_PRUEBA ?? new Date();
-  const visible =
-    forzar || FECHA_DE_PRUEBA !== null || enVentanaNavidad(ahora);
-
-  const motionOk = !window.matchMedia(
-    "(prefers-reduced-motion: reduce)",
-  ).matches;
+  const motionPreference = window.matchMedia("(prefers-reduced-motion: reduce)");
 
   function esMovil() {
     return (
@@ -93,6 +68,10 @@
     if (!container) return;
     container.replaceChildren();
 
+    const christmasDecor = document.getElementById("christmas-decor");
+    const motionOk = !motionPreference.matches;
+    christmasDecor?.classList.toggle("is-active", visible && motionOk);
+
     if (!visible || !motionOk) return;
 
     window.__snowTimer = setInterval(
@@ -106,6 +85,7 @@
      navegación, así que se reinicia en astro:page-load. Es idempotente:
      limpia el intervalo anterior antes de crear otro. */
   document.addEventListener("astro:page-load", initSnowEffect);
+  motionPreference.addEventListener("change", initSnowEffect);
   initSnowEffect();
 </script>
 
