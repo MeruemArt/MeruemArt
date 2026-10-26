@@ -197,12 +197,16 @@ Dos, y las dos son ambiente: nunca informa y nunca sostiene texto.
   (violeta `0.28` en claro, lima `0.22` en oscuro): un solo token para dos
   climas. El pico de opacidad es `0.85` en claro y `0.7` en oscuro — se ve que
   está, no grita.
-- **Capa estacional**. Nevada (`SnowEffect.astro`): del **1 de diciembre
-  00:00 al 6 de enero 23:59**; Halloween (`HalloweenEffect.astro`): del **24
-  de octubre al 1 de noviembre**, hora local del visitante. Para probarlas:
-  `/?snow=1` y `/?halloween=1`.
+- **Capa estacional**. Nevada, regalos y trineo (`SnowEffect.astro` y
+  `ChristmasDecor.astro`): del **1 de diciembre 00:00 al 6 de enero 23:59**;
+  Halloween (`HalloweenEffect.astro`): del **24 de octubre al 1 de noviembre**,
+  hora local del visitante. Para probarlas: `/?snow=1` y `/?halloween=1`.
 
 Las dos se anulan con `prefers-reduced-motion: reduce`.
+
+Nunca coinciden: `getSeasonalEffect` (`src/utils/seasonal-effect.js`) decide
+**un solo** efecto. Los previews de la URL mandan sobre la fecha; si llegan
+los dos juntos gana Navidad.
 
 ## Reglas que no se negocian
 
@@ -230,7 +234,7 @@ Las dos se anulan con `prefers-reduced-motion: reduce`.
 | Contacto | `src/components/ContactCTA.astro` | formulario Netlify replegado |
 | Retrato | `src/pages/index.astro` | 20rem, marco neutro |
 | Luz de borde | `src/components/BackgroundPattern.astro` | elipses tras el patrón, `--color-accent-glow` |
-| Nevada | `src/components/SnowEffect.astro` | 1 dic → 6 ene, `/?snow=1` para probarla |
+| Nevada / Navidad | `src/components/SnowEffect.astro`, `src/components/ChristmasDecor.astro` | nieve, Santa en silueta con luces y regalos agrupados (3 y 2) del 1 dic → 6 ene; `/?snow=1` para probar |
 | Halloween | `src/components/HalloweenEffect.astro` | luna, 12 murciélagos y 4 faroles del 24 oct → 1 nov, `/?halloween=1` para probarla |
 | Foto de trabajo | `src/pages/about.astro` | `at-work.jpg`, mismo plano que el retrato |
 
