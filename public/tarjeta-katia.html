@@ -97,6 +97,9 @@
       box-shadow: inset 0 0 0 5px rgba(244, 239, 230, 0.92);
       clip-path: polygon(0 6%, 9% 1%, 22% 5%, 36% 0%, 51% 4%, 66% 0%, 82% 5%, 96% 1%, 100% 8%, 96% 24%, 100% 40%, 97% 58%, 100% 76%, 95% 94%, 83% 100%, 66% 96%, 50% 100%, 33% 96%, 17% 100%, 4% 95%, 0 82%, 3% 64%, 0 46%, 4% 26%);
       filter: drop-shadow(0 5px 8px rgba(0, 0, 0, 0.6));
+      cursor: pointer;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
     }
     .cutout::after {
       content: "";
@@ -112,7 +115,73 @@
     .cutout:nth-child(odd) { transform: rotate(-2deg); }
     .cutout:nth-child(even) { transform: rotate(2deg); }
     .cutout:hover { transform: rotate(0) scale(1.06); filter: drop-shadow(0 10px 14px rgba(0,0,0,0.8)); }
-    /* Lanciamento de naipes: entran desde el borde izquierdo fuera de la tarjeta. */
+    /* Visor de imágenes: se abre al hacer click en los recortes */
+    #image-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 100;
+      padding: 20px;
+      color: #fff;
+    }
+    #image-modal[hidden] { display: none; }
+    #image-modal:not([hidden]) { display: grid; }
+    #image-modal img {
+      max-width: 90vw;
+      max-height: 90vh;
+      border-radius: 4px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.8);
+    }
+    #image-modal .close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      width: 40px;
+      height: 40px;
+      background: rgba(255,255,255,0.2);
+      border: 2px solid #fff;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 24px;
+      cursor: pointer;
+      line-height: 36px;
+      text-align: center;
+      z-index: 101;
+      transition: background 0.2s;
+    }
+    #image-modal .close:hover { background: rgba(255,255,255,0.3); }
+    #image-modal nav {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 44px;
+      height: 44px;
+      background: rgba(255,255,255,0.2);
+      border: 2px solid #fff;
+      border-radius: 50%;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      line-height: 40px;
+      text-align: center;
+      z-index: 101;
+      transition: background 0.2s;
+    }
+    #image-modal nav:hover { background: rgba(255,255,255,0.3); }
+    #image-modal .prev { left: 20px; }
+    #image-modal .next { right: 20px; }
+    /* Evitar zoom del navegador en el modal */
+    #image-modal *, #image-modal *::before, #image-modal *::after {
+      touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    /* Efecto de transición al cerrar */
+    @keyframes fadeOut {
+      from { opacity: 1; transform: scale(1); }
+      to { opacity: 0; transform: scale(0.95); }
+    }
     /* Recortes siempre visibles; animación suave de entrada. */
     .cutout {
       position: relative;
@@ -650,5 +719,74 @@
     }
   </script>
 
+  <!-- Image modal viewer -->
+  <div id="image-modal" hidden aria-label="Visor de imágenes BTS">
+    <img id="modal-img" src="" alt="Imagen BTS">
+    <button class="close" aria-label="Cerrar visor">&times;</button>
+    <nav>
+      <button class="prev" aria-label="Imagen anterior"><</button>
+      <button class="next" aria-label="Siguiente imagen">></button>
+    </nav>
+  </div>
+
+  <script>
+    // Modal image viewer
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
+    const closeBtn = document.querySelector('#image-modal .close');
+    const prevBtn = document.querySelector('#image-modal .prev');
+    const nextBtn = document.querySelector('#image-modal .next');
+
+    // BTS images in order of the cutouts
+    const btsImages = [
+      'assets/bts-samsung.jpg',
+      'assets/bts-ama.jpg',
+      'assets/bts-whitehouse.jpg',
+      'assets/bts-wembley.jpg',
+      'assets/bts-daegu.jpg',
+      'assets/bts-hangang.jpg'
+    ];
+    let currentIndex = 0;
+
+    // Open modal when clicking a cutout
+    document.querySelectorAll('.cutout').forEach((cutout, index) => {
+      cutout.addEventListener('click', (e) => {
+        e.stopPropagation();
+        currentIndex = index;
+        showImage(index);
+        modal.hidden = false;
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    // Close modal
+    function closeModal() {
+      modal.hidden = true;
+      document.body.style.overflow = '';
+    }
+    closeBtn.addEventListener('click', closeModal);
+
+    // Close with Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+
+    // Show image by index
+    function showImage(index) {
+      modalImg.src = btsImages[index];
+    }
+
+    // Navigate to previous image
+    prevBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex - 1 + btsImages.length) % btsImages.length;
+      showImage(currentIndex);
+    });
+
+    // Navigate to next image
+    nextBtn.addEventListener('click', () => {
+      currentIndex = (currentIndex + 1) % btsImages.length;
+      showImage(currentIndex);
+    });
+  </script>
 </body>
 </html>

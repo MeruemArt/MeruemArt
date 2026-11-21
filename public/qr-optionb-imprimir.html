@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarjetas QR Option B - 60mm</title>
+  <style>
+    @page {
+      size: letter;
+      margin: 20mm 18mm;  /* 20mm top/bottom, 18mm left/right */
+    }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #fff;
+    }
+    .qr-grid {
+      display: grid;
+      grid-template-columns: 60mm 60mm 60mm;
+      grid-template-rows: 60mm 60mm 60mm 60mm;
+      gap: 3mm 3mm;
+      margin: 0 auto;
+      justify-items: center;
+      align-items: center;
+    }
+    .qr-cell {
+      background: #fff;
+      width: 60mm;
+      height: 60mm;
+    }
+    .qr-cell img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      margin: 2mm;
+    }
+  </style>
+</head>
+<body>
+  <div class="qr-grid">
+    <div class="qr-cell"><img src="file:///home/meruemart/Pictures/QR.png" alt="Código QR 1"></div>
+    <div class="qr-cell"><img src="file:///home/meruemart/Pictures/QR.png" alt="Código QR 2"></div>
+    <div class="qr-cell"><img src="file:///home/meruemart/Pictures/QR.png" alt="Código QR 3"></div>
+    <div class="qr-cell"><img src="file:///home/meruemart/Pictures/QR.png" alt="Código QR 4"></div>
+    <div class="qr-cell"><img src="file:///home/meruemart/Pictures/QR.png" alt="Código QR 5"></div>
+    <div class="qr-cell"><img src="file:///home/meruemart/Pictures/QR.png" alt="Código QR 6"></div>
+    <div class="qr-cell"><img src="file:///home/meruemart/Pictures/QR.png" alt="Código QR 7"></div>
+    <div class="qr-cell"><img src="file:///home/meruemart/Pictures/QR.png" alt="Código QR 8"></div>
+    <div class="qr-cell"><img src="file:///home/meruemart/Pictures/QR.png" alt="Código QR 9"></div>
+    <div class="qr-cell"><img src="file:///home/meruemart/Pictures/QR.png" alt="Código QR 10"></div>
+    <div class="qr-cell"><img src="file:///home/meruemart/Pictures/QR.png" alt="Código QR 11"></div>
+    <div class="qr-cell"><img src="file:///home/meruemart/Pictures/QR.png" alt="Código QR 12"></div>
+  </div>
+</body>
+</html>
