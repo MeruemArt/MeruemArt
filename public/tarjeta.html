@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#06110d" />
+  <meta name="description" content="Tarjeta de contacto de Luis Arteaga, Ingeniero DevOps." />
+  <title>Luis Arteaga — Ingeniero DevOps</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    /* Mismos tokens que el tema oscuro de meruemart.cloud. */
+    :root {
+      color-scheme: dark;
+      --surface: #06110d;
+      --surface-2: #0c1a16;
+      --surface-3: #13241e;
+      --text-1: #e9f1ed;
+      --text-2: #a3b4ac;
+      --text-3: #7a8c84;
+      --accent: #c8ff00;
+      --accent-hover: #d6ff3d;
+      --on-accent: #06110d;
+      --glow: rgba(200, 255, 0, 0.22);
+      --border: #17261f;
+      --border-light: #20332b;
+      --gradient-accent: linear-gradient(135deg, #e0ff66, #c8ff00, #a6d600);
+      --display: 'Space Grotesk', system-ui, sans-serif;
+      --sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+      --radius: 1.25rem;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background:
+        radial-gradient(ellipse at 30% 20%, rgba(200, 255, 0, 0.08), transparent 62%),
+        radial-gradient(ellipse at 72% 82%, rgba(0, 180, 120, 0.10), transparent 58%),
+        var(--surface);
+      color: var(--text-2);
+      font-family: var(--sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+    ::selection { background: var(--accent); color: var(--on-accent); }
+
+    .card {
+      width: 100%;
+      max-width: 420px;
+      padding: 28px 24px 24px;
+      background: var(--surface-2);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.55), 0 18px 44px -18px rgba(0, 0, 0, 0.8);
+    }
+
+    .hero { text-align: center; }
+
+    /* Las iniciales son el respaldo si no hay foto.jpg junto a este archivo. */
+    .avatar {
+      position: relative;
+      display: grid;
+      place-items: center;
+      width: 96px;
+      height: 96px;
+      margin: 0 auto 18px;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      background: var(--surface-3);
+      color: var(--accent);
+      font-family: var(--display);
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: -0.04em;
+    }
+    .avatar img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    h1 {
+      font-family: var(--display);
+      font-size: clamp(1.9rem, 7vw, 2.35rem);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.05;
+      color: var(--text-1);
+    }
+    .role { color: var(--accent); font-size: 1rem; font-weight: 500; margin-top: 4px; }
+    .lede { max-width: 34ch; margin: 14px auto 0; font-size: 0.95rem; color: var(--text-2); }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      list-style: none;
+      margin-top: 18px;
+    }
+    .tags li {
+      padding: 3px 10px;
+      background: var(--surface-3);
+      border: 1px solid var(--border);
+      border-radius: 0.5rem;
+      font-family: var(--mono);
+      font-size: 0.7rem;
+      color: var(--text-2);
+    }
+
+    .rail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px 16px;
+      margin: 24px 0;
+      padding: 18px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .fact dt {
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+    .fact dd { margin: 2px 0 0; font-size: 0.85rem; line-height: 1.4; color: var(--text-1); }
+
+    .btn-primary {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 14px 20px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--gradient-accent);
+      color: var(--on-accent);
+      font-family: var(--sans);
+      font-size: 0.92rem;
+      font-weight: 600;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 34px -8px var(--glow); }
+
+    .links { list-style: none; margin-top: 14px; border-bottom: 1px solid var(--border); }
+    .links a {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 12px;
+      border-top: 1px solid var(--border);
+      color: var(--text-1);
+      font-size: 0.92rem;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .links a:hover { background: var(--surface-3); box-shadow: inset 2px 0 0 var(--accent); }
+    .row-mark { font-family: var(--mono); font-size: 0.7rem; font-weight: 600; color: var(--text-3); }
+    .row-arrow { font-family: var(--mono); color: var(--text-3); }
+    .links a:hover .row-arrow { color: var(--accent); }
+
+    .save {
+      display: block;
+      margin: 18px auto 0;
+      padding: 2px 0;
+      background: none;
+      border: 0;
+      border-bottom: 1px solid var(--border-light);
+      color: var(--text-2);
+      font-family: var(--sans);
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: color 0.2s ease, border-color 0.2s ease;
+    }
+    .save:hover { color: var(--text-1); border-bottom-color: currentColor; }
+
+    footer {
+      margin-top: 22px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      text-align: center;
+      color: var(--text-3);
+    }
+    footer a { color: var(--text-3); text-decoration: none; }
+    footer a:hover { color: var(--accent); }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <main class="card">
+    <header class="hero">
+      <!-- Coloca foto.jpg junto a este archivo; si no existe, se ven las iniciales. -->
+      <div class="avatar" aria-hidden="true">LA<img src="foto.jpg" alt="" onerror="this.remove()" /></div>
+      <h1>Luis Arteaga</h1>
+      <p class="role">Ingeniero DevOps</p>
+      <p class="lede">Ayudo a empresas a desplegar software más rápido y sin errores, automatizando su infraestructura en la nube.</p>
+      <ul class="tags" aria-label="Stack">
+        <li>AWS</li><li>Azure DevOps</li><li>CloudFormation</li><li>SAM</li><li>EKS</li><li>Python</li><li>PowerShell</li><li>Docker</li><li>Git</li>
+      </ul>
+    </header>
+
+    <dl class="rail">
+      <div class="fact"><dt>Foco</dt><dd>CI/CD · Cloud · Automatización</dd></div>
+      <div class="fact"><dt>Sector</dt><dd>Banca y logística</dd></div>
+      <div class="fact"><dt>Base</dt><dd>Montería, Colombia</dd></div>
+      <div class="fact"><dt>Web</dt><dd>meruemart.cloud</dd></div>
+    </dl>
+
+    <a class="btn-primary" href="https://wa.me/573186405618?text=Hola%20Luis%2C%20vi%20tu%20tarjeta%20y%20me%20interesa%20contactarte." target="_blank" rel="noopener">
+      Escríbeme por WhatsApp
+    </a>
+
+    <nav aria-label="Canales de contacto">
+      <ul class="links">
+        <li><a href="tel:+573186405618"><span class="row-mark">TEL</span><span>Llamar ahora</span><span class="row-arrow" aria-hidden="true">↗</span></a></li>
+        <li><a href="mailto:lucartes1997@gmail.com"><span class="row-mark">MAIL</span><span>Enviar correo</span><span class="row-arrow" aria-hidden="true">↗</span></a></li>
+        <li><a href="https://www.linkedin.com/in/luis-arteaga-07/" target="_blank" rel="noopener"><span class="row-mark">IN</span><span>LinkedIn</span><span class="row-arrow" aria-hidden="true">↗</span></a></li>
+        <li><a href="https://github.com/MeruemArt" target="_blank" rel="noopener"><span class="row-mark">GH</span><span>GitHub</span><span class="row-arrow" aria-hidden="true">↗</span></a></li>
+        <li><a href="https://meruemart.cloud" target="_blank" rel="noopener"><span class="row-mark">WEB</span><span>Sitio web / Portafolio</span><span class="row-arrow" aria-hidden="true">↗</span></a></li>
+      </ul>
+    </nav>
+
+    <button class="save" type="button" onclick="descargarContacto()">+ Guardar contacto</button>
+
+    <footer>© 2026 Luis Arteaga · <a href="https://meruemart.cloud">meruemart.cloud</a></footer>
+  </main>
+
+  <script>
+    function descargarContacto() {
+      const esc = (s) => s.replace(/([,;\\])/g, '\\$1');
+      const vcard = [
+        'BEGIN:VCARD',
+        'VERSION:3.0',
+        'N:Arteaga;Luis;;;',
+        'FN:Luis Arteaga',
+        'ORG:MeruemArt',
+        'TITLE:Ingeniero DevOps',
+        'TEL;TYPE=CELL,VOICE:+573186405618',
+        'EMAIL;TYPE=PREF,INTERNET:lucartes1997@gmail.com',
+        'URL:https://meruemart.cloud',
+        'X-SOCIALPROFILE;TYPE=linkedin:' + esc('https://www.linkedin.com/in/luis-arteaga-07/'),
+        'END:VCARD'
+      ].join('\r\n');
+
+      const url = URL.createObjectURL(new Blob([vcard], { type: 'text/vcard;charset=utf-8' }));
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Luis-Arteaga.vcf';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    }
+  </script>
+
+</body>
+</html>
